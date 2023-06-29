@@ -1,0 +1,74 @@
+{
+  "name": "yeelight-tray",
+  "version": "1.0.0",
+  "description": "A minimal Electron application written with Typescript",
+  "engines": {
+    "node": "^18.16.0"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "dev:build": "nodemon --watch src --ext \"*\" --exec \"yarn build\"",
+    "dev:start": "nodemon --watch dist --ext \"*\" --exec \"yarn start\"",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"Build,Start\" \"yarn dev:build\" \"yarn dev:start\"",
+    "lint": "eslint .",
+    "start": "electron-forge start",
+    "build:icons": "electron-icon-builder --flatten --input=./lightbulb.png --output=.",
+    "package": "NODE_ENV=production yarn build && yarn build:icons && electron-forge package",
+    "make": "electron-forge make"
+  },
+  "main": "./dist/main.js",
+  "repository": "https://github.com/electron/electron-quick-start-typescript",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo",
+    "typescript"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
+    "@types/ms": "^0.7.31",
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "concurrently": "^8.0.1",
+    "electron": "^24.3.0",
+    "electron-icon-builder": "^2.0.1",
+    "esbuild": "^0.17.19",
+    "eslint": "^8.41.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ms": "^2.1.3",
+    "polished": "^4.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "source-map-support": "^0.5.21",
+    "yeelight-service": "^1.0.2",
+    "zod": "^3.21.4"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Yeelight Tray",
+        "executableName": "Yeelight Tray",
+        "icon": "./icons/icon"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        }
+      ]
+    }
+  }
+}
