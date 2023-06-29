@@ -1,21 +1,45 @@
 import { createRoot } from "react-dom/client";
 import { useAppState } from "./helpers/appState/appStateRenderer";
-import React from "react";
-import { createIncrementAction } from "./helpers/appState/appStateCommon";
+import React, { useState } from "react";
+import {
+  createAddTodoAction,
+  createRemoveTodoAction,
+} from "./helpers/appState/appStateCommon";
+import { v4 as createUuid } from "uuid";
 
 const App = () => {
   const [appState, dispatch] = useAppState();
+
+  const [inputValue, setInputValue] = useState<string>("");
   return (
     <div>
-      <h1>Hello World</h1>
-      <p>Count: {appState.count}</p>
-      <button
-        onClick={() => {
-          dispatch(createIncrementAction());
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(
+            createAddTodoAction({ uuid: createUuid(), title: inputValue })
+          );
+          setInputValue("");
         }}
       >
-        Increment
-      </button>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+      </form>
+      {appState.todos.map((todo) => (
+        <div key={todo.uuid}>
+          <p>{todo.title}</p>
+          <button
+            onClick={() => {
+              dispatch(createRemoveTodoAction(todo.uuid));
+            }}
+          >
+            Remove
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
