@@ -25,10 +25,14 @@ export const App = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          addTodo({
-            uuid: createUuid(),
-            title: inputValue,
-          });
+
+          if (inputValue) {
+            addTodo({
+              uuid: createUuid(),
+              title: inputValue,
+              completed: false,
+            });
+          }
           setInputValue("");
         }}
       >
