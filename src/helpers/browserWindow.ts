@@ -13,5 +13,10 @@ export const createBrowserWindow = () => {
   });
   browserWindowRef.current = browserWindow;
   browserWindow.loadFile("./index.html");
-  browserWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV !== "production") {
+    browserWindow.webContents.openDevTools({
+      mode: "undocked",
+      activate: false,
+    });
+  }
 };
