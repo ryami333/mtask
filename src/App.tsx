@@ -3,6 +3,7 @@ import type { Todo } from "./helpers/appState";
 import { v4 as createUuid } from "uuid";
 import { useAppState } from "./AppStateContext";
 import styled from "styled-components";
+import { Button } from "./Button";
 
 const TodoWrapper = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ const TodoButton = styled.button`
   cursor: pointer;
   padding: 4px;
   border-radius: 2px;
+  font-size: 16px;
 
   &:hover,
   &:focus {
@@ -37,7 +39,7 @@ export const App = () => {
     }));
   };
 
-  const removeCompletedTodos = (uuid: string) => {
+  const removeCompletedTodos = () => {
     window.appState.setState((current) => ({
       todos: current.todos.filter((todo) => !todo.completed),
     }));
@@ -86,7 +88,7 @@ export const App = () => {
           </TodoButton>
         </TodoWrapper>
       ))}
-      <button onClick={() => removeCompletedTodos()}>Clear Completed</button>
+      <Button onClick={() => removeCompletedTodos()}>Clear Completed</Button>
     </div>
   );
 };
