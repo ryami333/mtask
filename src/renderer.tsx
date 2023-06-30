@@ -1,24 +1,22 @@
 import { createRoot } from "react-dom/client";
-import { useAppState } from "./helpers/appState/appStateRenderer";
 import React, { useState } from "react";
-import {
-  createAddTodoAction,
-  createRemoveTodoAction,
-} from "./helpers/appState/appStateCommon";
 import { v4 as createUuid } from "uuid";
+import { useAppState } from "./helpers/useAppState";
 
 const App = () => {
-  const [appState, dispatch] = useAppState();
+  const appState = useAppState();
 
   const [inputValue, setInputValue] = useState<string>("");
+
   return (
     <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          dispatch(
-            createAddTodoAction({ uuid: createUuid(), title: inputValue })
-          );
+          window.appState.actions.addTodo({
+            uuid: createUuid(),
+            title: inputValue,
+          });
           setInputValue("");
         }}
       >
@@ -31,11 +29,7 @@ const App = () => {
       {appState.todos.map((todo) => (
         <div key={todo.uuid}>
           <p>{todo.title}</p>
-          <button
-            onClick={() => {
-              dispatch(createRemoveTodoAction(todo.uuid));
-            }}
-          >
+          <button onClick={() => window.appState.actions.removeTodo(todo.uuid)}>
             Remove
           </button>
         </div>

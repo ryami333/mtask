@@ -4,12 +4,16 @@ import { resolve } from "path";
 import { app } from "electron/main";
 import { safeJsonParse } from "./safeJsonParse";
 
-const APP_DATA_DIRECTORY = resolve(app.getPath("appData"), "yeelight-tray");
+const APP_DATA_DIRECTORY = resolve(app.getPath("appData"), "mtask");
 const DB_PATH = resolve(APP_DATA_DIRECTORY, "db.json");
 
-export interface State {
-  lastWatered: Date;
-  warningThresholdDays: number;
+export interface Todo {
+  uuid: string;
+  title: string;
+}
+
+export interface AppState {
+  todos: Todo[];
 }
 
 if (!existsSync(APP_DATA_DIRECTORY)) {
@@ -20,21 +24,25 @@ if (!existsSync(DB_PATH)) {
   writeFileSync(DB_PATH, "");
 }
 
-export const readState = (): State => {
+export const readState = (): AppState => {
   return z
     .object({
-      lastWatered: z
-        .string()
-        .datetime()
-        .transform((str) => new Date(str)),
-      warningThresholdDays: z.number().int(),
+      todos: z
+        .object({
+          uuid: z.string().uuid(),
+          title: z.string(),
+        })
+        .array(),
     })
     .catch({
-      lastWatered: new Date(),
-      warningThresholdDays: 10,
+      todos: [],
     })
     .parse(safeJsonParse(readFileSync(DB_PATH, "utf8")));
 };
 
-export const writeState = (state: State) =>
+export const writeState = (state: AppState) =>
   writeFileSync(DB_PATH, JSON.stringify(state));
+
+export const initialState: AppState = {
+  todos: [],
+};
