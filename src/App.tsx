@@ -6,18 +6,17 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
 
+const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
-  row-gap: 16px;
-`;
-
-const Rule = styled.hr`
-  all: unset;
-  height: 2px;
-  background-color: white;
-  width: 100%;
+  row-gap: 24px;
 `;
 
 export const App = () => {
@@ -37,7 +36,7 @@ export const App = () => {
 
   return (
     <Container>
-      <form
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -56,10 +55,8 @@ export const App = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-      </form>
-      <Rule />
+      </Form>
       <TodoList />
-      <Rule />
 
       <Button onClick={() => removeCompletedTodos()}>Clear Completed</Button>
     </Container>

@@ -4,6 +4,12 @@
   --color-background: rgb(38, 50, 56);
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 html {
   font-family: "Fira Code";
   background-color: var(--color-background);
@@ -16,10 +22,4 @@ html {
 body {
   padding: 16px 8px;
   margin: 0;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
 }

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const Input = styled.input`
-  all: unset;
+  display: block;
+  width: 100%;
   appearance: none;
   cursor: pointer;
   border-radius: 2px;
   padding: 8px 8px;
+  border: none;
   font-family: "Fira Code";
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
