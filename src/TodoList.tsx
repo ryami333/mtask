@@ -5,7 +5,6 @@ import React from "react";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 4px;
 `;
 
 const TodoWrapper = styled.div`
@@ -13,15 +12,19 @@ const TodoWrapper = styled.div`
 `;
 
 const TodoButton = styled.button`
-  all: unset;
+  background: none;
+  border: none;
   appearance: none;
+  text-align: left;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   border-radius: 2px;
   font-size: 16px;
+  width: 100%;
 
   &:hover,
   &:focus {
+    background-color: rgba(0, 0, 0, 0.5);
     font-weight: 500;
   }
 `;
