@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { AppState } from "./state";
 import { safeJsonParse } from "./safeJsonParse";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { DB_PATH } from "./config";
+import { AppState } from "./appState";
 
 export const readState = (): AppState => {
   if (!existsSync(DB_PATH)) {

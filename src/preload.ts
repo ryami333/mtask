@@ -1,51 +1,31 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { AppState, Todo } from "./helpers/state";
-import { browserWindowRef } from "./helpers/browserWindow";
-import { APP_STATE_CHANNEL } from "./helpers/channels";
-import { readState } from "./helpers/readState";
-import { writeState } from "./helpers/writeState";
+import {
+  GET_STATE_CHANNEL,
+  SET_STATE_CHANNEL,
+  SYNC_STATE_CHANNEL,
+} from "./helpers/channels";
+import type { AppState } from "./helpers/appState";
 
-const appState: AppState = new Proxy(readState(), {
-  set(...args) {
-    const result = Reflect.set(...args);
-    // TODO: promise-get browserWindow?
-    console.log("state updated", JSON.stringify(appState));
+const onSyncState = (fn: (_: AppState) => void) =>
+  ipcRenderer.on(SYNC_STATE_CHANNEL, (__, appState) => fn(appState));
 
-    // Sending "copy" because Proxy is not serializable.
-    const copy = { ...appState };
-    writeState(copy);
-
-    browserWindowRef.current?.webContents.send(APP_STATE_CHANNEL, copy);
-    return result;
-  },
-});
-
-const setState = (
+const setState = async (
   patch: Partial<AppState> | ((current: AppState) => AppState)
 ) => {
   if (typeof patch === "function") {
-    Object.assign(appState, patch(appState));
+    // TODO: use schema
+    const appState: AppState = await ipcRenderer.invoke(GET_STATE_CHANNEL);
+
+    return void ipcRenderer.invoke(SET_STATE_CHANNEL, patch(appState));
   } else {
-    Object.assign(appState, patch);
+    return void ipcRenderer.invoke(SET_STATE_CHANNEL, patch);
   }
 };
 
-const actions = {
-  addTodo: (todo: Todo) =>
-    setState((current) => ({ todos: [...current.todos, todo] })),
-  removeTodo: (uuid: string) =>
-    setState((current) => ({
-      todos: current.todos.filter((todo) => todo.uuid !== uuid),
-    })),
-};
-
-const onUpdate = (fn: (_: AppState) => void) =>
-  ipcRenderer.on(APP_STATE_CHANNEL, (__, appState) => fn(appState));
-
 const appStateApi = {
-  actions,
-  onUpdate,
-  initialState: { ...appState },
+  onSyncState,
+  setState,
+  getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
 };
 
 export type AppStateApi = typeof appStateApi;

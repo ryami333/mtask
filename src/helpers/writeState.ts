@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { APP_DATA_DIRECTORY, DB_PATH } from "./config";
-import { AppState } from "./state";
+import { AppState } from "./appState";
 
 export const writeState = (state: AppState) => {
   if (!existsSync(APP_DATA_DIRECTORY)) {

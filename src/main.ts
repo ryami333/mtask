@@ -1,7 +1,7 @@
 import "source-map-support/register";
 import { app } from "electron";
 import { createBrowserWindow } from "./helpers/browserWindow";
-import "./helpers/appState/appStateMain";
+import "./helpers/appState";
 
 /**
  * Performance improvement:
