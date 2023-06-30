@@ -27,6 +27,9 @@ const commonOptions = {
   },
   entryNames: "[name]",
   external: ["electron"],
+  loader: {
+    ".woff2": "file",
+  },
 };
 
 esbuild.build({

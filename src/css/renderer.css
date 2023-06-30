@@ -1,0 +1,6 @@
+@import "./fonts.css";
+
+html {
+  background-color: red;
+  font-family: "Fira Code";
+}
