@@ -1,6 +1,7 @@
 @import "./fonts.css";
 
 html {
-  background-color: red;
   font-family: "Fira Code";
+  background-color: rgb(38, 50, 56);
+  color: white;
 }
