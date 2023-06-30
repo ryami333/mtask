@@ -1,7 +1,8 @@
 import "source-map-support/register";
-import { app } from "electron";
-import { createBrowserWindow } from "./helpers/browserWindow";
 import "./helpers/appState";
+import { createAppState } from "./helpers/appState";
+import path from "node:path";
+import { BrowserWindow, app } from "electron/main";
 
 /**
  * Performance improvement:
@@ -12,6 +13,24 @@ import "./helpers/appState";
 app
   .whenReady()
   .then(async () => {
-    createBrowserWindow();
+    const browserWindow = new BrowserWindow({
+      webPreferences: {
+        preload: path.join(app.getAppPath(), "dist/preload.js"),
+      },
+    });
+
+    /**
+     * It's important to invoke `createAppState` before calling `loadFile` etc
+     * to avoid race-conditions on listeners.
+     */
+    createAppState(browserWindow);
+
+    browserWindow.loadFile("./index.html");
+    if (process.env.NODE_ENV !== "production") {
+      browserWindow.webContents.openDevTools({
+        mode: "undocked",
+        activate: false,
+      });
+    }
   })
   .catch(console.error);
