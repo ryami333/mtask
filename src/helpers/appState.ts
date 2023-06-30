@@ -11,6 +11,7 @@ import { BrowserWindow } from "electron/main";
 export interface Todo {
   uuid: string;
   title: string;
+  completed: boolean;
 }
 
 export interface AppState {

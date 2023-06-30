@@ -15,6 +15,7 @@ export const readState = (): AppState => {
         .object({
           uuid: z.string().uuid(),
           title: z.string(),
+          completed: z.boolean(),
         })
         .array(),
     })
