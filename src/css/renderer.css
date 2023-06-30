@@ -1,7 +1,11 @@
 @import "./fonts.css";
 
+:root {
+  --color-background: rgb(38, 50, 56);
+}
+
 html {
   font-family: "Fira Code";
-  background-color: rgb(38, 50, 56);
+  background-color: var(--color-background);
   color: white;
 }

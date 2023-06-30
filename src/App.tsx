@@ -4,6 +4,7 @@ import { v4 as createUuid } from "uuid";
 import { useAppState } from "./AppStateContext";
 import styled from "styled-components";
 import { Button } from "./Button";
+import { Input } from "./Input";
 
 const TodoWrapper = styled.div`
   display: flex;
@@ -75,7 +76,7 @@ export const App = () => {
           setInputValue("");
         }}
       >
-        <input
+        <Input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
