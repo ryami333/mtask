@@ -11,14 +11,19 @@ const TodoWrapper = styled.div`
 const TodoButton = styled.button`
   all: unset;
   appearance: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
 
-  &:hover {
-    background-color: rgb(#ff0000, 0.5);
+  &:hover,
+  &:focus {
+    font-weight: 500;
   }
 `;
 
 const TodoTitle = styled.span<{ $completed?: boolean }>`
   text-decoration: ${(props) => (props.$completed ? "line-through" : "normal")};
+  color: ${(props) => (props.$completed ? "gray" : "white")};
 `;
 
 export const App = () => {
@@ -32,9 +37,9 @@ export const App = () => {
     }));
   };
 
-  const removeTodo = (uuid: string) => {
+  const removeCompletedTodos = (uuid: string) => {
     window.appState.setState((current) => ({
-      todos: current.todos.filter((todo) => todo.uuid !== uuid),
+      todos: current.todos.filter((todo) => !todo.completed),
     }));
   };
 
@@ -79,9 +84,9 @@ export const App = () => {
           <TodoButton onClick={() => toggleTodoCompleted(todo.uuid)}>
             <TodoTitle $completed={todo.completed}>{todo.title}</TodoTitle>
           </TodoButton>
-          <button onClick={() => removeTodo(todo.uuid)}>Remove</button>
         </TodoWrapper>
       ))}
+      <button onClick={() => removeCompletedTodos()}>Clear Completed</button>
     </div>
   );
 };
