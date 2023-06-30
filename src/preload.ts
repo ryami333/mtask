@@ -1,7 +1,9 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { AppState, Todo, readState, writeState } from "./helpers/state";
+import { AppState, Todo } from "./helpers/state";
 import { browserWindowRef } from "./helpers/browserWindow";
 import { APP_STATE_CHANNEL } from "./helpers/channels";
+import { readState } from "./helpers/readState";
+import { writeState } from "./helpers/writeState";
 
 const appState: AppState = new Proxy(readState(), {
   set(...args) {
