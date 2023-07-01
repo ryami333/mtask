@@ -1,6 +1,6 @@
 import { useAppState } from "./AppStateContext";
 import styled from "styled-components";
-import React from "react";
+import React, { useRef } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -51,11 +51,52 @@ export const TodoList = () => {
     }));
   };
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    const allButtons = Array.from(
+      wrapperRef.current?.querySelectorAll("[data-todolist-button]") ?? []
+    ).filter((button): button is HTMLElement => button instanceof HTMLElement);
+
+    const currentIndex = allButtons.findIndex(
+      (button) => button === event.currentTarget
+    );
+
+    switch (event.key) {
+      case "ArrowUp":
+      case "ArrowLeft": {
+        event.preventDefault(); // Block scrolling
+        allButtons.at(currentIndex - 1)?.focus();
+        break;
+      }
+      case "ArrowDown":
+      case "ArrowRight": {
+        event.preventDefault(); // Block scrolling
+        allButtons.at((currentIndex + 1) % allButtons.length)?.focus();
+        break;
+      }
+      case "Home": {
+        event.preventDefault(); // Block scrolling
+        allButtons.at(0)?.focus();
+        break;
+      }
+      case "End": {
+        event.preventDefault(); // Block scrolling
+        allButtons.at(-1)?.focus();
+        break;
+      }
+    }
+  };
+
   return (
-    <Container>
+    <Container ref={wrapperRef}>
       {appState.todos.map((todo) => (
         <TodoWrapper key={todo.uuid}>
-          <TodoButton onClick={() => toggleTodoCompleted(todo.uuid)}>
+          <TodoButton
+            onClick={() => toggleTodoCompleted(todo.uuid)}
+            data-todolist-button
+            onKeyDown={onKeyDown}
+          >
             <TodoTitle $completed={todo.completed}>{todo.title}</TodoTitle>
           </TodoButton>
         </TodoWrapper>
