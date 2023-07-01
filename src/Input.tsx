@@ -12,4 +12,10 @@ export const Input = styled.input`
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
+  line-height: 1.5;
+  border: 2px solid transparent;
+
+  &:focus-visible {
+    border-color: white;
+  }
 `;

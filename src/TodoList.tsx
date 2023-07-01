@@ -8,7 +8,7 @@ const Container = styled.div`
   border-radius: 2px;
   border: 2px solid transparent;
 
-  &:has(:focus) {
+  &:has(:focus-visible) {
     border: 2px solid white;
   }
 `;
@@ -29,7 +29,7 @@ const TodoButton = styled.button<{ $active?: boolean }>`
   width: 100%;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: 500;
   }

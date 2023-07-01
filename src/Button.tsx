@@ -4,11 +4,17 @@ export const Button = styled.button`
   unset: all;
   appearance: none;
   cursor: pointer;
-  border-radius: 2px;
-  padding: 4px 8px;
+  border-radius: 24px;
+  padding: 8px 8px;
   font-family: "Fira Code";
-  border: 2px solid white;
+  border: 2px solid transparent;
   color: white;
-  background: none;
+  background-color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
+  line-height: 1.5;
+
+  &:hover,
+  &:focus {
+    border-color: white;
+  }
 `;
