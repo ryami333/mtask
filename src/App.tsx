@@ -24,7 +24,7 @@ export const App = () => {
 
   const addTodo = (todo: Todo) => {
     window.appState.setState((current) => ({
-      todos: [...current.todos, todo],
+      todos: [todo, ...current.todos],
     }));
   };
 
