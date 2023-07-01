@@ -27,3 +27,9 @@ body {
 :focus {
   outline: none;
 }
+
+html,
+body,
+#root {
+  height: -webkit-fill-available;
+}

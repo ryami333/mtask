@@ -6,6 +6,13 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  height: -webkit-fill-available;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -13,10 +20,8 @@ const Form = styled.form`
   padding: 0;
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+const TodoListWrapper = styled.div`
+  flex: 1;
 `;
 
 export const App = () => {
@@ -56,8 +61,9 @@ export const App = () => {
           onChange={(e) => setInputValue(e.target.value)}
         />
       </Form>
-      <TodoList />
-
+      <TodoListWrapper>
+        <TodoList />
+      </TodoListWrapper>
       <Button onClick={() => removeCompletedTodos()}>Clear Completed</Button>
     </Container>
   );
