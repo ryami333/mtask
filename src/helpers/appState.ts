@@ -2,11 +2,12 @@ import { ipcMain } from "electron";
 import {
   GET_STATE_CHANNEL,
   SET_STATE_CHANNEL,
+  SHOW_TODO_CONTEXT_MENU,
   SYNC_STATE_CHANNEL,
 } from "./channels";
 import { readState } from "./readState";
 import { writeState } from "./writeState";
-import { BrowserWindow } from "electron/main";
+import { BrowserWindow, Menu } from "electron/main";
 
 export interface Todo {
   uuid: string;
@@ -39,5 +40,18 @@ export const createAppState = (browserWindow: BrowserWindow) => {
   ipcMain.handle(GET_STATE_CHANNEL, () => ({ ...appState }));
   ipcMain.handle(SET_STATE_CHANNEL, (_, patch: Partial<AppState>) => {
     Object.assign(appState, patch);
+  });
+
+  ipcMain.handle(SHOW_TODO_CONTEXT_MENU, (_, uuid: string) => {
+    const menu = Menu.buildFromTemplate([
+      {
+        type: "normal",
+        label: "Delete",
+        click: () => {
+          appState.todos = appState.todos.filter((todo) => todo.uuid !== uuid);
+        },
+      },
+    ]);
+    menu.popup();
   });
 };

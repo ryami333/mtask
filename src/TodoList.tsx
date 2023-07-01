@@ -140,7 +140,7 @@ export const TodoList = () => {
             data-todolist-button={todo.uuid}
             $active={activeIndex === index}
             onContextMenu={() => {
-              remote;
+              window.appState.showContextMenuForTodo(todo.uuid);
             }}
           >
             <TodoTitle $completed={todo.completed}>{todo.title}</TodoTitle>
