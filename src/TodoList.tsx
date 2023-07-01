@@ -57,6 +57,12 @@ export const TodoList = () => {
     }));
   };
 
+  const removeTodo = (uuid: string) => {
+    window.appState.setState((current) => ({
+      todos: current.todos.filter((todo) => todo.uuid !== uuid),
+    }));
+  };
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -104,6 +110,19 @@ export const TodoList = () => {
         allButtons.at(newIndex)?.focus();
         break;
       }
+      case "Delete":
+      case "Backspace": {
+        event.preventDefault(); // Block scrolling
+        const newIndex = Math.max(0, allButtons.length - 1);
+        setActiveIndex(newIndex);
+
+        const uuid = event.currentTarget.getAttribute("data-todolist-button");
+        if (uuid) {
+          removeTodo(uuid);
+        }
+        allButtons.at(newIndex)?.focus();
+        break;
+      }
     }
   };
 
@@ -118,8 +137,11 @@ export const TodoList = () => {
               setActiveIndex(index);
               toggleTodoCompleted(todo.uuid);
             }}
-            data-todolist-button
+            data-todolist-button={todo.uuid}
             $active={activeIndex === index}
+            onContextMenu={() => {
+              remote;
+            }}
           >
             <TodoTitle $completed={todo.completed}>{todo.title}</TodoTitle>
           </TodoButton>
