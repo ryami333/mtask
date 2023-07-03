@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import type { Todo } from "./helpers/appState";
 import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
@@ -24,7 +24,17 @@ const TodoListWrapper = styled.div`
   flex: 1;
 `;
 
-export const HomePage = () => {
+const ButtonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+`;
+
+export const HomePage = ({
+  onClickSettings,
+}: {
+  onClickSettings: MouseEventHandler;
+}) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const addTodo = (todo: Todo) => {
@@ -64,7 +74,12 @@ export const HomePage = () => {
       <TodoListWrapper>
         <TodoList />
       </TodoListWrapper>
-      <Button onClick={() => removeCompletedTodos()}>Clear Completed</Button>
+      <ButtonWrapper>
+        <Button onClick={() => removeCompletedTodos()}>
+          Clear Completed 🚫
+        </Button>
+        <Button onClick={onClickSettings}>Settings ⚙️</Button>
+      </ButtonWrapper>
     </Container>
   );
 };

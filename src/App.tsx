@@ -7,8 +7,12 @@ export const App = () => {
 
   return (
     <>
-      {currentPage === "HOME" && <HomePage />}
-      {currentPage === "SETTINGS" && <SettingsPage />}
+      {currentPage === "HOME" && (
+        <HomePage onClickSettings={() => setCurrentPage("SETTINGS")} />
+      )}
+      {currentPage === "SETTINGS" && (
+        <SettingsPage onClickBack={() => setCurrentPage("HOME")} />
+      )}
     </>
   );
 };

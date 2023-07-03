@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { MouseEventHandler, useId } from "react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import styled from "styled-components";
@@ -38,7 +38,11 @@ const validationSchema = z.object({
 
 type FormValues = z.infer<typeof validationSchema>;
 
-export const SettingsPage = () => {
+export const SettingsPage = ({
+  onClickBack,
+}: {
+  onClickBack: MouseEventHandler;
+}) => {
   const {
     register,
     handleSubmit,
@@ -80,6 +84,7 @@ export const SettingsPage = () => {
 
   return (
     <Container>
+      <Button onClick={onClickBack}>⏎ Back</Button>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Field>
           <Label htmlFor={prefixInputId}>Prefix</Label>
