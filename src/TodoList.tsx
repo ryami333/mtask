@@ -88,9 +88,6 @@ function TitleFormatter({ children }: { children: string }) {
             </ExternalLink>
           );
         }
-
-        //github.com/redbullmediahouse/rb-pcs/pull/1421
-        https: return token;
       })}
     </>
   );
