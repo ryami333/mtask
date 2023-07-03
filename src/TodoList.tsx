@@ -71,7 +71,26 @@ function TitleFormatter({ children }: { children: string }) {
             </ExternalLink>
           );
         }
-        return token;
+
+        const pullRequestMatch = token.match(
+          /https:\/\/github.com\/\S+?\/(\S+)?\/pull\/(\S+)?/
+        );
+        if (pullRequestMatch) {
+          return (
+            <ExternalLink
+              key={index}
+              onClick={(event) => {
+                event.stopPropagation();
+                window.appState.openLink(token);
+              }}
+            >
+              {pullRequestMatch[1]}/{pullRequestMatch[2]} 🔗
+            </ExternalLink>
+          );
+        }
+
+        //github.com/redbullmediahouse/rb-pcs/pull/1421
+        https: return token;
       })}
     </>
   );
