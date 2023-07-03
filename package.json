@@ -12,7 +12,7 @@
     "dev": "concurrently -k -p \"[{name}]\" -n \"Build,Start\" \"yarn dev:build\" \"yarn dev:start\"",
     "lint": "eslint .",
     "start": "electron-forge start",
-    "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.svg --output=.",
+    "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.svg.png --output=.",
     "package": "NODE_ENV=production yarn build && yarn build:icons && electron-forge package",
     "make": "electron-forge make"
   },
