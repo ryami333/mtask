@@ -40,6 +40,43 @@ const TodoTitle = styled.span<{ $completed?: boolean }>`
   color: ${(props) => (props.$completed ? "gray" : "white")};
 `;
 
+const ExternalLink = styled.span`
+  font-weight: 600;
+  font-style: italic;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+function TitleFormatter({ children }: { children: string }) {
+  const tokens = children.match(/\S+\s?/g) ?? [];
+
+  return (
+    <>
+      {tokens?.map((token, index) => {
+        const jiraLinkMatch = token.match(
+          /https:\/\/diesdas.atlassian.net\/browse\/([A-Z0-9\\-]+)/
+        );
+        if (jiraLinkMatch) {
+          return (
+            <ExternalLink
+              key={index}
+              onClick={(event) => {
+                event.stopPropagation();
+                window.appState.openLink(token);
+              }}
+            >
+              {jiraLinkMatch[1]} 🔗
+            </ExternalLink>
+          );
+        }
+        return token;
+      })}
+    </>
+  );
+}
+
 export const TodoList = () => {
   const appState = useAppState();
 
@@ -155,7 +192,7 @@ export const TodoList = () => {
               }}
               $completed={todo.completed}
             >
-              {todo.title}
+              <TitleFormatter>{todo.title}</TitleFormatter>
             </TodoTitle>
           </TodoButton>
         </TodoWrapper>

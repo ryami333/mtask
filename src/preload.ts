@@ -1,6 +1,7 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, shell } from "electron";
 import {
   GET_STATE_CHANNEL,
+  OPEN_LINK_CHANNEL,
   SET_STATE_CHANNEL,
   SHOW_TODO_CONTEXT_MENU,
   SYNC_STATE_CHANNEL,
@@ -29,6 +30,9 @@ const appStateApi = {
   getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
   showContextMenuForTodo: (uuid: string) => {
     ipcRenderer.invoke(SHOW_TODO_CONTEXT_MENU, uuid);
+  },
+  openLink: (url: string) => {
+    ipcRenderer.invoke(OPEN_LINK_CHANNEL, url);
   },
 };
 
