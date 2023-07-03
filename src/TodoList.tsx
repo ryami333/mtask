@@ -147,7 +147,16 @@ export const TodoList = () => {
               window.appState.showContextMenuForTodo(todo.uuid);
             }}
           >
-            <TodoTitle $completed={todo.completed}>{todo.title}</TodoTitle>
+            <TodoTitle
+              style={{
+                color: appState.colors.find((colorMapping) =>
+                  todo.title.startsWith(colorMapping.prefix)
+                )?.color,
+              }}
+              $completed={todo.completed}
+            >
+              {todo.title}
+            </TodoTitle>
           </TodoButton>
         </TodoWrapper>
       ))}
