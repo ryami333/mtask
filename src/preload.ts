@@ -11,7 +11,7 @@ const onSyncState = (fn: (_: AppState) => void) =>
   ipcRenderer.on(SYNC_STATE_CHANNEL, (__, appState) => fn(appState));
 
 const setState = async (
-  patch: Partial<AppState> | ((current: AppState) => AppState)
+  patch: Partial<AppState> | ((current: AppState) => Partial<AppState>)
 ) => {
   if (typeof patch === "function") {
     // TODO: use schema

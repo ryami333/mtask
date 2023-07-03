@@ -17,10 +17,12 @@ export interface Todo {
 
 export interface AppState {
   todos: Todo[];
+  colorMap: Record<string, string>;
 }
 
 export const initialState: AppState = {
   todos: [],
+  colorMap: {},
 };
 
 export const createAppState = (browserWindow: BrowserWindow) => {

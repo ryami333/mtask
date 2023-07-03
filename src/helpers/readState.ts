@@ -18,9 +18,11 @@ export const readState = (): AppState => {
           completed: z.boolean(),
         })
         .array(),
+      colorMap: z.record(z.string()).default({}),
     })
     .catch({
       todos: [],
+      colorMap: {},
     })
     .parse(safeJsonParse(readFileSync(DB_PATH, "utf8")));
 };
