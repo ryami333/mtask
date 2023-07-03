@@ -15,14 +15,20 @@ export interface Todo {
   completed: boolean;
 }
 
+export interface ColorMapping {
+  uuid: string;
+  prefix: string;
+  color: string;
+}
+
 export interface AppState {
   todos: Todo[];
-  colorMap: Record<string, string>;
+  colors: ColorMapping[];
 }
 
 export const initialState: AppState = {
   todos: [],
-  colorMap: {},
+  colors: [],
 };
 
 export const createAppState = (browserWindow: BrowserWindow) => {

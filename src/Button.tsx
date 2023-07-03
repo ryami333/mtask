@@ -5,7 +5,7 @@ export const Button = styled.button`
   appearance: none;
   cursor: pointer;
   border-radius: 24px;
-  padding: 8px 8px;
+  padding: 8px 32px;
   font-family: "Fira Code";
   border: 2px solid transparent;
   color: white;

@@ -18,11 +18,17 @@ export const readState = (): AppState => {
           completed: z.boolean(),
         })
         .array(),
-      colorMap: z.record(z.string()).default({}),
+      colors: z
+        .object({
+          uuid: z.string().uuid(),
+          prefix: z.string(),
+          color: z.string(),
+        })
+        .array(),
     })
     .catch({
       todos: [],
-      colorMap: {},
+      colors: [],
     })
     .parse(safeJsonParse(readFileSync(DB_PATH, "utf8")));
 };
