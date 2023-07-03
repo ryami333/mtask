@@ -113,14 +113,18 @@ export const TodoList = () => {
       case "Delete":
       case "Backspace": {
         event.preventDefault(); // Block scrolling
-        const newIndex = Math.max(0, allButtons.length - 1);
-        setActiveIndex(newIndex);
+
+        const nextButton = allButtons[activeIndex + 1];
+        if (nextButton) {
+          nextButton?.focus();
+        } else {
+          allButtons[activeIndex - 1]?.focus();
+        }
 
         const uuid = event.currentTarget.getAttribute("data-todolist-button");
         if (uuid) {
           removeTodo(uuid);
         }
-        allButtons.at(newIndex)?.focus();
         break;
       }
     }
