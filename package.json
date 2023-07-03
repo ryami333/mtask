@@ -12,7 +12,7 @@
     "dev": "concurrently -k -p \"[{name}]\" -n \"Build,Start\" \"yarn dev:build\" \"yarn dev:start\"",
     "lint": "eslint .",
     "start": "electron-forge start",
-    "build:icons": "electron-icon-builder --flatten --input=./lightbulb.png --output=.",
+    "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.svg --output=.",
     "package": "NODE_ENV=production yarn build && yarn build:icons && electron-forge package",
     "make": "electron-forge make"
   },
@@ -61,8 +61,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Yeelight Tray",
-        "executableName": "Yeelight Tray",
+        "name": "mtask",
+        "executableName": "mtask",
         "icon": "./icons/icon"
       },
       "makers": [
