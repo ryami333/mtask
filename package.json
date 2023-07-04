@@ -36,7 +36,7 @@
     "@types/react-dom": "^18.2.6",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
+    "@typescript-eslint/parser": "^5.61.0",
     "concurrently": "^8.2.0",
     "electron": "^25.2.0",
     "electron-icon-builder": "^2.0.1",
