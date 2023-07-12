@@ -1,6 +1,7 @@
 import { useAppState } from "../helpers/AppStateContext";
 import styled from "styled-components";
 import React, { useRef, useState } from "react";
+import { TodoItem } from "./TodoItem";
 
 const Container = styled.div`
   display: flex;
@@ -12,86 +13,6 @@ const Container = styled.div`
     border: 2px solid white;
   }
 `;
-
-const TodoWrapper = styled.div`
-  display: flex;
-`;
-
-const TodoButton = styled.button<{ $active?: boolean }>`
-  background: none;
-  border: none;
-  appearance: none;
-  text-align: left;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 2px;
-  font-size: 16px;
-  width: 100%;
-
-  &:hover,
-  &:focus-visible {
-    background-color: rgba(0, 0, 0, 0.5);
-    font-weight: 500;
-  }
-`;
-
-const TodoTitle = styled.span<{ $completed?: boolean }>`
-  text-decoration: ${(props) => (props.$completed ? "line-through" : "normal")};
-  color: ${(props) => (props.$completed ? "gray" : "white")};
-`;
-
-const ExternalLink = styled.span`
-  font-weight: 600;
-  font-style: italic;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-function TitleFormatter({ children }: { children: string }) {
-  const tokens = children.match(/\S+\s?/g) ?? [];
-
-  return (
-    <>
-      {tokens?.map((token, index) => {
-        const jiraLinkMatch = token.match(
-          /https:\/\/diesdas.atlassian.net\/browse\/([A-Z0-9\\-]+)/
-        );
-        if (jiraLinkMatch) {
-          return (
-            <ExternalLink
-              key={index}
-              onClick={(event) => {
-                event.stopPropagation();
-                window.appState.openLink(token);
-              }}
-            >
-              {jiraLinkMatch[1]} 🔗
-            </ExternalLink>
-          );
-        }
-
-        const pullRequestMatch = token.match(
-          /https:\/\/github.com\/\S+?\/(\S+)?\/pull\/(\S+)?/
-        );
-        if (pullRequestMatch) {
-          return (
-            <ExternalLink
-              key={index}
-              onClick={(event) => {
-                event.stopPropagation();
-                window.appState.openLink(token);
-              }}
-            >
-              {pullRequestMatch[1]}/{pullRequestMatch[2]} 🔗
-            </ExternalLink>
-          );
-        }
-      })}
-    </>
-  );
-}
 
 export const TodoList = () => {
   const appState = useAppState();
@@ -186,32 +107,21 @@ export const TodoList = () => {
   return (
     <Container ref={wrapperRef}>
       {appState.todos.map((todo, index) => (
-        <TodoWrapper key={todo.uuid}>
-          <TodoButton
-            onKeyDown={onKeyDown}
-            tabIndex={activeIndex === index ? 0 : -1} // using "roving" tabIndex
-            onClick={() => {
-              setActiveIndex(index);
-              toggleTodoCompleted(todo.uuid);
-            }}
-            data-todolist-button={todo.uuid}
-            $active={activeIndex === index}
-            onContextMenu={() => {
-              window.appState.showContextMenuForTodo(todo.uuid);
-            }}
-          >
-            <TodoTitle
-              style={{
-                color: appState.colors.find((colorMapping) =>
-                  todo.title.startsWith(colorMapping.prefix)
-                )?.color,
-              }}
-              $completed={todo.completed}
-            >
-              <TitleFormatter>{todo.title}</TitleFormatter>
-            </TodoTitle>
-          </TodoButton>
-        </TodoWrapper>
+        <TodoItem
+          todo={todo}
+          key={todo.uuid}
+          onKeyDown={onKeyDown}
+          tabIndex={activeIndex === index ? 0 : -1} // using "roving" tabIndex
+          onClick={() => {
+            setActiveIndex(index);
+            toggleTodoCompleted(todo.uuid);
+          }}
+          active={activeIndex === index}
+          onContextMenu={() => {
+            window.appState.showContextMenuForTodo(todo.uuid);
+          }}
+          colors={appState.colors}
+        />
       ))}
     </Container>
   );
