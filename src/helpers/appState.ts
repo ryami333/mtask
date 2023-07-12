@@ -8,6 +8,7 @@ import {
 import { readState } from "./readState";
 import { writeState } from "./writeState";
 import { BrowserWindow, Menu } from "electron/main";
+import { z } from "zod";
 
 export interface Todo {
   uuid: string;
@@ -30,6 +31,23 @@ export const initialState: AppState = {
   todos: [],
   colors: [],
 };
+
+export const appStateSchema = z.object({
+  todos: z
+    .object({
+      uuid: z.string().uuid(),
+      title: z.string(),
+      completed: z.boolean(),
+    })
+    .array(),
+  colors: z
+    .object({
+      uuid: z.string().uuid(),
+      prefix: z.string(),
+      color: z.string(),
+    })
+    .array(),
+}) satisfies z.ZodSchema<AppState>;
 
 export const createAppState = (browserWindow: BrowserWindow) => {
   const appState: AppState = new Proxy(readState(), {
