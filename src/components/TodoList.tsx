@@ -1,7 +1,7 @@
-import { useAppState } from "../helpers/AppStateContext";
 import styled from "styled-components";
 import React, { useRef, useState } from "react";
 import { TodoItem } from "./TodoItem";
+import { ColorMapping, Todo } from "../helpers/appState";
 
 const Container = styled.div`
   display: flex;
@@ -14,29 +14,19 @@ const Container = styled.div`
   }
 `;
 
-export const TodoList = () => {
-  const appState = useAppState();
-
-  const toggleTodoCompleted = (uuid: string) => {
-    window.appState.setState((current) => ({
-      todos: current.todos.map((todo) => {
-        if (todo.uuid === uuid) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
-      }),
-    }));
-  };
-
-  const removeTodo = (uuid: string) => {
-    window.appState.setState((current) => ({
-      todos: current.todos.filter((todo) => todo.uuid !== uuid),
-    }));
-  };
-
+export const TodoList = ({
+  onClickTodo,
+  onDeleteKeyDown,
+  onContextMenu,
+  colors,
+  todos,
+}: {
+  onClickTodo: (uuid: string) => void;
+  onDeleteKeyDown: (uuid: string) => void;
+  onContextMenu: (uuid: string) => void;
+  colors: ColorMapping[];
+  todos: Todo[];
+}) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -97,7 +87,7 @@ export const TodoList = () => {
 
         const uuid = event.currentTarget.getAttribute("data-todolist-button");
         if (uuid) {
-          removeTodo(uuid);
+          onDeleteKeyDown(uuid);
         }
         break;
       }
@@ -106,7 +96,7 @@ export const TodoList = () => {
 
   return (
     <Container ref={wrapperRef}>
-      {appState.todos.map((todo, index) => (
+      {todos.map((todo, index) => (
         <TodoItem
           todo={todo}
           key={todo.uuid}
@@ -114,13 +104,11 @@ export const TodoList = () => {
           tabIndex={activeIndex === index ? 0 : -1} // using "roving" tabIndex
           onClick={() => {
             setActiveIndex(index);
-            toggleTodoCompleted(todo.uuid);
+            onClickTodo(todo.uuid);
           }}
           active={activeIndex === index}
-          onContextMenu={() => {
-            window.appState.showContextMenuForTodo(todo.uuid);
-          }}
-          colors={appState.colors}
+          onContextMenu={() => onContextMenu(todo.uuid)}
+          colors={colors}
         />
       ))}
     </Container>

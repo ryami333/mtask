@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
+import { useAppState } from "../helpers/AppStateContext";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,32 @@ export const HomePage = ({
     }));
   };
 
+  const onClickTodo = (uuid: string) => {
+    window.appState.setState((current) => ({
+      todos: current.todos.map((todo) => {
+        if (todo.uuid === uuid) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      }),
+    }));
+  };
+
+  const onDeleteKeyDown = (uuid: string) => {
+    window.appState.setState((current) => ({
+      todos: current.todos.filter((todo) => todo.uuid !== uuid),
+    }));
+  };
+
+  const onContextMenu = (uuid: string) => {
+    window.appState.showContextMenuForTodo(uuid);
+  };
+
+  const appState = useAppState();
+
   return (
     <Container>
       <Form
@@ -72,7 +99,13 @@ export const HomePage = ({
         />
       </Form>
       <TodoListWrapper>
-        <TodoList />
+        <TodoList
+          onClickTodo={onClickTodo}
+          onDeleteKeyDown={onDeleteKeyDown}
+          onContextMenu={onContextMenu}
+          todos={appState.todos}
+          colors={appState.colors}
+        />
       </TodoListWrapper>
       <ButtonWrapper>
         <Button onClick={() => removeCompletedTodos()}>
