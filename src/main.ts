@@ -19,6 +19,7 @@ app
       webPreferences: {
         preload: path.join(app.getAppPath(), "dist/preload.js"),
       },
+      titleBarStyle: "hidden",
     });
 
     /**
