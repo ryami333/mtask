@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useState } from "react";
-import type { Todo } from "./helpers/appState";
+import type { Todo } from "../helpers/appState";
 import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
 import { Input } from "./Input";

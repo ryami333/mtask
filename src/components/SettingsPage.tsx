@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { v4 as createUuid } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppState } from "./AppStateContext";
+import { useAppState } from "../helpers/AppStateContext";
 
 const Container = styled.div`
   display: flex;

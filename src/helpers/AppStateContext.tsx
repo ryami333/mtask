@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AppState } from "./helpers/appState";
+import { AppState } from "./appState";
 
 const AppStateContext = React.createContext<AppState | undefined>(undefined);
 

@@ -1,8 +1,8 @@
 import "./css/renderer.css";
 import { createRoot } from "react-dom/client";
 import React from "react";
-import { App } from "./App";
-import { AppStateContextProvider } from "./AppStateContext";
+import { App } from "./components/App";
+import { AppStateContextProvider } from "./helpers/AppStateContext";
 
 (async () => {
   const initialState = await window.appState.getState();
