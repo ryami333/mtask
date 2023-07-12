@@ -14,7 +14,9 @@
     "start": "electron-forge start",
     "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.png --output=.",
     "package": "NODE_ENV=production yarn build && yarn build:icons && electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "main": "./dist/main.js",
   "repository": "https://github.com/electron/electron-quick-start-typescript",
@@ -29,6 +31,10 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@electron-forge/cli": "^6.2.1",
     "@electron-forge/maker-zip": "^6.2.1",
     "@types/ms": "^0.7.31",
@@ -40,10 +46,18 @@
     "concurrently": "^8.2.0",
     "electron": "^25.2.0",
     "electron-icon-builder": "^2.0.1",
-    "esbuild": "^0.18.10",
+    "esbuild": "^0.18.11",
     "eslint": "^8.43.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
+    "@storybook/addon-essentials": "^7.0.26",
+    "@storybook/addon-interactions": "^7.0.26",
+    "@storybook/addon-links": "^7.0.26",
+    "@storybook/blocks": "^7.0.26",
+    "@storybook/builder-manager": "^7.0.26",
+    "@storybook/react": "^7.0.26",
+    "@storybook/react-webpack5": "^7.0.26",
+    "storybook": "^7.0.26",
     "typescript": "^5.1.6"
   },
   "dependencies": {
@@ -75,5 +89,8 @@
         }
       ]
     }
+  },
+  "resolutions": {
+    "@storybook/builder-manager/esbuild": "0.18.11"
   }
 }
