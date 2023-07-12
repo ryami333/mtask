@@ -78,6 +78,8 @@ function TitleFormatter({ children }: { children: string }) {
             </ExternalLink>
           );
         }
+
+        return token;
       })}
     </>
   );
