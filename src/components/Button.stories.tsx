@@ -7,7 +7,7 @@ type ButtonProps = React.ComponentProps<typeof Button>;
 export default {
   title: "Blocks/Button",
   parameters: {
-    layout: "fullscreen",
+    layout: "padded",
   },
 } satisfies Meta<ButtonProps>;
 
