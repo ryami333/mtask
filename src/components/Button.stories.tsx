@@ -9,6 +9,9 @@ export default {
   parameters: {
     layout: "padded",
   },
+  args: {
+    children: "Click Me",
+  },
 } satisfies Meta<ButtonProps>;
 
 export const Static: StoryFn<ButtonProps> = (args) => <Button {...args} />;
