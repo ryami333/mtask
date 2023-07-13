@@ -56,7 +56,7 @@
     "@storybook/blocks": "^7.0.26",
     "@storybook/builder-manager": "^7.0.26",
     "@storybook/react": "^7.0.26",
-    "@storybook/react-webpack5": "^7.0.26",
+    "@storybook/react-webpack5": "^7.0.27",
     "storybook": "^7.0.26",
     "typescript": "^5.1.6"
   },
