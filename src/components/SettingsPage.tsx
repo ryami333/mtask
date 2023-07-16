@@ -43,12 +43,7 @@ export const SettingsPage = ({
 }: {
   onClickBack: MouseEventHandler;
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormValues>({
+  const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       prefix: "",
       color: "#FF0000",

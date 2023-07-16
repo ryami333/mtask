@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, shell } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 import {
   GET_STATE_CHANNEL,
   OPEN_LINK_CHANNEL,
