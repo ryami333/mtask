@@ -33,11 +33,11 @@ export const TodoList = ({
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     const allButtons = Array.from(
-      wrapperRef.current?.querySelectorAll("[data-todolist-button]") ?? []
+      wrapperRef.current?.querySelectorAll("[data-todolist-button]") ?? [],
     ).filter((button): button is HTMLElement => button instanceof HTMLElement);
 
     const currentIndex = allButtons.findIndex(
-      (button) => button === event.currentTarget
+      (button) => button === event.currentTarget,
     );
 
     switch (event.key) {
@@ -46,7 +46,7 @@ export const TodoList = ({
         event.preventDefault(); // Block scrolling
         const newIndex = Math.max(
           0,
-          (currentIndex - 1 + allButtons.length) % allButtons.length
+          (currentIndex - 1 + allButtons.length) % allButtons.length,
         );
         setActiveIndex(newIndex);
         allButtons.at(newIndex)?.focus();

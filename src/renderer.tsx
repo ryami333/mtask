@@ -16,6 +16,6 @@ import { AppStateContextProvider } from "./helpers/AppStateContext";
   root.render(
     <AppStateContextProvider initialState={initialState}>
       <App />
-    </AppStateContextProvider>
+    </AppStateContextProvider>,
   );
 })().catch(console.error);

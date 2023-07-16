@@ -72,7 +72,7 @@ export const SettingsPage = ({
   const removeColorMapping = (uuid: string) => {
     window.appState.setState((current) => ({
       colors: current.colors.filter(
-        (colorMapping) => colorMapping.uuid !== uuid
+        (colorMapping) => colorMapping.uuid !== uuid,
       ),
     }));
   };

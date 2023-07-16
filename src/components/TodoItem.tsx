@@ -46,7 +46,7 @@ function TitleFormatter({ children }: { children: string }) {
     <>
       {tokens?.map((token, index) => {
         const jiraLinkMatch = token.match(
-          /https:\/\/diesdas.atlassian.net\/browse\/([A-Z0-9\\-]+)/
+          /https:\/\/diesdas.atlassian.net\/browse\/([A-Z0-9\\-]+)/,
         );
         if (jiraLinkMatch) {
           return (
@@ -63,7 +63,7 @@ function TitleFormatter({ children }: { children: string }) {
         }
 
         const pullRequestMatch = token.match(
-          /https:\/\/github.com\/\S+?\/(\S+)?\/pull\/(\S+)?/
+          /https:\/\/github.com\/\S+?\/(\S+)?\/pull\/(\S+)?/,
         );
         if (pullRequestMatch) {
           return (
@@ -115,7 +115,7 @@ export const TodoItem = ({
         <TodoTitle
           style={{
             color: colors.find((colorMapping) =>
-              todo.title.startsWith(colorMapping.prefix)
+              todo.title.startsWith(colorMapping.prefix),
             )?.color,
           }}
           $completed={todo.completed}
