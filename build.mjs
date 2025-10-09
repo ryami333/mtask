@@ -1,6 +1,5 @@
 // ts-check
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
 
 import esbuild from "esbuild";
 import childProcess from "node:child_process";
@@ -27,14 +26,17 @@ const commonOptions = {
   },
   entryNames: "[name]",
   external: ["electron"],
+  format: "esm",
   loader: {
     ".woff2": "file",
   },
+  outExtension: { ".js": ".mjs" }, // emit .mjs
 };
 
 esbuild.build({
   ...commonOptions,
   entryPoints: ["src/preload.ts", "src/renderer.tsx"],
+  platform: "browser",
 });
 
 esbuild.build({
