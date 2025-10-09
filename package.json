@@ -93,5 +93,6 @@
   },
   "resolutions": {
     "@storybook/builder-manager/esbuild": "0.18.13"
-  }
+  },
+  "packageManager": "yarn@4.10.3"
 }
