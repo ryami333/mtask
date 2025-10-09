@@ -6,7 +6,7 @@
     "node": "^22.18.0"
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.mjs",
     "dev:build": "nodemon --watch src --ext \"*\" --exec \"yarn build\"",
     "dev:start": "nodemon --watch dist --ext \"*\" --exec \"yarn start\"",
     "dev": "concurrently -k -p \"[{name}]\" -n \"Build,Start\" \"yarn dev:build\" \"yarn dev:start\"",

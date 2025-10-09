@@ -2,9 +2,9 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const esbuild = require("esbuild");
-const childProcess = require("child_process");
-const path = require("path");
+import esbuild from "esbuild";
+import childProcess from "node:child_process";
+import path from "path";
 
 const env = process.env.NODE_ENV ?? "development";
 
