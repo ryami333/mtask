@@ -1,9 +1,10 @@
-// ts-check
+// @ts-check
 /* eslint-env node */
 
 import esbuild from "esbuild";
 import childProcess from "node:child_process";
-import path from "path";
+import path from "node:path";
+import fs from "node:fs";
 
 const env = process.env.NODE_ENV ?? "development";
 
@@ -12,12 +13,17 @@ const revision =
     ? childProcess.execSync("git rev-parse --short HEAD").toString().trim()
     : "local";
 
+const outdir = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "./dist",
+);
+
 /**
  * @type {import("esbuild").BuildOptions} commonOptions
  */
 const commonOptions = {
   bundle: true,
-  outdir: path.join(process.cwd(), "dist"),
+  outdir,
   sourcemap: true,
   minify: true,
   define: {
@@ -32,6 +38,8 @@ const commonOptions = {
   },
   outExtension: { ".js": ".mjs" }, // emit .mjs
 };
+
+fs.rmSync(outdir, { recursive: true, force: true });
 
 esbuild.build({
   ...commonOptions,
