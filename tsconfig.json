@@ -5,6 +5,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "skipLibCheck": true,
+    "lib": ["dom", "es2022"],
     "outDir": "dist",
     "noEmit": true,
     "allowJs": true,
