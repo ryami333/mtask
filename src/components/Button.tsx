@@ -14,7 +14,7 @@ export const Button = styled.button`
   line-height: 1.5;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     border-color: white;
   }
 `;
