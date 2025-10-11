@@ -19,7 +19,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "main": "./dist/main.js",
+  "main": "./dist/main.mjs",
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
     "Electron",
