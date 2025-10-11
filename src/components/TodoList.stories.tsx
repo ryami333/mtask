@@ -2,8 +2,6 @@ import React from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { TodoList } from "./TodoList";
 
-type TodoListProps = React.ComponentProps<typeof TodoList>;
-
 export default {
   title: "Blocks/TodoList",
   parameters: {
@@ -36,8 +34,8 @@ export default {
       },
     ],
   },
-} satisfies Meta<TodoListProps>;
+} satisfies Meta<typeof TodoList>;
 
-export const Text: StoryObj<TodoListProps> = {
+export const Text: StoryObj<typeof TodoList> = {
   render: (args) => <TodoList {...args} />,
 };

@@ -2,8 +2,6 @@ import React from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "./Input";
 
-type InputProps = React.ComponentProps<typeof Input>;
-
 export default {
   title: "Blocks/Input",
   parameters: {
@@ -12,9 +10,9 @@ export default {
   args: {
     defaultValue: "Hello World",
   },
-} satisfies Meta<InputProps>;
+} satisfies Meta<typeof Input>;
 
-export const Text: StoryObj<InputProps> = {
+export const Text: StoryObj<typeof Input> = {
   args: {
     type: "text",
     defaultValue: "Hello World",

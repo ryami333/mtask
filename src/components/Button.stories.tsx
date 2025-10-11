@@ -2,8 +2,6 @@ import React from "react";
 import { Meta, StoryFn } from "@storybook/react-vite";
 import { Button } from "./Button";
 
-type ButtonProps = React.ComponentProps<typeof Button>;
-
 export default {
   title: "Blocks/Button",
   parameters: {
@@ -12,6 +10,6 @@ export default {
   args: {
     children: "Click Me",
   },
-} satisfies Meta<ButtonProps>;
+} satisfies Meta<typeof Button>;
 
-export const Static: StoryFn<ButtonProps> = (args) => <Button {...args} />;
+export const Static: StoryFn<typeof Button> = (args) => <Button {...args} />;

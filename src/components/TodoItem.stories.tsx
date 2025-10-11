@@ -2,8 +2,6 @@ import React from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { TodoItem } from "./TodoItem";
 
-type TodoItemProps = React.ComponentProps<typeof TodoItem>;
-
 export default {
   title: "Blocks/TodoItem",
   parameters: {
@@ -24,8 +22,8 @@ export default {
       },
     ],
   },
-} satisfies Meta<TodoItemProps>;
+} satisfies Meta<typeof TodoItem>;
 
-export const Text: StoryObj<TodoItemProps> = {
+export const Text: StoryObj<typeof TodoItem> = {
   render: (args) => <TodoItem {...args} />,
 };
