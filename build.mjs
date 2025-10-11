@@ -32,11 +32,9 @@ const commonOptions = {
   },
   entryNames: "[name]",
   external: ["electron"],
-  format: "esm",
   loader: {
     ".woff2": "file",
   },
-  outExtension: { ".js": ".mjs" }, // emit .mjs
 };
 
 fs.rmSync(outdir, { recursive: true, force: true });

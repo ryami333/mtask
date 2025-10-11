@@ -5,7 +5,6 @@
   "engines": {
     "node": "^22.18.0"
   },
-  "type": "module",
   "scripts": {
     "build": "node build.mjs",
     "dev:build": "nodemon --watch src --ext \"*\" --exec \"yarn build\"",
@@ -19,7 +18,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "main": "./dist/main.mjs",
+  "main": "./dist/main.js",
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
     "Electron",
