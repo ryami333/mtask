@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-env node */
 
 import esbuild from "esbuild";
 import childProcess from "node:child_process";
