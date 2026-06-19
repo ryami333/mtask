@@ -6,19 +6,16 @@
     "node": "^22.18.0"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "dev:build": "nodemon --watch src --ext \"*\" --exec \"yarn build\"",
-    "dev:start": "nodemon --watch dist --ext \"*\" --exec \"yarn start\"",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"Build,Start\" \"yarn dev:build\" \"yarn dev:start\"",
+    "dev": "electron-forge start",
     "lint": "eslint .",
     "start": "electron-forge start",
     "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.png --output=.",
-    "package": "NODE_ENV=production yarn build && yarn build:icons && electron-forge package",
-    "make": "electron-forge make",
+    "package": "yarn build:icons && electron-forge package",
+    "make": "yarn build:icons && electron-forge make",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "main": "./dist/main.js",
+  "main": ".vite/build/main.js",
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
     "Electron",
@@ -33,6 +30,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^7.11.2",
     "@electron-forge/maker-zip": "^7.11.2",
+    "@electron-forge/plugin-vite": "^7.11.2",
     "@eslint/js": "^10.0.1",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-links": "^10.4.6",
@@ -42,15 +40,12 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
-    "concurrently": "^10.0.3",
     "electron": "^42.4.1",
     "electron-icon-builder": "^2.0.1",
-    "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-storybook": "10.4.6",
     "globals": "^17.6.0",
-    "nodemon": "^3.1.14",
     "prettier": "^3.8.4",
     "storybook": "^10.4.6",
     "typescript": "^6.0.3",
@@ -68,21 +63,7 @@
     "zod": "^4.4.3"
   },
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "name": "mtask",
-        "executableName": "mtask",
-        "icon": "./icons/icon"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        }
-      ]
-    }
+    "forge": "./forge.config.mjs"
   },
   "packageManager": "yarn@4.17.0"
 }

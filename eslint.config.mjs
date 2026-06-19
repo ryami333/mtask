@@ -8,7 +8,7 @@ import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 
 export default defineConfig([
-  globalIgnores(["dist/", "out/"]),
+  globalIgnores(["dist/", "out/", ".vite/"]),
   {
     files: ["**/*.{js,jsx,ts,tsx,mjs}"],
     languageOptions: {
