@@ -1,10 +1,5 @@
 import { create } from "zustand";
-import {
-  AppState,
-  ColorMapping,
-  Todo,
-  initialState,
-} from "./appState";
+import { AppState, ColorMapping, Todo, initialState } from "./appState";
 
 /**
  * The renderer owns application state. This store is the single source of
@@ -61,11 +56,14 @@ export const initPersistence = (): void => {
   useAppStore.subscribe((state) => {
     clearTimeout(writeTimer);
     writeTimer = setTimeout(() => {
-      window.appState.setState({ todos: state.todos, colors: state.colors });
+      window.client.invoke.setState({
+        todos: state.todos,
+        colors: state.colors,
+      });
     }, 150);
   });
 
-  window.appState.onDeleteTodo((uuid) =>
+  window.client.subscribe.deleteTodo((uuid) =>
     useAppStore.getState().deleteTodo(uuid),
   );
 };

@@ -7,7 +7,7 @@ import { initPersistence, useAppStore } from "./helpers/useAppStore";
 (async () => {
   // Hydrate from disk before the first render so there's no empty-state flash,
   // then wire up persistence so the initial load doesn't echo back to disk.
-  const persisted = await window.appState.getState();
+  const persisted = await window.client.invoke.GET_STATE();
   useAppStore.getState().hydrate(persisted);
   initPersistence();
 

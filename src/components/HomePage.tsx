@@ -45,7 +45,7 @@ export const HomePage = ({
   const clearCompleted = useAppStore((state) => state.clearCompleted);
 
   const onContextMenu = (uuid: string) => {
-    window.appState.showContextMenuForTodo(uuid);
+    window.client.invoke.showTodoContextMenu(uuid);
   };
 
   return (
@@ -80,9 +80,7 @@ export const HomePage = ({
         />
       </TodoListWrapper>
       <ButtonWrapper>
-        <Button onClick={() => clearCompleted()}>
-          Clear Completed 🚫
-        </Button>
+        <Button onClick={() => clearCompleted()}>Clear Completed 🚫</Button>
         <Button onClick={onClickSettings}>Settings ⚙️</Button>
       </ButtonWrapper>
     </Container>

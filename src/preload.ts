@@ -1,31 +1,18 @@
 import { contextBridge, ipcRenderer } from "electron";
-import {
-  DELETE_TODO_CHANNEL,
-  GET_STATE_CHANNEL,
-  OPEN_LINK_CHANNEL,
-  SET_STATE_CHANNEL,
-  SHOW_TODO_CONTEXT_MENU,
-} from "./helpers/channels";
-import type { AppState } from "./helpers/appState";
+import { createClient } from "./helpers/endpoints";
+import type { AppEvents, Endpoints } from "./main";
 
-const appStateApi = {
-  getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
-  setState: (state: AppState): Promise<void> =>
-    ipcRenderer.invoke(SET_STATE_CHANNEL, state),
-  onDeleteTodo: (fn: (uuid: string) => void) =>
-    ipcRenderer.on(DELETE_TODO_CHANNEL, (_, uuid: string) => fn(uuid)),
-  showContextMenuForTodo: (uuid: string) => {
-    ipcRenderer.invoke(SHOW_TODO_CONTEXT_MENU, uuid);
-  },
-  openLink: (url: string) => {
-    ipcRenderer.invoke(OPEN_LINK_CHANNEL, url);
-  },
-};
+/**
+ * The renderer's entire view of main. Both the call surface (`invoke.*`) and the
+ * event surface (`subscribe.*`) are derived from the tables declared in
+ * `main.ts`, so this bridge stays in lockstep with the backend automatically.
+ */
+const client = createClient<Endpoints, AppEvents>(ipcRenderer);
 
-contextBridge.exposeInMainWorld("appState", appStateApi);
+contextBridge.exposeInMainWorld("client", client);
 
 declare global {
   interface Window {
-    appState: typeof appStateApi;
+    client: typeof client;
   }
 }
