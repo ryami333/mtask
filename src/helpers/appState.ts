@@ -5,8 +5,7 @@ import {
   SHOW_TODO_CONTEXT_MENU,
   SYNC_STATE_CHANNEL,
 } from "./channels";
-import { readState } from "./readState";
-import { writeState } from "./writeState";
+import { readState, writeState } from "./store";
 import { BrowserWindow, Menu } from "electron/main";
 import { z } from "zod";
 
