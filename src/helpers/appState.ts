@@ -34,14 +34,14 @@ export const initialState: AppState = {
 export const appStateSchema = z.object({
   todos: z
     .object({
-      uuid: z.string().uuid(),
+      uuid: z.uuidv4(),
       title: z.string(),
       completed: z.boolean(),
     })
     .array(),
   colors: z
     .object({
-      uuid: z.string().uuid(),
+      uuid: z.uuidv4(),
       prefix: z.string(),
       color: z.string(),
     })
