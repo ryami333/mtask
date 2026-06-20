@@ -38,14 +38,17 @@ app
      * `getState` always has a handler waiting.
      */
     ipcMain.handle(GET_STATE_CHANNEL, () => readState());
-    ipcMain.handle(SET_STATE_CHANNEL, (_, state: AppState) => writeState(state));
+    ipcMain.handle(SET_STATE_CHANNEL, (_, state: AppState) =>
+      writeState(state),
+    );
 
     ipcMain.handle(SHOW_TODO_CONTEXT_MENU, (_, uuid: string) => {
       const menu = Menu.buildFromTemplate([
         {
           type: "normal",
           label: "Delete",
-          click: () => browserWindow.webContents.send(DELETE_TODO_CHANNEL, uuid),
+          click: () =>
+            browserWindow.webContents.send(DELETE_TODO_CHANNEL, uuid),
         },
       ]);
       menu.popup();
