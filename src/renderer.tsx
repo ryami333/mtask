@@ -2,10 +2,15 @@ import "./css/renderer.css";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import { App } from "./components/App";
-import { AppStateContextProvider } from "./helpers/AppStateContext";
+import { initPersistence, useAppStore } from "./helpers/useAppStore";
 
 (async () => {
-  const initialState = await window.appState.getState();
+  // Hydrate from disk before the first render so there's no empty-state flash,
+  // then wire up persistence so the initial load doesn't echo back to disk.
+  const persisted = await window.appState.getState();
+  useAppStore.getState().hydrate(persisted);
+  initPersistence();
+
   const rootElement = document.querySelector("#root");
 
   if (!rootElement) {
@@ -13,9 +18,5 @@ import { AppStateContextProvider } from "./helpers/AppStateContext";
   }
 
   const root = createRoot(rootElement);
-  root.render(
-    <AppStateContextProvider initialState={initialState}>
-      <App />
-    </AppStateContextProvider>,
-  );
+  root.render(<App />);
 })().catch(console.error);

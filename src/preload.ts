@@ -1,33 +1,19 @@
 import { contextBridge, ipcRenderer } from "electron";
 import {
+  DELETE_TODO_CHANNEL,
   GET_STATE_CHANNEL,
   OPEN_LINK_CHANNEL,
   SET_STATE_CHANNEL,
   SHOW_TODO_CONTEXT_MENU,
-  SYNC_STATE_CHANNEL,
 } from "./helpers/channels";
 import type { AppState } from "./helpers/appState";
 
-const onSyncState = (fn: (_: AppState) => void) =>
-  ipcRenderer.on(SYNC_STATE_CHANNEL, (__, appState) => fn(appState));
-
-const setState = async (
-  patch: Partial<AppState> | ((current: AppState) => Partial<AppState>),
-) => {
-  if (typeof patch === "function") {
-    // TODO: use schema
-    const appState: AppState = await ipcRenderer.invoke(GET_STATE_CHANNEL);
-
-    return void ipcRenderer.invoke(SET_STATE_CHANNEL, patch(appState));
-  } else {
-    return void ipcRenderer.invoke(SET_STATE_CHANNEL, patch);
-  }
-};
-
 const appStateApi = {
-  onSyncState,
-  setState,
   getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
+  setState: (state: AppState): Promise<void> =>
+    ipcRenderer.invoke(SET_STATE_CHANNEL, state),
+  onDeleteTodo: (fn: (uuid: string) => void) =>
+    ipcRenderer.on(DELETE_TODO_CHANNEL, (_, uuid: string) => fn(uuid)),
   showContextMenuForTodo: (uuid: string) => {
     ipcRenderer.invoke(SHOW_TODO_CONTEXT_MENU, uuid);
   },

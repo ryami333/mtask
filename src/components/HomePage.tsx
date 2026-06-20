@@ -1,11 +1,10 @@
 import React, { MouseEventHandler, useState } from "react";
-import type { Todo } from "../helpers/appState";
 import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
-import { useAppState } from "../helpers/AppStateContext";
+import { useAppStore } from "../helpers/useAppStore";
 
 const Container = styled.div`
   display: flex;
@@ -38,43 +37,16 @@ export const HomePage = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
-  const addTodo = (todo: Todo) => {
-    window.appState.setState((current) => ({
-      todos: [todo, ...current.todos],
-    }));
-  };
-
-  const removeCompletedTodos = () => {
-    window.appState.setState((current) => ({
-      todos: current.todos.filter((todo) => !todo.completed),
-    }));
-  };
-
-  const onClickTodo = (uuid: string) => {
-    window.appState.setState((current) => ({
-      todos: current.todos.map((todo) => {
-        if (todo.uuid === uuid) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
-      }),
-    }));
-  };
-
-  const onDeleteKeyDown = (uuid: string) => {
-    window.appState.setState((current) => ({
-      todos: current.todos.filter((todo) => todo.uuid !== uuid),
-    }));
-  };
+  const todos = useAppStore((state) => state.todos);
+  const colors = useAppStore((state) => state.colors);
+  const addTodo = useAppStore((state) => state.addTodo);
+  const toggleTodo = useAppStore((state) => state.toggleTodo);
+  const deleteTodo = useAppStore((state) => state.deleteTodo);
+  const clearCompleted = useAppStore((state) => state.clearCompleted);
 
   const onContextMenu = (uuid: string) => {
     window.appState.showContextMenuForTodo(uuid);
   };
-
-  const appState = useAppState();
 
   return (
     <Container>
@@ -100,15 +72,15 @@ export const HomePage = ({
       </Form>
       <TodoListWrapper>
         <TodoList
-          onClickTodo={onClickTodo}
-          onDeleteKeyDown={onDeleteKeyDown}
+          onClickTodo={toggleTodo}
+          onDeleteKeyDown={deleteTodo}
           onContextMenu={onContextMenu}
-          todos={appState.todos}
-          colors={appState.colors}
+          todos={todos}
+          colors={colors}
         />
       </TodoListWrapper>
       <ButtonWrapper>
-        <Button onClick={() => removeCompletedTodos()}>
+        <Button onClick={() => clearCompleted()}>
           Clear Completed 🚫
         </Button>
         <Button onClick={onClickSettings}>Settings ⚙️</Button>

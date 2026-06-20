@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { v4 as createUuid } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppState } from "../helpers/AppStateContext";
+import { useAppStore } from "../helpers/useAppStore";
 
 const Container = styled.div`
   display: flex;
@@ -51,31 +51,17 @@ export const SettingsPage = ({
     resolver: zodResolver(validationSchema),
   });
 
+  const colors = useAppStore((state) => state.colors);
+  const addColor = useAppStore((state) => state.addColor);
+  const removeColor = useAppStore((state) => state.removeColor);
+
   const onSubmit = (formValues: FormValues) => {
-    window.appState.setState((current) => ({
-      colors: [
-        ...current.colors,
-        {
-          uuid: createUuid(),
-          ...formValues,
-        },
-      ],
-    }));
+    addColor({ uuid: createUuid(), ...formValues });
     reset();
   };
 
   const prefixInputId = useId();
   const colorInputId = useId();
-
-  const appState = useAppState();
-
-  const removeColorMapping = (uuid: string) => {
-    window.appState.setState((current) => ({
-      colors: current.colors.filter(
-        (colorMapping) => colorMapping.uuid !== uuid,
-      ),
-    }));
-  };
 
   return (
     <Container>
@@ -100,12 +86,12 @@ export const SettingsPage = ({
           </tr>
         </thead>
         <tbody>
-          {appState.colors.map((colorMapping) => (
+          {colors.map((colorMapping) => (
             <tr key={colorMapping.uuid} style={{ color: colorMapping.color }}>
               <td>{colorMapping.prefix}</td>
               <td>{colorMapping.color}</td>
               <td>
-                <Button onClick={() => removeColorMapping(colorMapping.uuid)}>
+                <Button onClick={() => removeColor(colorMapping.uuid)}>
                   Delete
                 </Button>
               </td>
