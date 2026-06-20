@@ -5,6 +5,7 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
 import { useAppStore } from "../helpers/useAppStore";
+import { client } from "../helpers/trpc";
 
 const Container = styled.div`
   display: flex;
@@ -45,7 +46,7 @@ export const HomePage = ({
   const clearCompleted = useAppStore((state) => state.clearCompleted);
 
   const onContextMenu = (uuid: string) => {
-    window.client.invoke.showTodoContextMenu(uuid);
+    client.showTodoContextMenu.mutate(uuid);
   };
 
   return (

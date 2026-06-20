@@ -53,7 +53,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@trpc/client": "^11",
+    "@trpc/server": "^11",
     "electron-store": "^11.0.2",
+    "electron-trpc-experimental": "^1.0.0-alpha.1",
     "polished": "^4.3.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

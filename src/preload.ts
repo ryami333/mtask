@@ -1,18 +1,10 @@
-import { contextBridge, ipcRenderer } from "electron";
-import { createClient } from "./helpers/endpoints";
-import type { AppEvents, Endpoints } from "./main";
+import { exposeElectronTRPC } from "electron-trpc-experimental/preload";
 
 /**
- * The renderer's entire view of main. Both the call surface (`invoke.*`) and the
- * event surface (`subscribe.*`) are derived from the tables declared in
- * `main.ts`, so this bridge stays in lockstep with the backend automatically.
+ * Exposes the tRPC IPC bridge on `window` (via `contextBridge`) for the renderer
+ * client to attach to. No hand-written API surface — the renderer derives its
+ * fully-typed client from `AppRouter` instead.
  */
-const client = createClient<Endpoints, AppEvents>(ipcRenderer);
-
-contextBridge.exposeInMainWorld("client", client);
-
-declare global {
-  interface Window {
-    client: typeof client;
-  }
-}
+process.once("loaded", () => {
+  exposeElectronTRPC();
+});

@@ -1,6 +1,7 @@
 import React, { KeyboardEventHandler, MouseEventHandler } from "react";
 import { ColorMapping } from "../helpers/appState";
 import { Todo } from "../helpers/appState";
+import { client } from "../helpers/trpc";
 import styled from "styled-components";
 
 const TodoButton = styled.button<{ $active?: boolean }>`
@@ -54,7 +55,7 @@ function TitleFormatter({ children }: { children: string }) {
               key={index}
               onClick={(event) => {
                 event.stopPropagation();
-                window.client.invoke.openLink(token);
+                client.openLink.mutate(token);
               }}
             >
               {jiraLinkMatch[1]} 🔗
@@ -71,7 +72,7 @@ function TitleFormatter({ children }: { children: string }) {
               key={index}
               onClick={(event) => {
                 event.stopPropagation();
-                window.client.invoke.openLink(token);
+                client.openLink.mutate(token);
               }}
             >
               {pullRequestMatch[1]}/{pullRequestMatch[2]} 🔗

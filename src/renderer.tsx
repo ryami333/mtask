@@ -3,11 +3,12 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import { App } from "./components/App";
 import { initPersistence, useAppStore } from "./helpers/useAppStore";
+import { client } from "./helpers/trpc";
 
 (async () => {
   // Hydrate from disk before the first render so there's no empty-state flash,
   // then wire up persistence so the initial load doesn't echo back to disk.
-  const persisted = await window.client.invoke.GET_STATE();
+  const persisted = await client.getState.query();
   useAppStore.getState().hydrate(persisted);
   initPersistence();
 

@@ -2464,6 +2464,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@trpc/client@npm:^11":
+  version: 11.18.0
+  resolution: "@trpc/client@npm:11.18.0"
+  peerDependencies:
+    "@trpc/server": 11.18.0
+    typescript: ">=5.7.2"
+  bin:
+    intent: bin/intent.js
+  checksum: 10c0/5f508ef927f8d2fb86016d367c1368e9a628b24088a366db6d2b806e1fd481e3a6791411053afc3985067bf651d39fe91d9fb10e40acab3ec625d6820071fa67
+  languageName: node
+  linkType: hard
+
+"@trpc/server@npm:^11":
+  version: 11.18.0
+  resolution: "@trpc/server@npm:11.18.0"
+  peerDependencies:
+    typescript: ">=5.7.2"
+  bin:
+    intent: bin/intent.js
+  checksum: 10c0/4cf53c786c4c0c2c15e11d8ea3c05093ad27c40c8663fc0d23b31ecdbbb58a2003e528c15661058526b15079f9612bf561daf79ef3f4f87f43ef22fa7af23640
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.10.2":
   version: 0.10.2
   resolution: "@tybys/wasm-util@npm:0.10.2"
@@ -2858,6 +2881,13 @@ __metadata:
   version: 9.3.1
   resolution: "@vscode/sudo-prompt@npm:9.3.1"
   checksum: 10c0/680f0c0d16303bf2f7b28fda83a3e6725e75a593461521460a56365af0ca619595e2b6dcc56b1fa4ba24f8be4030fb1b015c31a92773c09ca55c49da89490e38
+  languageName: node
+  linkType: hard
+
+"@watchable/unpromise@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@watchable/unpromise@npm:1.0.2"
+  checksum: 10c0/b449593f1a258e0e2ac8be4d8bc6ce4ad17d6ef4907ff783f8a54048e116146068466f2ecfafd00ee6d077a3f24a3767344022796422187a4935a5cefc2a77b8
   languageName: node
   linkType: hard
 
@@ -4045,7 +4075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.4.3":
+"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.4.1, debug@npm:^4.4.3":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
   dependencies:
@@ -4290,6 +4320,21 @@ __metadata:
   version: 1.5.376
   resolution: "electron-to-chromium@npm:1.5.376"
   checksum: 10c0/c57e306ef12ad258e427218f90e14d155dfba68b23699674d7b66e528ce41ff69b46a78f38545ee7690d080d25d3ebb98338282e95d65510e8fa5fd4f7455a86
+  languageName: node
+  linkType: hard
+
+"electron-trpc-experimental@npm:^1.0.0-alpha.1":
+  version: 1.0.0-alpha.1
+  resolution: "electron-trpc-experimental@npm:1.0.0-alpha.1"
+  dependencies:
+    "@watchable/unpromise": "npm:^1.0.2"
+    debug: "npm:^4.4.1"
+    typescript: "npm:^5.8.3"
+  peerDependencies:
+    "@trpc/client": ">11.0.0"
+    "@trpc/server": ">11.0.0"
+    electron: ">19.0.0"
+  checksum: 10c0/cafd33a52424ac46cacbe322f96a164dbe5d1d68a3043cab7f08f7e6efdf691831e5b4b030699c326c3dd6800042ea81c7901c2e7f858ffb7a327323221030ae
   languageName: node
   linkType: hard
 
@@ -6801,6 +6846,8 @@ __metadata:
     "@storybook/addon-docs": "npm:^10.4.6"
     "@storybook/addon-links": "npm:^10.4.6"
     "@storybook/react-vite": "npm:^10.4.6"
+    "@trpc/client": "npm:^11"
+    "@trpc/server": "npm:^11"
     "@types/node": "npm:22.19.21"
     "@types/react": "npm:^19.2.17"
     "@types/react-dom": "npm:^19.2.3"
@@ -6809,6 +6856,7 @@ __metadata:
     electron: "npm:^42.4.1"
     electron-icon-builder: "npm:^2.0.1"
     electron-store: "npm:^11.0.2"
+    electron-trpc-experimental: "npm:^1.0.0-alpha.1"
     eslint: "npm:^10.5.0"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-storybook: "npm:10.4.6"
@@ -9122,6 +9170,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.8.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^6.0.3":
   version: 6.0.3
   resolution: "typescript@npm:6.0.3"
@@ -9139,6 +9197,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/2954022ada340fd3d6a9e2b8e534f65d57c92d5f3989a263754a78aba549f7e6529acc1921913560a4b816c46dce7df4a4d29f9f11a3dc0d4213bb76d043251e
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/ad09fdf7a756814dce65bc60c1657b40d44451346858eea230e10f2e95a289d9183b6e32e5c11e95acc0ccc214b4f36289dcad4bf1886b0adb84d711d336a430
   languageName: node
   linkType: hard
 

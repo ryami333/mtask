@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { AppState, ColorMapping, Todo, initialState } from "./appState";
+import { client } from "./trpc";
 
 /**
  * The renderer owns application state. This store is the single source of
@@ -56,14 +57,14 @@ export const initPersistence = (): void => {
   useAppStore.subscribe((state) => {
     clearTimeout(writeTimer);
     writeTimer = setTimeout(() => {
-      window.client.invoke.setState({
+      client.setState.mutate({
         todos: state.todos,
         colors: state.colors,
       });
     }, 150);
   });
 
-  window.client.subscribe.deleteTodo((uuid) =>
-    useAppStore.getState().deleteTodo(uuid),
-  );
+  client.onDeleteTodo.subscribe(undefined, {
+    onData: (uuid) => useAppStore.getState().deleteTodo(uuid),
+  });
 };
