@@ -24,7 +24,7 @@ const appStateApi = {
 
 export type AppStateApi = typeof appStateApi;
 
-contextBridge.exposeInIsolatedWorld(0, "appState", appStateApi);
+contextBridge.exposeInMainWorld("appState", appStateApi);
 
 declare global {
   interface Window {
