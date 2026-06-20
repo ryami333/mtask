@@ -1,40 +1,29 @@
 import { z } from "zod";
 
-export interface Todo {
-  uuid: string;
-  title: string;
-  completed: boolean;
-}
+const colorSchema = z.object({
+  uuid: z.uuidv4(),
+  prefix: z.string(),
+  color: z.string(),
+});
 
-export interface ColorMapping {
-  uuid: string;
-  prefix: string;
-  color: string;
-}
+export type ColorMapping = z.output<typeof colorSchema>;
 
-export interface AppState {
-  todos: Todo[];
-  colors: ColorMapping[];
-}
+const todoSchema = z.object({
+  uuid: z.uuidv4(),
+  title: z.string(),
+  completed: z.boolean(),
+});
+
+export type Todo = z.output<typeof todoSchema>;
+
+export const appStateSchema = z.object({
+  todos: todoSchema.array(),
+  colors: colorSchema.array(),
+});
+
+export type AppState = z.output<typeof appStateSchema>;
 
 export const initialState: AppState = {
   todos: [],
   colors: [],
 };
-
-export const appStateSchema = z.object({
-  todos: z
-    .object({
-      uuid: z.uuidv4(),
-      title: z.string(),
-      completed: z.boolean(),
-    })
-    .array(),
-  colors: z
-    .object({
-      uuid: z.uuidv4(),
-      prefix: z.string(),
-      color: z.string(),
-    })
-    .array(),
-}) satisfies z.ZodSchema<AppState>;
