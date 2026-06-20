@@ -22,12 +22,10 @@ const appStateApi = {
   },
 };
 
-export type AppStateApi = typeof appStateApi;
-
 contextBridge.exposeInMainWorld("appState", appStateApi);
 
 declare global {
   interface Window {
-    appState: AppStateApi;
+    appState: typeof appStateApi;
   }
 }
