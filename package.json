@@ -61,7 +61,8 @@
     "source-map-support": "^0.5.21",
     "styled-components": "6.4.2",
     "uuid": "^14.0.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
   },
   "config": {
     "forge": "./forge.config.mjs"
