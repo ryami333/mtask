@@ -1,53 +1,48 @@
-import React, { useId } from "react";
+import React from "react";
 import { Button } from "./Button";
-import { Input } from "./Input";
 import classNames from "classnames/bind";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
+import { useCrudModalState } from "../helpers/useCrudModalState";
 import { useDeleteModalState } from "../helpers/useDeleteModalState";
+import {
+  ColorMappingFormModal,
+  ColorMappingFormValues,
+} from "./ColorMappingFormModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import styles from "./SettingsPage.module.css";
 
 const cx = classNames.bind(styles);
 
-const validationSchema = z.object({
-  prefix: z.string().nonempty(),
-  color: z.string().nonempty(),
-});
-
-type FormValues = z.infer<typeof validationSchema>;
-
 export const SettingsPage = () => {
-  const { register, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: {
-      prefix: "",
-      color: "#FF0000",
-    },
-    resolver: zodResolver(validationSchema),
-  });
-
-  const onSubmit = (formValues: FormValues) => {
-    ipcClient.setState((current) => ({
-      colors: [
-        ...current.colors,
-        {
-          uuid: crypto.randomUUID(),
-          ...formValues,
-        },
-      ],
-    }));
-    reset();
-  };
-
-  const prefixInputId = useId();
-  const colorInputId = useId();
-
   const appState = useAppState();
 
-  const deleteModalState = useDeleteModalState<(typeof appState.colors)[number]>();
+  const formModalState = useCrudModalState<typeof appState.colors>();
+  const deleteModalState = useDeleteModalState<typeof appState.colors>();
+
+  const submitColorMapping = (formValues: ColorMappingFormValues) => {
+    if (formModalState.mode === "edit") {
+      const { uuid } = formModalState.selectedEntity;
+      ipcClient.setState((current) => ({
+        colors: current.colors.map((colorMapping) =>
+          colorMapping.uuid === uuid
+            ? { ...colorMapping, ...formValues }
+            : colorMapping,
+        ),
+      }));
+    } else {
+      ipcClient.setState((current) => ({
+        colors: [
+          ...current.colors,
+          {
+            uuid: crypto.randomUUID(),
+            ...formValues,
+          },
+        ],
+      }));
+    }
+    formModalState.closeAndReset();
+  };
 
   const removeColorMapping = (uuid: string) => {
     ipcClient.setState((current) => ({
@@ -66,17 +61,9 @@ export const SettingsPage = () => {
 
   return (
     <div className={cx("container")}>
-      <form className={cx("form")} onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor={prefixInputId}>Prefix</label>
-          <Input id={prefixInputId} type="text" {...register("prefix")} />
-        </div>
-        <div>
-          <label htmlFor={colorInputId}>Color</label>
-          <Input id={colorInputId} type="text" {...register("color")} />
-        </div>
-        <Button type="submit">Submit</Button>
-      </form>
+      <Button onClick={() => formModalState.openNew()}>
+        Add color mapping
+      </Button>
       <table>
         <thead>
           <tr>
@@ -93,6 +80,16 @@ export const SettingsPage = () => {
               <td>
                 <Button
                   onClick={() =>
+                    formModalState.openEdit({
+                      selectedEntity: colorMapping,
+                      key: colorMapping.uuid,
+                    })
+                  }
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() =>
                     deleteModalState.open({ selectedEntity: colorMapping })
                   }
                 >
@@ -103,6 +100,20 @@ export const SettingsPage = () => {
           ))}
         </tbody>
       </table>
+      <ColorMappingFormModal
+        isOpen={formModalState.isOpen}
+        onRequestClose={() => formModalState.close()}
+        onSubmit={submitColorMapping}
+        defaultValues={
+          formModalState.mode === "edit"
+            ? {
+                prefix: formModalState.selectedEntity.prefix,
+                color: formModalState.selectedEntity.color,
+              }
+            : undefined
+        }
+        key={formModalState.key}
+      />
       <ConfirmDeleteModal
         isOpen={deleteModalState.isOpen}
         onRequestClose={() => deleteModalState.close()}
