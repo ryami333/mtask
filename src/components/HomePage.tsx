@@ -9,6 +9,8 @@ import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
 import { NewTodoModal } from "./NewTodoModal";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
+import { useCrudModalState } from "../helpers/useCrudModalState";
 
 const cx = classNames.bind(styles);
 
@@ -45,10 +47,18 @@ export const HomePage = ({
     }));
   };
 
-  const onDeleteKeyDown = (uuid: string) => {
-    ipcClient.setState((current) => ({
-      todos: current.todos.filter((todo) => todo.uuid !== uuid),
-    }));
+  const requestDeleteTodo = (uuid: string) => {
+    deleteModalState.openEdit({ key: uuid, selectedEntity: uuid });
+  };
+
+  const confirmDeleteTodo = () => {
+    if (deleteModalState.mode === "edit") {
+      const uuid = deleteModalState.selectedEntity;
+      ipcClient.setState((current) => ({
+        todos: current.todos.filter((todo) => todo.uuid !== uuid),
+      }));
+    }
+    deleteModalState.close();
   };
 
   const onContextMenu = (uuid: string) => {
@@ -58,6 +68,8 @@ export const HomePage = ({
   const appState = useAppState();
 
   const [isNewTodoModalOpen, newTodoModalActions] = useDisclosure();
+
+  const deleteModalState = useCrudModalState<string>();
 
   return (
     <div className={cx("container")}>
@@ -71,12 +83,18 @@ export const HomePage = ({
       <div className={cx("todoListWrapper")}>
         <TodoList
           onToggleTodo={onToggleTodo}
-          onDeleteKeyDown={onDeleteKeyDown}
+          onDeleteKeyDown={requestDeleteTodo}
           onContextMenu={onContextMenu}
           todos={appState.todos}
           colors={appState.colors}
         />
       </div>
+      <ConfirmDeleteModal
+        isOpen={deleteModalState.isOpen}
+        onRequestClose={() => deleteModalState.close()}
+        onConfirm={() => confirmDeleteTodo()}
+        key={deleteModalState.key}
+      />
       <div className={cx("buttonWrapper")}>
         <Button
           onClick={() => removeCompletedTodos()}
