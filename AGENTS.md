@@ -15,13 +15,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 There is no test runner configured and no `tsc` build step (`tsconfig.json` is `noEmit`; Vite does the bundling). Type errors surface in the editor/`tsc --noEmit`, not via a yarn script.
 
+All code should be formatted with Prettier (`yarn prettier {file} --write`).
+
 Package manager is **Yarn 4** (`packageManager: yarn@4.17.0`). Node `^24.15.0`.
 
 ## Architecture
 
 ### Three processes, one renderer bundle
 
-Standard Electron split — **main** (`src/main.ts`), **preload** (`src/preload.ts`), **renderer** (`src/renderer.tsx`) — but note both app windows load the *same* renderer bundle. The main process opens a window with a URL hash to pick which page mounts: no hash → `HomePage`, `#settings` → `SettingsPage` (see `loadRenderer` in `main.ts` and the hash check in `renderer.tsx`). The settings window is a singleton, opened via the app menu's "Preferences…" (⌘,).
+Standard Electron split — **main** (`src/main.ts`), **preload** (`src/preload.ts`), **renderer** (`src/renderer.tsx`) — but note both app windows load the _same_ renderer bundle. The main process opens a window with a URL hash to pick which page mounts: no hash → `HomePage`, `#settings` → `SettingsPage` (see `loadRenderer` in `main.ts` and the hash check in `renderer.tsx`). The settings window is a singleton, opened via the app menu's "Preferences…" (⌘,).
 
 ### State lives in the main process and is broadcast to all windows
 
