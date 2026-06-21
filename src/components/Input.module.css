@@ -8,12 +8,17 @@
   padding-block: var(--spacing-sm);
   font-family: "Fira Code";
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: transparent;
   font-size: 16px;
   line-height: 1.5;
   border: 2px solid transparent;
-}
+  border-bottom: 1px solid grey;
 
-.input:focus-visible {
-  border-color: white;
+  &:focus-visible {
+    border: 2px solid white;
+  }
+
+  &::placeholder {
+    color: grey;
+  }
 }
