@@ -5,10 +5,11 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
-import { useHotkeys } from "@mantine/hooks";
+import { useDisclosure, useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
+import { NewTodoDialog } from "./NewTodoDialog";
 
 const cx = classNames.bind(styles);
 
@@ -60,31 +61,18 @@ export const HomePage = ({
 
   const appState = useAppState();
 
+  const [isNewTodoDialogOpen, newTodoDialogActions] = useDisclosure();
+
   return (
     <div className={cx("container")}>
-      <form
-        className={cx("form")}
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          if (inputValue) {
-            addTodo({
-              uuid: crypto.randomUUID(),
-              title: inputValue,
-              completed: false,
-            });
-          }
-          setInputValue("");
-        }}
-      >
-        <Input
-          ref={inputRef}
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Please enter a new thing here"
-        />
-      </form>
+      <Button onClick={() => newTodoDialogActions.open()}>New Todo</Button>
+      <NewTodoDialog
+        isOpen={isNewTodoDialogOpen}
+        onRequestClose={() => newTodoDialogActions.close()}
+        inputRef={inputRef} // TODO: might be redundant now with autofocus attribute.
+        onSubmit={(todo) => addTodo(todo)}
+        key={1} // TODO: reset after submission
+      />
       <div className={cx("todoListWrapper")}>
         <TodoList
           onClickTodo={onClickTodo}
