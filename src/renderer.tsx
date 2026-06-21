@@ -5,7 +5,7 @@ import { App } from "./components/App";
 import { AppStateContextProvider } from "./helpers/AppStateContext";
 
 (async () => {
-  const initialState = await window.appState.getState();
+  const initialState = await window.ipcClient.getState();
   const rootElement = document.querySelector("#root");
 
   if (!rootElement) {

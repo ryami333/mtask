@@ -52,7 +52,7 @@ export const SettingsPage = ({
   });
 
   const onSubmit = (formValues: FormValues) => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       colors: [
         ...current.colors,
         {
@@ -70,7 +70,7 @@ export const SettingsPage = ({
   const appState = useAppState();
 
   const removeColorMapping = (uuid: string) => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       colors: current.colors.filter(
         (colorMapping) => colorMapping.uuid !== uuid,
       ),

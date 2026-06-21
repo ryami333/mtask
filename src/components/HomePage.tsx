@@ -39,19 +39,19 @@ export const HomePage = ({
   const [inputValue, setInputValue] = useState<string>("");
 
   const addTodo = (todo: Todo) => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       todos: [todo, ...current.todos],
     }));
   };
 
   const removeCompletedTodos = () => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       todos: current.todos.filter((todo) => !todo.completed),
     }));
   };
 
   const onClickTodo = (uuid: string) => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       todos: current.todos.map((todo) => {
         if (todo.uuid === uuid) {
           return {
@@ -65,13 +65,13 @@ export const HomePage = ({
   };
 
   const onDeleteKeyDown = (uuid: string) => {
-    window.appState.setState((current) => ({
+    window.ipcClient.setState((current) => ({
       todos: current.todos.filter((todo) => todo.uuid !== uuid),
     }));
   };
 
   const onContextMenu = (uuid: string) => {
-    window.appState.showContextMenuForTodo(uuid);
+    window.ipcClient.showContextMenuForTodo(uuid);
   };
 
   const appState = useAppState();

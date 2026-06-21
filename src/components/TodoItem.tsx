@@ -54,7 +54,7 @@ function TitleFormatter({ children }: { children: string }) {
               key={index}
               onClick={(event) => {
                 event.stopPropagation();
-                window.appState.openLink(token);
+                window.ipcClient.openLink(token);
               }}
             >
               {jiraLinkMatch[1]} 🔗
@@ -71,7 +71,7 @@ function TitleFormatter({ children }: { children: string }) {
               key={index}
               onClick={(event) => {
                 event.stopPropagation();
-                window.appState.openLink(token);
+                window.ipcClient.openLink(token);
               }}
             >
               {pullRequestMatch[1]}/{pullRequestMatch[2]} 🔗

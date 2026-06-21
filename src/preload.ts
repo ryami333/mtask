@@ -24,7 +24,7 @@ const setState = async (
   }
 };
 
-const appStateApi = {
+const ipcClient = {
   onSyncState,
   setState,
   getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
@@ -36,12 +36,12 @@ const appStateApi = {
   },
 };
 
-export type AppStateApi = typeof appStateApi;
+export type AppStateApi = typeof ipcClient;
 
-contextBridge.exposeInIsolatedWorld(0, "appState", appStateApi);
+contextBridge.exposeInIsolatedWorld(0, "ipcClient", ipcClient);
 
 declare global {
   interface Window {
-    appState: AppStateApi;
+    ipcClient: AppStateApi;
   }
 }
