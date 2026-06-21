@@ -15,14 +15,19 @@ export const Button = ({
   icon?: React.ComponentType<IconProps>;
   iconPlacement?: "before" | "after";
 }) => {
-  const iconChild = IconComponent && (
-    <IconComponent stroke={1.5} size={24} className={cx("icon")} />
-  );
+  const iconChild = IconComponent && <IconComponent className={cx("icon")} />;
+  const isIconOnly = iconChild && !children;
   return (
-    <button className={cx("button", className)} {...props}>
-      {iconPlacement === "before" && iconChild}
-      {children}
-      {iconPlacement === "after" && iconChild}
+    <button
+      className={cx("button", className)}
+      data-icon-only={!!isIconOnly}
+      {...props}
+    >
+      <span className={cx("inner")}>
+        {iconPlacement === "before" && iconChild}
+        {children}
+        {iconPlacement === "after" && iconChild}
+      </span>
     </button>
   );
 };

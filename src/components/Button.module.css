@@ -1,21 +1,40 @@
 .button {
-  display: flex;
+  width: fit-contents;
   appearance: none;
   cursor: pointer;
   border-radius: 24px;
   padding-block: var(--spacing-sm);
-  padding-inline: var(--spacing-xl);
+  padding-inline: var(--spacing-md);
   font-family: system-ui, sans-serif;
   border: 2px solid transparent;
   color: var(--color-base-l100);
   background-color: var(--color-base-l10);
-  font-size: 16px;
-  line-height: 1.5;
-  align-items: center;
-  column-gap: 0.5rem;
+
+  &[data-icon-only="true"] {
+    border-radius: 50%;
+    padding-inline: var(--spacing-sm);
+  }
 
   &:hover,
   &:focus-visible {
     border-color: var(--color-base-l80);
   }
+}
+
+.inner {
+  --icon-size: 1.25rem;
+  --font-size: 1rem;
+
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+  column-gap: var(--spacing-xs);
+  line-height: 1;
+  min-height: max(var(--icon-size), var(--font-size));
+}
+
+.icon {
+  stroke-width: 1.5px;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
