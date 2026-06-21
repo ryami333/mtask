@@ -1,7 +1,6 @@
-import React, { MouseEventHandler, useRef, useState } from "react";
+import React, { MouseEventHandler, useRef } from "react";
 import type { Todo } from "../helpers/appState";
 import { Button } from "./Button";
-import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
@@ -18,7 +17,6 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  const [inputValue, setInputValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useHotkeys([["mod+N", () => inputRef.current?.focus()]]);
