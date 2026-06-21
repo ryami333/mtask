@@ -7,6 +7,10 @@ import {
 import React from "react";
 import { Todo } from "../helpers/appState";
 import { Input } from "./Input";
+import styles from "./NewTodoDialog.module.css";
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
 
 export function NewTodoDialog({
   isOpen,
@@ -23,39 +27,45 @@ export function NewTodoDialog({
 
   const mergedRef = useMergedRef(focusTrapRef, clickawayref);
   return (
-    <dialog
-      open={isOpen}
-      ref={mergedRef}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          e.preventDefault();
-          onRequestClose();
-        }
-      }}
-    >
-      <form
-        autoFocus
-        // className={cx("form")}
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          if (inputValue) {
-            onSubmit({
-              uuid: crypto.randomUUID(),
-              title: inputValue,
-              completed: false,
-            });
+    <>
+      {isOpen && (
+        <div className={cx("backdrop")} onClick={onRequestClose} />
+      )}
+      <dialog
+        className={cx("dialog")}
+        open={isOpen}
+        ref={mergedRef}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            onRequestClose();
           }
-          setInputValue("");
         }}
       >
-        <Input
-          type="text"
-          value={inputValue}
-          onChange={setInputValue}
-          placeholder="Please enter a new thing here"
-        />
-      </form>
-    </dialog>
+        <form
+          autoFocus
+          // className={cx("form")}
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            if (inputValue) {
+              onSubmit({
+                uuid: crypto.randomUUID(),
+                title: inputValue,
+                completed: false,
+              });
+            }
+            setInputValue("");
+          }}
+        >
+          <Input
+            type="text"
+            value={inputValue}
+            onChange={setInputValue}
+            placeholder="Please enter a new thing here"
+          />
+        </form>
+      </dialog>
+    </>
   );
 }
