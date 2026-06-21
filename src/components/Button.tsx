@@ -12,7 +12,7 @@ export const Button = ({
   children,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  icon: React.ComponentType<IconProps>;
+  icon?: React.ComponentType<IconProps>;
   iconPlacement?: "before" | "after";
 }) => {
   const iconChild = IconComponent && (
