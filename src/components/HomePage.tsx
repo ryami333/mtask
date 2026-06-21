@@ -1,6 +1,5 @@
 import React, { MouseEventHandler, useRef, useState } from "react";
 import type { Todo } from "../helpers/appState";
-import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { TodoList } from "./TodoList";
@@ -70,7 +69,7 @@ export const HomePage = ({
 
           if (inputValue) {
             addTodo({
-              uuid: createUuid(),
+              uuid: crypto.randomUUID(),
               title: inputValue,
               completed: false,
             });

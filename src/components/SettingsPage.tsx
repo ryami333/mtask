@@ -4,7 +4,6 @@ import { Input } from "./Input";
 import classNames from "classnames/bind";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { v4 as createUuid } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
@@ -37,7 +36,7 @@ export const SettingsPage = ({
       colors: [
         ...current.colors,
         {
-          uuid: createUuid(),
+          uuid: crypto.randomUUID(),
           ...formValues,
         },
       ],
