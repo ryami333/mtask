@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useRef } from "react";
+import React, { MouseEventHandler } from "react";
 import type { Todo } from "../helpers/appState";
 import { Button } from "./Button";
 import { TodoList } from "./TodoList";
