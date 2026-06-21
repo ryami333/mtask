@@ -93,7 +93,6 @@ export const HomePage = ({
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => todoModalState.openNew()}>New Todo</Button>
       <TodoModal
         isOpen={todoModalState.isOpen}
         onRequestClose={() => todoModalState.close()}
