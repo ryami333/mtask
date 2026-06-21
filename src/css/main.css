@@ -18,8 +18,8 @@ html {
 }
 
 body {
-  padding-inline: var(--spacing-md);
-  padding-block: var(--spacing-sm);
+  padding-block: var(--spacing-md);
+  padding-inline: var(--spacing-sm);
   margin: 0;
 }
 

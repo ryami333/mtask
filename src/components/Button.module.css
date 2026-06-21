@@ -3,8 +3,8 @@
   appearance: none;
   cursor: pointer;
   border-radius: 24px;
-  padding-inline: var(--spacing-sm);
-  padding-block: var(--spacing-xl);
+  padding-block: var(--spacing-sm);
+  padding-inline: var(--spacing-xl);
   font-family: "Fira Code";
   border: 2px solid transparent;
   color: white;
