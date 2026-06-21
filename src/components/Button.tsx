@@ -11,7 +11,7 @@ export const Button = ({
   iconPlacement = "before",
   children,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+}: React.ComponentPropsWithRef<"button"> & {
   icon?: React.ComponentType<IconProps>;
   iconPlacement?: "before" | "after";
 }) => {

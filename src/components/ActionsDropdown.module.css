@@ -1,0 +1,68 @@
+.container {
+  width: fit-content;
+  anchor-scope: --actions-dropdown;
+}
+
+.trigger {
+  display: grid;
+  anchor-name: --actions-dropdown;
+  grid-auto-columns: 1fr auto;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+.flyover {
+  display: flex;
+  position: fixed;
+  position-anchor: --actions-dropdown;
+  position-try-fallbacks:
+    flip-block,
+    flip-inline,
+    flip-block flip-inline;
+  inset: auto;
+  top: anchor(bottom);
+  left: anchor(left);
+  row-gap: var(--spacing-xs);
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: stretch;
+  margin-top: var(--spacing-xs);
+  background: var(--color-base-l10);
+  padding: var(--spacing-xs);
+  min-width: anchor-size(width);
+  border-radius: 14px;
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+.action {
+  --icon-size: 1.25rem;
+  --font-size: 1rem;
+  --min-height: max(var(--icon-size), var(--font-size));
+
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+  column-gap: var(--spacing-xs);
+  line-height: 1;
+  min-height: var(--min-height);
+  border-radius: calc(var(--min-height) / 2);
+  border: 0;
+  padding: var(--spacing-sm);
+  background: transparent;
+  color: var(--color-base-l80);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-base-l100);
+    background: var(--color-base-l20);
+  }
+
+  svg {
+    stroke-width: 1.5px;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+}
