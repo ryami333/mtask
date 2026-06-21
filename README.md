@@ -37,7 +37,6 @@ What it _does_ have is a couple of small touches that make it pleasant to live i
 ### Mouse, if you must
 
 - **Double-click a link** inside a todo to open it in your browser.
-- **Right-click a todo** for a native context menu (including Delete).
 
 ---
 

@@ -39,7 +39,7 @@ This is the core pattern to understand before touching state. There is a single 
 - `preload.ts` exposes `window.ipcClient` (typed `IpcClient`) over the context bridge; `src/helpers/ipcClient.ts` re-exports it as a typed import so the rest of the renderer never touches `window`.
 - Read path: renderer calls `getState()` once for `initialState`, then subscribes via `onSyncState` to receive every broadcast. `AppStateContext.tsx` wires this into React — `useAppState()` is the hook components use.
 - Write path: components call `ipcClient.setState(patch)`. `patch` may be a partial object or an **updater function** `(current) => Partial<AppState>`; the function form is resolved in the preload by fetching current state first, so writes that depend on existing state (toggling, mapping, filtering todos) are safe. See `HomePage.tsx` for the canonical CRUD examples.
-- IPC channel name constants live in `src/helpers/channels.ts`. Native context menus (e.g. right-click "Delete" a todo) are built in the main process — the renderer just fires `showContextMenuForTodo(uuid)`.
+- IPC channel name constants live in `src/helpers/channels.ts`. Beyond the state channels, the only extra one is `OPEN_LINK_CHANNEL`: opening an external link is delegated to the main process (`shell.openExternal`) — the renderer fires `ipcClient.openLink(url)` (see link handling in `TodoItem.tsx`/`TodoList.tsx`).
 
 ### UI conventions
 
