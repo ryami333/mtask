@@ -1,53 +1,75 @@
-# electron-quick-start-typescript
+# mtask
 
-**Clone and run for a quick way to see Electron in action.**
+A small, keyboard-led todo app for the desktop — built for an audience of one (me).
 
-This is a [TypeScript](https://www.typescriptlang.org) port of the [Electron Quick Start repo](https://github.com/electron/electron-quick-start) -- a minimal Electron application based on the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start) within the Electron documentation.
+`mtask` is unapologetically self-indulgent. It does exactly what I want a todo list to do and nothing more. It's minimal, fast, driven from the keyboard, and its look and feel borrows heavily from my favourite tools: the muted, focused chrome of **Sublime Text** and **Sublime Merge**. If that happens to be your taste too, welcome.
 
-**Use this app along with the [Electron API Demos](http://electron.atom.io/#get-started) app for API code examples to help you get started.**
+---
 
-A basic Electron application needs just these files:
+## What it is
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.ts` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
+A single, flat list of things to do. You add a thing, you check it off, you delete it. No folders, no boards, no due dates, no sync service, no account. Your todos live in a plain JSON file on your own machine.
 
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start).
+What it _does_ have is a couple of small touches that make it pleasant to live in:
 
-## To Use
+- **Color-coded groupings.** You can prefix a todo to tag it — say, a project code — and have every todo with that prefix render in a colour of your choosing. It's a lightweight way to create visual groupings (by project, by context, by whatever) without imposing any real structure. Prefixes and colours are completely customizable in settings.
+- **Inline links.** Paste a URL into a todo and it's recognised automatically: the `https://` is hidden for readability, and you can open it in your browser without leaving the keyboard.
+- **Everything from the keyboard.** Navigation, completing, editing, deleting, opening links — you never need the mouse if you don't want to.
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+---
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start-typescript
-# Go into the repository
-cd electron-quick-start-typescript
-# Install dependencies
-npm install
-# Run the app
-npm start
+## Keyboard shortcuts
+
+> On macOS, **`⌘`** is the modifier. On Windows/Linux, use **`Ctrl`** in its place.
+
+| Shortcut                       | Action                                          |
+| ------------------------------ | ----------------------------------------------- |
+| `⌘ + N`                        | New todo                                        |
+| `↑` / `←`                      | Move focus to the previous todo (wraps around)  |
+| `↓` / `→`                      | Move focus to the next todo (wraps around)      |
+| `Home`                         | Jump to the first todo                          |
+| `End`                          | Jump to the last todo                           |
+| `⌘ + Enter` / `⌘ + Space`      | Toggle the focused todo complete / incomplete   |
+| `⌘ + E`                        | Edit the focused todo                           |
+| `⌘ + O`                        | Open the first link in the focused todo         |
+| `⌘ + Delete` / `⌘ + Backspace` | Delete the focused todo (asks for confirmation) |
+
+### Mouse, if you must
+
+- **Double-click a link** inside a todo to open it in your browser.
+- **Right-click a todo** for a native context menu (including Delete).
+
+---
+
+## Color mappings, in practice
+
+Open Settings (`⌘,`) and you'll find a table of **prefix → colour** pairs. Each row maps a leading string to a hex colour.
+
+For example, with a mapping of prefix `ACME` → `#468C77`:
+
+```
+ACME-123 Ship the release      ← rendered in green
+ACME-124 Write the changelog   ← rendered in green
+Buy milk                       ← default colour
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+Anything you type that starts with `ACME` picks up the colour. Use it however suits you — project codes, clients, contexts, energy levels. Add, edit, and delete mappings freely; changes apply to the list immediately.
 
-## Re-compile automatically
+---
 
-To recompile automatically and to allow using [electron-reload](https://github.com/yan-foto/electron-reload), run this in a separate terminal:
+## Running it
 
 ```bash
-npm run watch
+yarn install
+yarn dev      # run in development
+yarn package  # build an unpacked app
+yarn make     # produce a distributable (.zip, macOS only)
 ```
 
-## Resources for Learning Electron
+Built with Electron, React, and TypeScript. Distributables are produced for macOS.
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [Electron Fiddle](https://electronjs.org/fiddle) - create, play, and share small Electron experiments
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
+---
 
-## License
+## A note on scope
 
-[MIT](LICENSE.md)
+This is a personal tool. Features exist because I wanted them, and absent features are absent because I didn't. It's shared in case it's useful or interesting — but it's not trying to be a general-purpose product, and that's rather the point.
