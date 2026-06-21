@@ -3,6 +3,7 @@
   --color-base-l0: hsl(from var(--color-base) h s 0);
   --color-base-l10: hsl(from var(--color-base) h s 10);
   --color-base-l20: hsl(from var(--color-base) h s 20);
+  --color-base-l30: hsl(from var(--color-base) h s 30);
   --color-base-l40: hsl(from var(--color-base) h s 40);
   --color-base-l60: hsl(from var(--color-base) h s 60);
   --color-base-l80: hsl(from var(--color-base) h s 80);

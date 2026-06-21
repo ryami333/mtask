@@ -11,6 +11,7 @@ import {
 } from "./ColorMappingFormModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import styles from "./SettingsPage.module.css";
+import { IconEdit, IconTrash } from "@tabler/icons-react";
 
 const cx = classNames.bind(styles);
 
@@ -64,12 +65,13 @@ export const SettingsPage = () => {
       <Button onClick={() => formModalState.openNew()}>
         Add color mapping
       </Button>
-      <table>
+      <table className={cx("table")}>
         <thead>
           <tr>
-            <th className={cx("th")}>Prefix</th>
-            <th className={cx("th")}>Color</th>
-            <th className={cx("th")}></th>
+            <th>Prefix</th>
+            <th>Color</th>
+            <th />
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -85,16 +87,18 @@ export const SettingsPage = () => {
                       key: colorMapping.uuid,
                     })
                   }
-                >
-                  Edit
-                </Button>
+                  icon={IconEdit}
+                  aria-label="edit"
+                />
+              </td>
+              <td>
                 <Button
                   onClick={() =>
                     deleteModalState.open({ selectedEntity: colorMapping })
                   }
-                >
-                  Delete
-                </Button>
+                  icon={IconTrash}
+                  aria-label="delete"
+                />
               </td>
             </tr>
           ))}

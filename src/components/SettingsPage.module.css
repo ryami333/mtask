@@ -5,14 +5,31 @@
   height: -webkit-fill-available;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  row-gap: var(--spacing-sm);
-  margin: 0;
-  padding: 0;
-}
+.table {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  column-gap: var(--spacing-sm);
 
-.th {
-  text-align: left;
+  thead,
+  tbody,
+  tr {
+    display: contents;
+  }
+
+  tr {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    padding: var(--spacing-xs);
+
+    &:focus,
+    &:hover {
+      background-color: var(--color-base-l30);
+    }
+  }
+
+  th {
+    text-align: left;
+  }
 }
