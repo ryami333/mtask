@@ -2,6 +2,7 @@
   padding: var(--spacing-md);
   position: fixed;
   inset: 0;
+  pointer-events: none;
 }
 
 .backdrop {
@@ -13,6 +14,7 @@
 }
 
 .dialog {
+  pointer-events: auto;
   position: relative; /* Override dialog default */
   z-index: 11;
   background-color: var(--color-base);
