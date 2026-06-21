@@ -17,7 +17,7 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  useHotkeys([["mod+N", () => newTodoDialogActions.open());
+  useHotkeys([["mod+N", () => newTodoDialogActions.open()]]);
 
   const addTodo = (todo: Todo) => {
     ipcClient.setState((current) => ({
