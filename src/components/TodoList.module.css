@@ -6,5 +6,5 @@
 }
 
 .container:has(:focus-visible) {
-  border: 2px solid var(--color-base-100);
+  border: 2px solid var(--color-base-l100);
 }

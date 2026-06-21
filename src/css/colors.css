@@ -1,10 +1,10 @@
 :root {
   --color-base: rgb(38, 50, 56);
-  --color-base-0: hsl(from var(--color-base) h s 0);
-  --color-base-10: hsl(from var(--color-base) h s 10);
-  --color-base-20: hsl(from var(--color-base) h s 20);
-  --color-base-40: hsl(from var(--color-base) h s 40);
-  --color-base-60: hsl(from var(--color-base) h s 60);
-  --color-base-80: hsl(from var(--color-base) h s 80);
-  --color-base-100: hsl(from var(--color-base) h s 100);
+  --color-base-l0: hsl(from var(--color-base) h s 0);
+  --color-base-l10: hsl(from var(--color-base) h s 10);
+  --color-base-l20: hsl(from var(--color-base) h s 20);
+  --color-base-l40: hsl(from var(--color-base) h s 40);
+  --color-base-l60: hsl(from var(--color-base) h s 60);
+  --color-base-l80: hsl(from var(--color-base) h s 80);
+  --color-base-l100: hsl(from var(--color-base) h s 100);
 }

@@ -17,16 +17,16 @@
 
 .button:focus,
 :global(body:not(:has(:focus-visible))) .button:hover {
-  background-color: var(--color-base-0);
+  background-color: var(--color-base-l0);
 }
 
 .title {
-  color: var(--color-base-100);
+  color: var(--color-base-l100);
 }
 
 .title.completed {
   text-decoration: line-through;
-  color: var(--color-base-60);
+  color: var(--color-base-l60);
 }
 
 .externalLink {
