@@ -1,13 +1,11 @@
 import React from "react";
 import type { Todo } from "../helpers/appState";
-import { Button } from "./Button";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
 import { useHotkeys, useFocusReturn } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
-import { IconSettings } from "@tabler/icons-react";
 import { TodoModal } from "./TodoModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useCrudModalState } from "../helpers/useCrudModalState";
@@ -115,15 +113,6 @@ export const HomePage = () => {
         onRequestClose={() => deleteModalState.close()}
         onConfirm={() => confirmDeleteTodo()}
       />
-      <div className={cx("buttonWrapper")}>
-        <Button
-          onClick={() => ipcClient.openSettings()}
-          icon={IconSettings}
-          iconPlacement="after"
-        >
-          Settings
-        </Button>
-      </div>
     </div>
   );
 };

@@ -2,8 +2,9 @@ import "source-map-support/register";
 import "./helpers/appState";
 import { createAppState } from "./helpers/appState";
 import path from "node:path";
-import { BrowserWindow, app, ipcMain } from "electron/main";
-import { OPEN_LINK_CHANNEL, OPEN_SETTINGS_CHANNEL } from "./helpers/channels";
+import { BrowserWindow, Menu, app, ipcMain } from "electron/main";
+import type { MenuItemConstructorOptions } from "electron";
+import { OPEN_LINK_CHANNEL } from "./helpers/channels";
 import { shell } from "electron";
 
 // These constants are injected by `@electron-forge/plugin-vite`.
@@ -80,6 +81,57 @@ const openSettingsWindow = () => {
   });
 };
 
+const isMac = process.platform === "darwin";
+
+/**
+ * Builds the application menu, adding a "Preferences" item (⌘,) that opens the
+ * settings window. The remaining menus are the standard Electron roles so the
+ * usual shortcuts (copy/paste, quit, window controls) keep working.
+ */
+const createApplicationMenu = () => {
+  const preferencesItem: MenuItemConstructorOptions = {
+    label: "Preferences…",
+    accelerator: "CmdOrCtrl+,",
+    click: () => openSettingsWindow(),
+  };
+
+  const template: MenuItemConstructorOptions[] = [
+    ...(isMac
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              { role: "about" },
+              { type: "separator" },
+              preferencesItem,
+              { type: "separator" },
+              { role: "services" },
+              { type: "separator" },
+              { role: "hide" },
+              { role: "hideOthers" },
+              { role: "unhide" },
+              { type: "separator" },
+              { role: "quit" },
+            ],
+          } satisfies MenuItemConstructorOptions,
+        ]
+      : []),
+    ...(isMac
+      ? []
+      : [
+          {
+            label: "File",
+            submenu: [preferencesItem, { type: "separator" }, { role: "quit" }],
+          } satisfies MenuItemConstructorOptions,
+        ]),
+    { role: "editMenu" },
+    { role: "viewMenu" },
+    { role: "windowMenu" },
+  ];
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+};
+
 app
   .whenReady()
   .then(async () => {
@@ -93,9 +145,7 @@ app
       shell.openExternal(url);
     });
 
-    ipcMain.handle(OPEN_SETTINGS_CHANNEL, () => {
-      openSettingsWindow();
-    });
+    createApplicationMenu();
 
     createMainWindow();
   })
