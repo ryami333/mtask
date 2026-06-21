@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { TodoItem } from "./TodoItem";
 
 export default {
-  title: "Blocks/TodoItem",
+  title: "TodoItem",
   parameters: {
     layout: "padded",
   },

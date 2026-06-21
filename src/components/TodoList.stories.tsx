@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { TodoList } from "./TodoList";
 
 export default {
-  title: "Blocks/TodoList",
+  title: "TodoList",
   parameters: {
     layout: "padded",
   },

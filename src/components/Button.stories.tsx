@@ -3,7 +3,7 @@ import { Meta, StoryFn } from "@storybook/react-vite";
 import { Button } from "./Button";
 
 export default {
-  title: "Blocks/Button",
+  title: "Button",
   parameters: {
     layout: "padded",
   },

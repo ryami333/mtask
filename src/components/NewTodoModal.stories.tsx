@@ -4,7 +4,7 @@ import { NewTodoModal } from "./NewTodoModal";
 import { fn } from "storybook/test";
 
 export default {
-  title: "Blocks/NewTodoModal",
+  title: "NewTodoModal",
   parameters: {
     layout: "padded",
   },

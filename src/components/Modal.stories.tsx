@@ -4,7 +4,7 @@ import { Modal } from "./Modal";
 import { fn } from "storybook/test";
 
 export default {
-  title: "Blocks/Modal",
+  title: "Modal",
   parameters: {
     layout: "padded",
   },

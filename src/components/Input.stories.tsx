@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "./Input";
 
 export default {
-  title: "Blocks/Input",
+  title: "Input",
   parameters: {
     layout: "padded",
   },
