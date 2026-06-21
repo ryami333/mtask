@@ -64,7 +64,7 @@ export const TodoItem = ({
   colors,
 }: {
   todo: Todo;
-  onKeyDown: KeyboardEventHandler;
+  onKeyDown: KeyboardEventHandler<HTMLElement>;
   onClick: MouseEventHandler;
   onContextMenu: MouseEventHandler;
   tabIndex: number;

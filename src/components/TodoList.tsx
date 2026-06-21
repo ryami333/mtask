@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import classNames from "classnames/bind";
+import { getHotkeyHandler } from "@mantine/hooks";
 import { TodoItem } from "./TodoItem";
 import { ColorMapping, Todo } from "../helpers/appState";
 import styles from "./TodoList.module.css";
@@ -23,68 +24,56 @@ export const TodoList = ({
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    const allButtons = Array.from(
+  const getButtons = () =>
+    Array.from(
       wrapperRef.current?.querySelectorAll("[data-todolist-button]") ?? [],
     ).filter((button): button is HTMLElement => button instanceof HTMLElement);
 
-    const currentIndex = allButtons.findIndex(
-      (button) => button === event.currentTarget,
+  const focusIndex = (index: number) => {
+    const buttons = getButtons();
+    const newIndex = Math.max(0, Math.min(index, buttons.length - 1));
+    setActiveIndex(newIndex);
+    buttons.at(newIndex)?.focus();
+  };
+
+  const moveFocus = (event: KeyboardEvent, delta: number) => {
+    const buttons = getButtons();
+    const currentIndex = buttons.findIndex(
+      (button) => button === event.target,
     );
+    focusIndex((currentIndex + delta + buttons.length) % buttons.length);
+  };
 
-    switch (event.key) {
-      case "ArrowUp":
-      case "ArrowLeft": {
-        event.preventDefault(); // Block scrolling
-        const newIndex = Math.max(
-          0,
-          (currentIndex - 1 + allButtons.length) % allButtons.length,
-        );
-        setActiveIndex(newIndex);
-        allButtons.at(newIndex)?.focus();
-        break;
-      }
-      case "ArrowDown":
-      case "ArrowRight": {
-        event.preventDefault(); // Block scrolling
-        const newIndex = (currentIndex + 1) % allButtons.length;
-        setActiveIndex(newIndex);
-        allButtons.at(newIndex)?.focus();
-        break;
-      }
-      case "Home": {
-        event.preventDefault(); // Block scrolling
-        const newIndex = 0;
-        setActiveIndex(newIndex);
-        allButtons.at(newIndex)?.focus();
-        break;
-      }
-      case "End": {
-        event.preventDefault(); // Block scrolling
-        const newIndex = Math.max(0, allButtons.length - 1);
-        setActiveIndex(newIndex);
-        allButtons.at(newIndex)?.focus();
-        break;
-      }
-      case "Delete":
-      case "Backspace": {
-        event.preventDefault(); // Block scrolling
+  const deleteActive = (event: KeyboardEvent) => {
+    const buttons = getButtons();
 
-        const nextButton = allButtons[activeIndex + 1];
-        if (nextButton) {
-          nextButton?.focus();
-        } else {
-          allButtons[activeIndex - 1]?.focus();
-        }
+    const nextButton = buttons[activeIndex + 1];
+    if (nextButton) {
+      nextButton.focus();
+    } else {
+      buttons[activeIndex - 1]?.focus();
+    }
 
-        const uuid = event.currentTarget.getAttribute("data-todolist-button");
-        if (uuid) {
-          onDeleteKeyDown(uuid);
-        }
-        break;
-      }
+    const uuid = (event.target as HTMLElement)
+      .closest("[data-todolist-button]")
+      ?.getAttribute("data-todolist-button");
+    if (uuid) {
+      onDeleteKeyDown(uuid);
     }
   };
+
+  // `getHotkeyHandler` calls `event.preventDefault()` by default, which blocks
+  // scrolling on the arrow/Home/End/Delete keys.
+  const onKeyDown = getHotkeyHandler([
+    ["ArrowUp", (event) => moveFocus(event, -1)],
+    ["ArrowLeft", (event) => moveFocus(event, -1)],
+    ["ArrowDown", (event) => moveFocus(event, 1)],
+    ["ArrowRight", (event) => moveFocus(event, 1)],
+    ["Home", () => focusIndex(0)],
+    ["End", () => focusIndex(getButtons().length - 1)],
+    ["Delete", deleteActive],
+    ["Backspace", deleteActive],
+  ]);
 
   return (
     <div className={cx("container")} ref={wrapperRef}>
