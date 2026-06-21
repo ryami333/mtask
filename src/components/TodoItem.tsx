@@ -58,17 +58,12 @@ function TitleFormatter({ children }: { children: string }) {
 export const TodoItem = ({
   todo,
   onKeyDown,
-  onClick,
   onContextMenu,
-  tabIndex,
   colors,
 }: {
   todo: Todo;
   onKeyDown: KeyboardEventHandler<HTMLElement>;
-  onClick: MouseEventHandler;
   onContextMenu: MouseEventHandler;
-  tabIndex: number;
-  active: boolean;
   colors: ColorMapping[];
 }) => {
   return (
@@ -76,8 +71,6 @@ export const TodoItem = ({
       <button
         className={cx("button")}
         onKeyDown={onKeyDown}
-        tabIndex={tabIndex}
-        onClick={onClick}
         data-todolist-button={todo.uuid}
         onContextMenu={onContextMenu}
       >

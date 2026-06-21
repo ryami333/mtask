@@ -8,7 +8,6 @@ export default {
     layout: "padded",
   },
   args: {
-    active: false,
     todo: {
       uuid: "7fca56bb-3136-41e1-9a38-155022dd8826",
       title: "FOO: feed the raccoons",

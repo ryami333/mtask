@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import classNames from "classnames/bind";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { TodoItem } from "./TodoItem";
@@ -22,8 +22,6 @@ export const TodoList = ({
   colors: ColorMapping[];
   todos: Todo[];
 }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const getButtons = () =>
@@ -34,7 +32,6 @@ export const TodoList = ({
   const focusIndex = (index: number) => {
     const buttons = getButtons();
     const newIndex = Math.max(0, Math.min(index, buttons.length - 1));
-    setActiveIndex(newIndex);
     buttons.at(newIndex)?.focus();
   };
 
@@ -64,13 +61,10 @@ export const TodoList = ({
 
   const deleteActive = (event: KeyboardEvent) => {
     const buttons = getButtons();
+    const currentIndex = buttons.findIndex((button) => button === event.target);
 
-    const nextButton = buttons[activeIndex + 1];
-    if (nextButton) {
-      nextButton.focus();
-    } else {
-      buttons[activeIndex - 1]?.focus();
-    }
+    const nextButton = buttons[currentIndex + 1] ?? buttons[currentIndex - 1];
+    nextButton?.focus();
 
     const uuid = (event.target as HTMLElement)
       .closest("[data-todolist-button]")
@@ -98,14 +92,11 @@ export const TodoList = ({
 
   return (
     <div className={cx("container")} ref={wrapperRef}>
-      {todos.map((todo, index) => (
+      {todos.map((todo) => (
         <TodoItem
           todo={todo}
           key={todo.uuid}
           onKeyDown={onKeyDown}
-          tabIndex={activeIndex === index ? 0 : -1} // using "roving" tabIndex
-          onClick={() => setActiveIndex(index)}
-          active={activeIndex === index}
           onContextMenu={() => onContextMenu(todo.uuid)}
           colors={colors}
         />
