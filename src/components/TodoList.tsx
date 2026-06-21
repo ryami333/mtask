@@ -1,18 +1,10 @@
-import styled from "styled-components";
 import React, { useRef, useState } from "react";
+import classNames from "classnames/bind";
 import { TodoItem } from "./TodoItem";
 import { ColorMapping, Todo } from "../helpers/appState";
+import styles from "./TodoList.module.css";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 2px;
-  border: 2px solid transparent;
-
-  &:has(:focus-visible) {
-    border: 2px solid white;
-  }
-`;
+const cx = classNames.bind(styles);
 
 export const TodoList = ({
   onClickTodo,
@@ -95,7 +87,7 @@ export const TodoList = ({
   };
 
   return (
-    <Container ref={wrapperRef}>
+    <div className={cx("container")} ref={wrapperRef}>
       {todos.map((todo, index) => (
         <TodoItem
           todo={todo}
@@ -111,6 +103,6 @@ export const TodoList = ({
           colors={colors}
         />
       ))}
-    </Container>
+    </div>
   );
 };

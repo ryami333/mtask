@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  border: 2px solid transparent;
+}
+
+.container:has(:focus-visible) {
+  border: 2px solid white;
+}

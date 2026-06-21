@@ -4,33 +4,12 @@ import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { TodoList } from "./TodoList";
-import styled from "styled-components";
+import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
+import styles from "./HomePage.module.css";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  height: -webkit-fill-available;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-`;
-
-const TodoListWrapper = styled.div`
-  flex: 1;
-`;
-
-const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 16px;
-`;
+const cx = classNames.bind(styles);
 
 export const HomePage = ({
   onClickSettings,
@@ -78,8 +57,9 @@ export const HomePage = ({
   const appState = useAppState();
 
   return (
-    <Container>
-      <Form
+    <div className={cx("container")}>
+      <form
+        className={cx("form")}
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -98,8 +78,8 @@ export const HomePage = ({
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-      </Form>
-      <TodoListWrapper>
+      </form>
+      <div className={cx("todoListWrapper")}>
         <TodoList
           onClickTodo={onClickTodo}
           onDeleteKeyDown={onDeleteKeyDown}
@@ -107,13 +87,13 @@ export const HomePage = ({
           todos={appState.todos}
           colors={appState.colors}
         />
-      </TodoListWrapper>
-      <ButtonWrapper>
+      </div>
+      <div className={cx("buttonWrapper")}>
         <Button onClick={() => removeCompletedTodos()}>
           Clear Completed 🚫
         </Button>
         <Button onClick={onClickSettings}>Settings ⚙️</Button>
-      </ButtonWrapper>
-    </Container>
+      </div>
+    </div>
   );
 };

@@ -1,20 +1,12 @@
-import styled from "styled-components";
+import React from "react";
+import classNames from "classnames/bind";
+import styles from "./Button.module.css";
 
-export const Button = styled.button`
-  unset: all;
-  appearance: none;
-  cursor: pointer;
-  border-radius: 24px;
-  padding: 8px 32px;
-  font-family: "Fira Code";
-  border: 2px solid transparent;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-  font-size: 16px;
-  line-height: 1.5;
+const cx = classNames.bind(styles);
 
-  &:hover,
-  &:focus-visible {
-    border-color: white;
-  }
-`;
+export const Button = ({
+  className,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button className={cx("button", className)} {...props} />
+);

@@ -1,21 +1,14 @@
-import styled from "styled-components";
+import React from "react";
+import classNames from "classnames/bind";
+import styles from "./Input.module.css";
 
-export const Input = styled.input`
-  display: block;
-  width: 100%;
-  appearance: none;
-  cursor: pointer;
-  border-radius: 2px;
-  padding: 8px 8px;
-  border: none;
-  font-family: "Fira Code";
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-  font-size: 16px;
-  line-height: 1.5;
-  border: 2px solid transparent;
+const cx = classNames.bind(styles);
 
-  &:focus-visible {
-    border-color: white;
-  }
-`;
+export const Input = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => (
+  <input ref={ref} className={cx("input", className)} {...props} />
+));
+
+Input.displayName = "Input";

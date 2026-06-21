@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+}
+
+.button {
+  background: none;
+  border: none;
+  appearance: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 2px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.button:hover,
+.button:focus-visible {
+  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+
+.title {
+  color: white;
+}
+
+.title.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.externalLink {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.externalLink:hover {
+  text-decoration: underline;
+}

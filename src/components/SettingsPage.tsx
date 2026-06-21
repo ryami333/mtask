@@ -1,36 +1,16 @@
 import React, { MouseEventHandler, useId } from "react";
 import { Button } from "./Button";
 import { Input } from "./Input";
-import styled from "styled-components";
+import classNames from "classnames/bind";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { v4 as createUuid } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
+import styles from "./SettingsPage.module.css";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 32px;
-  height: -webkit-fill-available;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  margin: 0;
-  padding: 0;
-`;
-
-const Th = styled.th`
-  text-align: left;
-`;
-
-const Field = styled.div``;
-
-const Label = styled.label``;
+const cx = classNames.bind(styles);
 
 const validationSchema = z.object({
   prefix: z.string().nonempty(),
@@ -79,25 +59,25 @@ export const SettingsPage = ({
   };
 
   return (
-    <Container>
+    <div className={cx("container")}>
       <Button onClick={onClickBack}>⏎ Back</Button>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Field>
-          <Label htmlFor={prefixInputId}>Prefix</Label>
+      <form className={cx("form")} onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label htmlFor={prefixInputId}>Prefix</label>
           <Input id={prefixInputId} type="text" {...register("prefix")} />
-        </Field>
-        <Field>
-          <Label htmlFor={colorInputId}>Color</Label>
+        </div>
+        <div>
+          <label htmlFor={colorInputId}>Color</label>
           <Input id={colorInputId} type="text" {...register("color")} />
-        </Field>
+        </div>
         <Button type="submit">Submit</Button>
-      </Form>
+      </form>
       <table>
         <thead>
           <tr>
-            <Th>Prefix</Th>
-            <Th>Color</Th>
-            <Th></Th>
+            <th className={cx("th")}>Prefix</th>
+            <th className={cx("th")}>Color</th>
+            <th className={cx("th")}></th>
           </tr>
         </thead>
         <tbody>
@@ -114,6 +94,6 @@ export const SettingsPage = ({
           ))}
         </tbody>
       </table>
-    </Container>
+    </div>
   );
 };
