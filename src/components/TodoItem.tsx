@@ -23,21 +23,8 @@ function TitleFormatter({ children }: { children: string }) {
           return token;
         }
 
-        let label = trimmed;
-        const jiraKey =
-          url.hostname === "diesdas.atlassian.net"
-            ? url.pathname.match(/^\/browse\/([A-Z0-9-]+)/)?.[1]
-            : undefined;
-        const pullRequest =
-          url.hostname === "github.com"
-            ? url.pathname.match(/^\/[^/]+\/([^/]+)\/pull\/([^/]+)/)
-            : null;
-
-        if (jiraKey) {
-          label = jiraKey;
-        } else if (pullRequest) {
-          label = `${pullRequest[1]}/${pullRequest[2]}`;
-        }
+        // Open the full URL, but hide the protocol when displaying it.
+        const label = trimmed.slice(`${url.protocol}//`.length);
 
         return (
           <span key={index}>
