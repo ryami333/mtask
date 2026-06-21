@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { TodoItem } from "./TodoItem";
 import { ColorMapping, Todo } from "../helpers/appState";
+import { ipcClient } from "../helpers/ipcClient";
 import styles from "./TodoList.module.css";
 
 const cx = classNames.bind(styles);
@@ -57,6 +58,24 @@ export const TodoList = ({
     }
   };
 
+  const openFirstLink = (event: KeyboardEvent) => {
+    const uuid = (event.target as HTMLElement)
+      .closest("[data-todolist-button]")
+      ?.getAttribute("data-todolist-button");
+    const todo = todos.find((todo) => todo.uuid === uuid);
+    if (!todo) {
+      return;
+    }
+
+    const firstLink = (todo.title.match(/\S+/g) ?? []).find((token) => {
+      const url = URL.parse(token);
+      return url?.protocol === "https:" || url?.protocol === "http:";
+    });
+    if (firstLink) {
+      ipcClient.openLink(firstLink);
+    }
+  };
+
   const deleteActive = (event: KeyboardEvent) => {
     const buttons = getButtons();
     const currentIndex = buttons.findIndex((button) => button === event.target);
@@ -84,6 +103,7 @@ export const TodoList = ({
     ["mod+Enter", toggleActive],
     ["mod+Space", toggleActive],
     ["mod+E", editActive],
+    ["mod+O", openFirstLink],
     ["mod+Delete", deleteActive],
     ["mod+Backspace", deleteActive],
   ]);
