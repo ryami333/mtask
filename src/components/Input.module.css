@@ -8,7 +8,7 @@
   padding-block: var(--spacing-sm);
   font-family: system-ui, sans-serif;
   color: var(--color-base-l100);
-  background: transparent;
+  background-color: var(--color-base-l10);
   font-size: 16px;
   line-height: 1.5;
   border: 2px solid transparent;

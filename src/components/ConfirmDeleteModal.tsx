@@ -1,6 +1,10 @@
 import React from "react";
 import { Modal } from "./Modal";
 import { Button } from "./Button";
+import styles from "./ConfirmDeleteModal.module.css";
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
 
 export function ConfirmDeleteModal({
   isOpen,
@@ -13,11 +17,13 @@ export function ConfirmDeleteModal({
 }) {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <h1>Confirm Delete</h1>
-      <p>Are you sure you wish to delete this item?</p>
-      <Button onClick={onConfirm} autoFocus>
-        Confirm
-      </Button>
+      <div className={cx("inner")}>
+        <p>Are you sure you wish to delete this item?</p>
+        <Button onClick={onRequestClose}>Cancel</Button>
+        <Button onClick={onConfirm} autoFocus>
+          Confirm
+        </Button>
+      </div>
     </Modal>
   );
 }

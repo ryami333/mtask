@@ -17,5 +17,5 @@
 
 .button:hover,
 .button:focus-visible {
-  border-color: var(--color-base-l100);
+  border-color: var(--color-base-l80);
 }

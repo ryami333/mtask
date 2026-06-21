@@ -1,0 +1,6 @@
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: var(--spacing-md);
+}
