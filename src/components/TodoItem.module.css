@@ -36,8 +36,5 @@
 .externalLink {
   font-weight: 600;
   font-style: italic;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  text-decoration: underline;
 }

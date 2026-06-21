@@ -30,7 +30,7 @@ function TitleFormatter({ children }: { children: string }) {
           <span key={index}>
             <span
               className={cx("externalLink")}
-              onClick={(event) => {
+              onDoubleClick={(event) => {
                 event.stopPropagation();
                 ipcClient.openLink(trimmed);
               }}
