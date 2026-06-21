@@ -1,5 +1,5 @@
 :root {
-  --color-base: rgb(38, 50, 56);
+  --color-base: #263238;
   --color-base-l0: hsl(from var(--color-base) h s 0);
   --color-base-l10: hsl(from var(--color-base) h s 10);
   --color-base-l20: hsl(from var(--color-base) h s 20);
