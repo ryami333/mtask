@@ -15,8 +15,10 @@ import {
   IconEdit,
   IconPlus,
   IconPlusFilled,
+  IconSettings,
   IconTrash,
 } from "@tabler/icons-react";
+import { ActionsDropdown } from "./ActionsDropdown";
 
 const cx = classNames.bind(styles);
 
@@ -74,7 +76,6 @@ export const SettingsPage = () => {
             <th>Prefix</th>
             <th>Color</th>
             <th />
-            <th />
           </tr>
         </thead>
         <tbody>
@@ -83,30 +84,32 @@ export const SettingsPage = () => {
               <td>{colorMapping.prefix}</td>
               <td>{colorMapping.color}</td>
               <td>
-                <Button
-                  onClick={() =>
-                    formModalState.openEdit({
-                      selectedEntity: colorMapping,
-                      key: colorMapping.uuid,
-                    })
-                  }
-                  icon={IconEdit}
-                  aria-label="edit"
-                />
-              </td>
-              <td>
-                <Button
-                  onClick={() =>
-                    deleteModalState.open({ selectedEntity: colorMapping })
-                  }
-                  icon={IconTrash}
-                  aria-label="delete"
+                <ActionsDropdown
+                  triggerLabel="actions"
+                  icon={IconSettings}
+                  actions={[
+                    {
+                      icon: IconEdit,
+                      label: "Edit",
+                      onClick: () =>
+                        formModalState.openEdit({
+                          selectedEntity: colorMapping,
+                          key: colorMapping.uuid,
+                        }),
+                    },
+                    {
+                      icon: IconTrash,
+                      label: "Delete",
+                      onClick: () =>
+                        deleteModalState.open({ selectedEntity: colorMapping }),
+                    },
+                  ]}
                 />
               </td>
             </tr>
           ))}
           <tr>
-            <td style={{ gridColumn: "span 3" }}>Create New</td>
+            <td style={{ gridColumn: "span 2" }}>Create New</td>
             <td>
               <Button
                 onClick={() => formModalState.openNew()}

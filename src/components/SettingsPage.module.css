@@ -7,7 +7,7 @@
 
 .table {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   column-gap: var(--spacing-sm);
 
   thead,
