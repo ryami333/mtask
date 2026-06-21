@@ -20,13 +20,32 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  useHotkeys([["mod+N", () => newTodoModalState.openNew()]]);
+  useHotkeys([["mod+N", () => todoModalState.openNew()]]);
 
-  const addTodo = (todo: Todo) => {
-    ipcClient.setState((current) => ({
-      todos: [todo, ...current.todos],
-    }));
-    newTodoModalState.closeAndReset();
+  const submitTodo = (title: string) => {
+    if (todoModalState.mode === "edit") {
+      const { uuid } = todoModalState.selectedEntity;
+      ipcClient.setState((current) => ({
+        todos: current.todos.map((todo) =>
+          todo.uuid === uuid ? { ...todo, title } : todo,
+        ),
+      }));
+    } else {
+      ipcClient.setState((current) => ({
+        todos: [
+          { uuid: crypto.randomUUID(), title, completed: false },
+          ...current.todos,
+        ],
+      }));
+    }
+    todoModalState.closeAndReset();
+  };
+
+  const requestEditTodo = (uuid: string) => {
+    const todo = appState.todos.find((todo) => todo.uuid === uuid);
+    if (todo) {
+      todoModalState.openEdit({ selectedEntity: todo, key: todo.uuid });
+    }
   };
 
   const removeCompletedTodos = () => {
@@ -69,23 +88,29 @@ export const HomePage = ({
 
   const appState = useAppState();
 
-  const newTodoModalState = useCrudModalState<string>();
+  const todoModalState = useCrudModalState<Todo>();
 
   const deleteModalState = useDeleteModalState<string>();
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => newTodoModalState.openNew()}>New Todo</Button>
+      <Button onClick={() => todoModalState.openNew()}>New Todo</Button>
       <TodoModal
-        isOpen={newTodoModalState.isOpen}
-        onRequestClose={() => newTodoModalState.close()}
-        onSubmit={(todo) => addTodo(todo)}
-        key={newTodoModalState.key}
+        isOpen={todoModalState.isOpen}
+        onRequestClose={() => todoModalState.close()}
+        onSubmit={(title) => submitTodo(title)}
+        defaultValue={
+          todoModalState.mode === "edit"
+            ? todoModalState.selectedEntity.title
+            : ""
+        }
+        key={todoModalState.key}
       />
       <div className={cx("todoListWrapper")}>
         <TodoList
           onToggleTodo={onToggleTodo}
           onDeleteKeyDown={requestDeleteTodo}
+          onEditKeyDown={requestEditTodo}
           onContextMenu={onContextMenu}
           todos={appState.todos}
           colors={appState.colors}

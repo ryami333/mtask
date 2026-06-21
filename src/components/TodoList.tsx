@@ -10,12 +10,14 @@ const cx = classNames.bind(styles);
 export const TodoList = ({
   onToggleTodo,
   onDeleteKeyDown,
+  onEditKeyDown,
   onContextMenu,
   colors,
   todos,
 }: {
   onToggleTodo: (uuid: string) => void;
   onDeleteKeyDown: (uuid: string) => void;
+  onEditKeyDown: (uuid: string) => void;
   onContextMenu: (uuid: string) => void;
   colors: ColorMapping[];
   todos: Todo[];
@@ -38,9 +40,7 @@ export const TodoList = ({
 
   const moveFocus = (event: KeyboardEvent, delta: number) => {
     const buttons = getButtons();
-    const currentIndex = buttons.findIndex(
-      (button) => button === event.target,
-    );
+    const currentIndex = buttons.findIndex((button) => button === event.target);
     focusIndex((currentIndex + delta + buttons.length) % buttons.length);
   };
 
@@ -50,6 +50,15 @@ export const TodoList = ({
       ?.getAttribute("data-todolist-button");
     if (uuid) {
       onToggleTodo(uuid);
+    }
+  };
+
+  const editActive = (event: KeyboardEvent) => {
+    const uuid = (event.target as HTMLElement)
+      .closest("[data-todolist-button]")
+      ?.getAttribute("data-todolist-button");
+    if (uuid) {
+      onEditKeyDown(uuid);
     }
   };
 
@@ -82,6 +91,7 @@ export const TodoList = ({
     ["End", () => focusIndex(getButtons().length - 1)],
     ["mod+Enter", toggleActive],
     ["mod+Space", toggleActive],
+    ["mod+E", editActive],
     ["mod+Delete", deleteActive],
     ["mod+Backspace", deleteActive],
   ]);

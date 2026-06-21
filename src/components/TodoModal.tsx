@@ -1,6 +1,5 @@
 import { useInputState } from "@mantine/hooks";
 import React from "react";
-import { Todo } from "../helpers/appState";
 import { Modal } from "./Modal";
 import { Input } from "./Input";
 
@@ -12,7 +11,7 @@ export function TodoModal({
 }: {
   isOpen: boolean;
   onRequestClose: () => void;
-  onSubmit: (todo: Todo) => void;
+  onSubmit: (title: string) => void;
   defaultValue?: string;
 }) {
   const [inputValue, setInputValue] = useInputState(defaultValue);
@@ -25,11 +24,7 @@ export function TodoModal({
           e.preventDefault();
 
           if (inputValue) {
-            onSubmit({
-              uuid: crypto.randomUUID(),
-              title: inputValue,
-              completed: false,
-            });
+            onSubmit(inputValue);
           }
           setInputValue("");
         }}
