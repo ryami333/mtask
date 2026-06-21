@@ -13,43 +13,46 @@ function TitleFormatter({ children }: { children: string }) {
   return (
     <>
       {tokens?.map((token, index) => {
-        const jiraLinkMatch = token.match(
-          /https:\/\/diesdas.atlassian.net\/browse\/([A-Z0-9\\-]+)/,
-        );
-        if (jiraLinkMatch) {
-          return (
+        // Tokens may carry a trailing space; parse only the URL itself and
+        // re-append the whitespace so word spacing is preserved.
+        const trimmed = token.trimEnd();
+        const trailing = token.slice(trimmed.length);
+        const url = URL.parse(trimmed);
+
+        if (url?.protocol !== "https:" && url?.protocol !== "http:") {
+          return token;
+        }
+
+        let label = trimmed;
+        const jiraKey =
+          url.hostname === "diesdas.atlassian.net"
+            ? url.pathname.match(/^\/browse\/([A-Z0-9-]+)/)?.[1]
+            : undefined;
+        const pullRequest =
+          url.hostname === "github.com"
+            ? url.pathname.match(/^\/[^/]+\/([^/]+)\/pull\/([^/]+)/)
+            : null;
+
+        if (jiraKey) {
+          label = jiraKey;
+        } else if (pullRequest) {
+          label = `${pullRequest[1]}/${pullRequest[2]}`;
+        }
+
+        return (
+          <span key={index}>
             <span
-              key={index}
               className={cx("externalLink")}
               onClick={(event) => {
                 event.stopPropagation();
-                ipcClient.openLink(token);
+                ipcClient.openLink(trimmed);
               }}
             >
-              {jiraLinkMatch[1]} 🔗
+              {label}
             </span>
-          );
-        }
-
-        const pullRequestMatch = token.match(
-          /https:\/\/github.com\/\S+?\/(\S+)?\/pull\/(\S+)?/,
+            {trailing}
+          </span>
         );
-        if (pullRequestMatch) {
-          return (
-            <span
-              key={index}
-              className={cx("externalLink")}
-              onClick={(event) => {
-                event.stopPropagation();
-                ipcClient.openLink(token);
-              }}
-            >
-              {pullRequestMatch[1]}/{pullRequestMatch[2]} 🔗
-            </span>
-          );
-        }
-
-        return token;
       })}
     </>
   );
