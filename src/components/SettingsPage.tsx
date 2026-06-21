@@ -7,6 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
+import { useDeleteModalState } from "../helpers/useDeleteModalState";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import styles from "./SettingsPage.module.css";
 
 const cx = classNames.bind(styles);
@@ -45,12 +47,21 @@ export const SettingsPage = () => {
 
   const appState = useAppState();
 
+  const deleteModalState = useDeleteModalState<(typeof appState.colors)[number]>();
+
   const removeColorMapping = (uuid: string) => {
     ipcClient.setState((current) => ({
       colors: current.colors.filter(
         (colorMapping) => colorMapping.uuid !== uuid,
       ),
     }));
+  };
+
+  const confirmRemoveColorMapping = () => {
+    if (deleteModalState.selectedEntity) {
+      removeColorMapping(deleteModalState.selectedEntity.uuid);
+    }
+    deleteModalState.close();
   };
 
   return (
@@ -80,7 +91,11 @@ export const SettingsPage = () => {
               <td>{colorMapping.prefix}</td>
               <td>{colorMapping.color}</td>
               <td>
-                <Button onClick={() => removeColorMapping(colorMapping.uuid)}>
+                <Button
+                  onClick={() =>
+                    deleteModalState.open({ selectedEntity: colorMapping })
+                  }
+                >
                   Delete
                 </Button>
               </td>
@@ -88,6 +103,16 @@ export const SettingsPage = () => {
           ))}
         </tbody>
       </table>
+      <ConfirmDeleteModal
+        isOpen={deleteModalState.isOpen}
+        onRequestClose={() => deleteModalState.close()}
+        onConfirm={() => confirmRemoveColorMapping()}
+        message={
+          deleteModalState.selectedEntity
+            ? `Are you sure you wish to delete the "${deleteModalState.selectedEntity.prefix}" color mapping?`
+            : undefined
+        }
+      />
     </div>
   );
 };

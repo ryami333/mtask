@@ -11,15 +11,17 @@ export function ConfirmDeleteModal({
   isOpen,
   onRequestClose,
   onConfirm,
+  message = "Are you sure you wish to delete this item?",
 }: {
   isOpen: boolean;
   onRequestClose: () => void;
   onConfirm: React.MouseEventHandler;
+  message?: string;
 }) {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <div className={cx("inner")}>
-        <p>Are you sure you wish to delete this item?</p>
+        <p>{message}</p>
         <FocusGroup direction="inline" className={cx("buttons")}>
           <Button onClick={onRequestClose}>Cancel</Button>
           <Button onClick={onConfirm} autoFocus>
