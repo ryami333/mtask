@@ -25,7 +25,16 @@ export function NewTodoDialog({
 
   const mergedRef = useMergedRef(focusTrapRef, clickawayref);
   return (
-    <dialog open={isOpen} ref={mergedRef}>
+    <dialog
+      open={isOpen}
+      ref={mergedRef}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          onRequestClose();
+        }
+      }}
+    >
       <form
         autoFocus
         // className={cx("form")}
