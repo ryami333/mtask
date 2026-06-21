@@ -1,8 +1,9 @@
-import React from "react";
-import { Meta, StoryFn } from "@storybook/react-vite";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
+import { IconSettings } from "@tabler/icons-react";
 
-export default {
+const meta = {
+  component: Button,
   title: "Button",
   parameters: {
     layout: "padded",
@@ -12,4 +13,20 @@ export default {
   },
 } satisfies Meta<typeof Button>;
 
-export const Static: StoryFn<typeof Button> = (args) => <Button {...args} />;
+export default meta;
+
+export const Default: StoryObj<typeof meta> = {};
+
+export const WithIcon: StoryObj<typeof meta> = {
+  args: {
+    icon: IconSettings,
+    children: "Settings",
+  },
+};
+
+export const WithIconOnly: StoryObj<typeof meta> = {
+  args: {
+    icon: IconSettings,
+    children: undefined,
+  },
+};
