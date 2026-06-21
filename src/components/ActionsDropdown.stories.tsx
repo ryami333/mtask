@@ -10,6 +10,7 @@ const meta = {
   title: "Components/ActionsDropdown",
   component: ActionsDropdown,
   args: {
+    icon: IconSettings,
     actions: [
       { icon: IconSettings, label: "Bearbeiten", onClick: fn() },
       { icon: IconSettings, label: "Löschen", onClick: fn() },

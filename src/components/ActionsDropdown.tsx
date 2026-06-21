@@ -2,16 +2,18 @@ import React, { MouseEventHandler } from "react";
 import styles from "./ActionsDropdown.module.css";
 import classNames from "classnames/bind";
 import { useMenuControls } from "../helpers/useMenuControls";
-import { IconDots, IconProps } from "@tabler/icons-react";
+import { IconProps } from "@tabler/icons-react";
 import { Button } from "./Button";
 
 const cx = classNames.bind(styles);
 
 export function ActionsDropdown({
   triggerLabel,
+  icon,
   actions,
 }: {
   triggerLabel: string;
+  icon: React.ComponentType<IconProps>;
   actions: {
     icon: React.ComponentType<IconProps>;
     label: string;
@@ -44,7 +46,7 @@ export function ActionsDropdown({
         onClick={onTriggerClick}
         onKeyDown={onTriggerKeyDown}
         ref={menuTriggerRef}
-        icon={IconDots}
+        icon={icon}
       />
       <div
         className={cx("flyover")}
