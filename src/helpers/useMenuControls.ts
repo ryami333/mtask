@@ -1,7 +1,14 @@
-import { useEffect, useId, useRef, useState } from "react";
+import React, { useId, useRef } from "react";
+import {
+  getHotkeyHandler,
+  useClickOutside,
+  useDisclosure,
+} from "@mantine/hooks";
+
+const MENU_ITEM_SELECTOR = "a, [role='menuitemcheckbox'], button";
 
 export function useMenuControls() {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMenuOpen, { open, close, toggle }] = useDisclosure(false);
 
   const menuTriggerRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -9,170 +16,100 @@ export function useMenuControls() {
   const menuId = useId();
   const menuTriggerId = useId();
 
-  const onTriggerKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    switch (event.key) {
-      case " ":
-      case "Enter":
-      case "ArrowDown":
-      case "Down": {
-        event.preventDefault();
-        setIsMenuOpen(true);
-        /**
-         * The menuitems are not focussable until the menu element is visible
-         * on the next frame:
-         */
-        requestAnimationFrame(() => {
-          const items = menuRef.current?.querySelectorAll<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          );
-          (items?.length ? items[0] : undefined)?.focus();
-        });
-        break;
-      }
-      case "ArrowUp":
-      case "Up": {
-        event.preventDefault();
-        setIsMenuOpen(true);
-        /**
-         * The menuitems are not focussable until the menu element is visible
-         * on the next frame:
-         */
-        requestAnimationFrame(() => {
-          const items = menuRef.current?.querySelectorAll<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          );
-          (items?.length ? items[items.length - 1] : undefined)?.focus();
-        });
-        break;
-      }
-    }
+  const getMenuItems = () =>
+    Array.from(
+      menuRef.current?.querySelectorAll<HTMLElement>(MENU_ITEM_SELECTOR) ?? [],
+    );
+
+  /**
+   * The menuitems are not focussable until the menu element is visible
+   * on the next frame, so focus moves are deferred with rAF.
+   */
+  const focusItemOnNextFrame = (
+    resolve: (items: HTMLElement[]) => HTMLElement | undefined,
+  ) => {
+    requestAnimationFrame(() => resolve(getMenuItems())?.focus());
   };
+
+  const openAndFocus = (
+    resolve: (items: HTMLElement[]) => HTMLElement | undefined,
+  ) => {
+    open();
+    focusItemOnNextFrame(resolve);
+  };
+
+  const onTriggerKeyDown = getHotkeyHandler([
+    ["space", () => openAndFocus((items) => items[0])],
+    ["enter", () => openAndFocus((items) => items[0])],
+    ["arrowdown", () => openAndFocus((items) => items[0])],
+    ["arrowup", () => openAndFocus((items) => items[items.length - 1])],
+  ]);
 
   const onTriggerClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setIsMenuOpen((current) => {
-      if (current === false) {
-        requestAnimationFrame(() => {
-          const first = menuRef.current?.querySelector<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          );
-          first?.focus();
-        });
-      }
-      return !current;
-    });
+    if (!isMenuOpen) {
+      focusItemOnNextFrame((items) => items[0]);
+    }
+    toggle();
   };
+
+  /** Move focus by `delta` items, clamped to the ends of the menu. */
+  const moveFocus = (delta: number) => {
+    const menuItems = getMenuItems();
+    const index = menuItems.indexOf(document.activeElement as HTMLElement);
+    if (index === -1) {
+      return;
+    }
+    const next = Math.min(Math.max(index + delta, 0), menuItems.length - 1);
+    menuItems[next]?.focus();
+  };
+
+  /**
+   * Named keys are mapped declaratively (`getHotkeyHandler` calls
+   * `preventDefault` on a match). Space+Enter are intentionally absent – the
+   * link/button elements implicitly handle activation.
+   */
+  const handleMenuHotkeys = getHotkeyHandler([
+    ["arrowdown", () => moveFocus(1)],
+    ["arrowup", () => moveFocus(-1)],
+    ["home", () => getMenuItems()[0]?.focus()],
+    ["end", () => getMenuItems().at(-1)?.focus()],
+    [
+      "escape",
+      () => {
+        close();
+        menuTriggerRef.current?.focus();
+      },
+    ],
+  ]);
 
   const onMenuKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { key } = event;
-    switch (key) {
-      /**
-       * No Explicit handling for Space+Enter – the link elements implicitly
-       * handle this.
-       */
-      case "ArrowDown":
-      case "Down": {
-        event.preventDefault();
-        const menuItems = Array.from(
-          menuRef.current?.querySelectorAll<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          ) ?? [],
-        );
-        const focussedIndex = menuItems.findIndex(
-          (item) => item === document.activeElement,
-        );
-        if (focussedIndex !== -1) {
-          menuItems[Math.min(focussedIndex + 1, menuItems.length)]?.focus();
-        }
-        break;
-      }
-      case "ArrowUp":
-      case "Up": {
-        event.preventDefault();
-        const menuItems = Array.from(
-          menuRef.current?.querySelectorAll<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          ) ?? [],
-        );
-        const focussedIndex = menuItems.findIndex(
-          (item) => item === document.activeElement,
-        );
-        if (focussedIndex !== -1) {
-          menuItems[Math.max(focussedIndex - 1, 0)]?.focus();
-        }
-        break;
-      }
-      case "Home": {
-        event.preventDefault();
-        const items = menuRef.current?.querySelectorAll<HTMLElement>(
-          "a, [role='menuitemcheckbox'], button",
-        );
-        items?.[0]?.focus();
-        break;
-      }
-      case "End": {
-        event.preventDefault();
-        const items = menuRef.current?.querySelectorAll<HTMLElement>(
-          "a, [role='menuitemcheckbox'], button",
-        );
-        (items?.length ? items[items.length - 1] : undefined)?.focus();
-        break;
-      }
-      case "Esc":
-      case "Escape": {
-        event.preventDefault();
-        setIsMenuOpen(false);
-        menuTriggerRef.current?.focus();
-        break;
-      }
-      default: {
-        if (key.length !== 1) {
-          break;
-        }
-        const char = key.toLowerCase();
-        const menuItems = Array.from(
-          menuRef.current?.querySelectorAll<HTMLElement>(
-            "a, [role='menuitemcheckbox'], button",
-          ) ?? [],
-        );
-        const matchingLink = menuItems.find((item) =>
-          item.textContent?.startsWith(char),
-        );
+    handleMenuHotkeys(event);
 
-        if (matchingLink) {
-          matchingLink.focus();
-        }
-      }
+    /**
+     * Type-ahead: jump to the first item starting with the pressed character.
+     * Handled here rather than via `getHotkeyHandler` because it matches any
+     * single printable key, not a fixed hotkey.
+     */
+    if (event.defaultPrevented || event.key.length !== 1) {
+      return;
     }
+    const char = event.key.toLowerCase();
+    const match = getMenuItems().find((item) =>
+      item.textContent?.startsWith(char),
+    );
+    match?.focus();
   };
 
-  useEffect(() => {
-    /**
-     * Close the menu on "click away"
-     */
-    const onDocumentClick = (e: MouseEvent) => {
-      const { target } = e;
-      const menu = menuRef.current;
-      const menuTrigger = menuTriggerRef.current;
-      if (!menu || !menuTrigger) {
-        throw new Error("Couldn't find menu or menuTrigger elements");
-      }
-      if (
-        isMenuOpen &&
-        !(
-          target instanceof Node &&
-          (menuTrigger.contains(target) || menu.contains(target))
-        )
-      ) {
-        e.preventDefault();
-        e.stopPropagation();
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("click", onDocumentClick);
-
-    return () => document.removeEventListener("click", onDocumentClick);
-  }, [isMenuOpen]);
+  /**
+   * Close the menu on "click away". `useClickOutside` treats clicks within
+   * either the menu or its trigger as "inside", and only listens while open.
+   */
+  useClickOutside(
+    () => close(),
+    null,
+    [menuRef.current, menuTriggerRef.current],
+    isMenuOpen,
+  );
 
   const onMenuBlur = ({ relatedTarget }: React.FocusEvent<HTMLDivElement>) => {
     /**
@@ -185,11 +122,9 @@ export function useMenuControls() {
           menuTriggerRef.current?.contains(relatedTarget))
       )
     ) {
-      setIsMenuOpen(false);
+      close();
     }
   };
-
-  const closeMenu = () => setIsMenuOpen(() => false);
 
   return {
     isMenuOpen,
@@ -201,6 +136,6 @@ export function useMenuControls() {
     onMenuBlur,
     onTriggerKeyDown,
     onTriggerClick,
-    closeMenu,
+    closeMenu: close,
   };
 }
