@@ -17,6 +17,9 @@
   pointer-events: auto;
   position: relative; /* Override dialog default */
   z-index: 11;
-  background-color: var(--color-base);
+  background-color: var(--color-base-l10);
   width: 100%;
+  border: 1px solid var(--color-base-l60);
+  outline: 0;
+  color: var(--color-base-l100);
 }
