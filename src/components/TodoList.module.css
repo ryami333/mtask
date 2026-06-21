@@ -4,7 +4,3 @@
   border-radius: 2px;
   border: 2px solid transparent;
 }
-
-.container:has(:focus-visible) {
-  border: 2px solid var(--color-base-l100);
-}

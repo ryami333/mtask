@@ -16,8 +16,12 @@
 }
 
 .button:focus,
-:global(body:not(:has(:focus-visible))) .button:hover {
+.button:hover {
   background-color: var(--color-base-l0);
+}
+
+.button:focus {
+  outline: 2px solid var(--color-base-l100);
 }
 
 .title {
@@ -32,8 +36,8 @@
 .externalLink {
   font-weight: 600;
   font-style: italic;
-}
 
-:global(body:not(:has(:focus-visible))) .externalLink:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
