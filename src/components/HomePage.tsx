@@ -8,6 +8,7 @@ import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
+import { IconBackspace, IconSettings } from "@tabler/icons-react";
 
 const cx = classNames.bind(styles);
 
@@ -89,10 +90,20 @@ export const HomePage = ({
         />
       </div>
       <div className={cx("buttonWrapper")}>
-        <Button onClick={() => removeCompletedTodos()}>
-          Clear Completed 🚫
+        <Button
+          onClick={() => removeCompletedTodos()}
+          icon={IconBackspace}
+          iconPlacement="after"
+        >
+          Clear Completed
         </Button>
-        <Button onClick={onClickSettings}>Settings ⚙️</Button>
+        <Button
+          onClick={onClickSettings}
+          icon={IconSettings}
+          iconPlacement="after"
+        >
+          Settings
+        </Button>
       </div>
     </div>
   );
