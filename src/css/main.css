@@ -1,9 +1,6 @@
 @import "./reset.css";
+@import "./colors.css";
 @import "./fonts.css";
-
-:root {
-  --color-background: rgb(38, 50, 56);
-}
 
 *,
 *:before,
