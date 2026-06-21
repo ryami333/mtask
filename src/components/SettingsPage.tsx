@@ -13,7 +13,6 @@ import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import styles from "./SettingsPage.module.css";
 import {
   IconEdit,
-  IconPlus,
   IconPlusFilled,
   IconSettings,
   IconTrash,
