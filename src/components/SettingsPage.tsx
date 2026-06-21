@@ -55,7 +55,6 @@ export const SettingsPage = () => {
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => window.close()}>Close</Button>
       <form className={cx("form")} onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor={prefixInputId}>Prefix</label>
