@@ -15,19 +15,18 @@
   width: 100%;
 }
 
-.button:hover,
-.button:focus {
-  background-color: rgba(0, 0, 0, 0.5);
-  font-weight: 500;
+.button:focus,
+:global(body:not(:has(:focus-visible))) .button:hover {
+  background-color: var(--color-base-0);
 }
 
 .title {
-  color: white;
+  color: var(--color-base-100);
 }
 
 .title.completed {
   text-decoration: line-through;
-  color: gray;
+  color: var(--color-base-60);
 }
 
 .externalLink {
@@ -35,6 +34,6 @@
   font-style: italic;
 }
 
-.externalLink:hover {
+:global(body:not(:has(:focus-visible))) .externalLink:hover {
   text-decoration: underline;
 }

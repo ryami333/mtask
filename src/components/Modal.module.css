@@ -2,11 +2,11 @@
   position: fixed;
   inset: 0;
   z-index: 10;
-  background-color: black;
+  background-color: var(--color-base-0);
   opacity: 0.5;
 }
 
 .modal {
   z-index: 11;
-  background-color: var(--color-background);
+  background-color: var(--color-base);
 }

@@ -4,8 +4,8 @@
 
 html {
   font-family: system-ui, sans-serif;
-  background-color: var(--color-background);
-  color: white;
+  background-color: var(--color-base);
+  color: var(--color-base-100);
   padding: 0;
   margin: 0;
   overflow: clip;

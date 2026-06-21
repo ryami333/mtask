@@ -7,8 +7,8 @@
   padding-inline: var(--spacing-xl);
   font-family: system-ui, sans-serif;
   border: 2px solid transparent;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--color-base-100);
+  background-color: var(--color-base-10);
   font-size: 16px;
   line-height: 1.5;
   align-items: center;
@@ -17,5 +17,5 @@
 
 .button:hover,
 .button:focus-visible {
-  border-color: white;
+  border-color: var(--color-base-100);
 }
