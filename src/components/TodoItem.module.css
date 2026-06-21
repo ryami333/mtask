@@ -13,24 +13,24 @@
   border-radius: 2px;
   font-size: 16px;
   width: 100%;
-}
 
-.button:focus,
-.button:hover {
-  background-color: var(--color-base-l10);
-}
+  &:focus,
+  &:hover {
+    background-color: var(--color-base-l10);
+  }
 
-.button:focus {
-  outline: 2px solid var(--color-base-l100);
+  &:focus {
+    outline: 2px solid var(--color-base-l100);
+  }
 }
 
 .title {
   color: var(--color-base-l100);
-}
 
-.title.completed {
-  text-decoration: line-through;
-  color: var(--color-base-l60);
+  &.completed {
+    text-decoration: line-through;
+    color: var(--color-base-l60);
+  }
 }
 
 .externalLink {
