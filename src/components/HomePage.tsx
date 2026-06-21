@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useRef, useState } from "react";
 import type { Todo } from "../helpers/appState";
 import { v4 as createUuid } from "uuid";
 import { Button } from "./Button";
@@ -6,6 +6,7 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
+import { useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
@@ -18,6 +19,9 @@ export const HomePage = ({
   onClickSettings: MouseEventHandler;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useHotkeys([["mod+N", () => inputRef.current?.focus()]]);
 
   const addTodo = (todo: Todo) => {
     ipcClient.setState((current) => ({
@@ -75,6 +79,7 @@ export const HomePage = ({
         }}
       >
         <Input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

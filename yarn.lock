@@ -1702,6 +1702,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/hooks@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@mantine/hooks@npm:9.3.2"
+  peerDependencies:
+    react: ^19.2.0
+  checksum: 10c0/b9c3982236aabc7a85fb01b70b4012d2afe0fe67144e0929857722afdc7fa8886266bec51c075551d33a84ee2bbd1cfce057f2d4839a877217b8412eb174332b
+  languageName: node
+  linkType: hard
+
 "@mdx-js/react@npm:^3.0.0":
   version: 3.1.1
   resolution: "@mdx-js/react@npm:3.1.1"
@@ -6782,6 +6791,7 @@ __metadata:
     "@electron-forge/plugin-vite": "npm:^7.11.2"
     "@eslint/js": "npm:^10.0.1"
     "@hookform/resolvers": "npm:^5.4.0"
+    "@mantine/hooks": "npm:^9.3.2"
     "@storybook/addon-docs": "npm:^10.4.6"
     "@storybook/addon-links": "npm:^10.4.6"
     "@storybook/react-vite": "npm:^10.4.6"
