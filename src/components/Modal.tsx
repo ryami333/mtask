@@ -1,11 +1,11 @@
 import { useClickOutside, useFocusTrap, useMergedRef } from "@mantine/hooks";
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./Dialog.module.css";
+import styles from "./Modal.module.css";
 
 const cx = classNames.bind(styles);
 
-export function Dialog({
+export function Modal({
   isOpen,
   onRequestClose,
   children,
@@ -22,7 +22,7 @@ export function Dialog({
     <>
       {isOpen && <div className={cx("backdrop")} onClick={onRequestClose} />}
       <dialog
-        className={cx("dialog")}
+        className={cx("modal")}
         open={isOpen}
         ref={mergedRef}
         onKeyDown={(e) => {

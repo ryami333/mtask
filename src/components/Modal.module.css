@@ -6,7 +6,7 @@
   opacity: 0.5;
 }
 
-.dialog {
+.modal {
   z-index: 11;
   background-color: var(--color-background);
 }

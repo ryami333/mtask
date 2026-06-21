@@ -1,18 +1,20 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react-vite";
-import { Dialog } from "./Dialog";
+import { NewTodoModal } from "./NewTodoModal";
 import { fn } from "storybook/test";
 
 export default {
-  title: "Blocks/Dialog",
+  title: "Blocks/NewTodoModal",
   parameters: {
     layout: "padded",
   },
   args: {
     isOpen: true,
     onRequestClose: fn(),
-    children: "Dialog content goes here",
+    onSubmit: fn(),
   },
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta<typeof NewTodoModal>;
 
-export const Static: StoryFn<typeof Dialog> = (args) => <Dialog {...args} />;
+export const Static: StoryFn<typeof NewTodoModal> = (args) => (
+  <NewTodoModal {...args} />
+);

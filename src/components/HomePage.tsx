@@ -8,7 +8,7 @@ import { useDisclosure, useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
-import { NewTodoDialog } from "./NewTodoDialog";
+import { NewTodoModal } from "./NewTodoModal";
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +17,7 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  useHotkeys([["mod+N", () => newTodoDialogActions.open()]]);
+  useHotkeys([["mod+N", () => newTodoModalActions.open()]]);
 
   const addTodo = (todo: Todo) => {
     ipcClient.setState((current) => ({
@@ -57,14 +57,14 @@ export const HomePage = ({
 
   const appState = useAppState();
 
-  const [isNewTodoDialogOpen, newTodoDialogActions] = useDisclosure();
+  const [isNewTodoModalOpen, newTodoModalActions] = useDisclosure();
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => newTodoDialogActions.open()}>New Todo</Button>
-      <NewTodoDialog
-        isOpen={isNewTodoDialogOpen}
-        onRequestClose={() => newTodoDialogActions.close()}
+      <Button onClick={() => newTodoModalActions.open()}>New Todo</Button>
+      <NewTodoModal
+        isOpen={isNewTodoModalOpen}
+        onRequestClose={() => newTodoModalActions.close()}
         onSubmit={(todo) => addTodo(todo)}
         key={1} // TODO: reset after submission
       />
