@@ -4,7 +4,7 @@ import { Button } from "./Button";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
-import { useHotkeys } from "@mantine/hooks";
+import { useHotkeys, useFocusReturn } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconSettings } from "@tabler/icons-react";
@@ -85,6 +85,11 @@ export const HomePage = ({
   const todoModalState = useCrudModalState<Todo>();
 
   const deleteModalState = useDeleteModalState<string>();
+
+  // Return focus to the element that opened a modal once it closes.
+  useFocusReturn({
+    opened: todoModalState.isOpen || deleteModalState.isOpen,
+  });
 
   return (
     <div className={cx("container")}>
