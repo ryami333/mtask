@@ -4,16 +4,18 @@ import { Todo } from "../helpers/appState";
 import { Modal } from "./Modal";
 import { Input } from "./Input";
 
-export function NewTodoModal({
+export function TodoModal({
   isOpen,
   onRequestClose,
   onSubmit,
+  defaultValue = "",
 }: {
   isOpen: boolean;
   onRequestClose: () => void;
   onSubmit: (todo: Todo) => void;
+  defaultValue?: string;
 }) {
-  const [inputValue, setInputValue] = useInputState("");
+  const [inputValue, setInputValue] = useInputState(defaultValue);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>

@@ -1,10 +1,10 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react-vite";
-import { NewTodoModal } from "./NewTodoModal";
+import { TodoModal } from "./TodoModal";
 import { fn } from "storybook/test";
 
 export default {
-  title: "NewTodoModal",
+  title: "TodoModal",
   parameters: {
     layout: "padded",
   },
@@ -13,8 +13,8 @@ export default {
     onRequestClose: fn(),
     onSubmit: fn(),
   },
-} satisfies Meta<typeof NewTodoModal>;
+} satisfies Meta<typeof TodoModal>;
 
-export const Static: StoryFn<typeof NewTodoModal> = (args) => (
-  <NewTodoModal {...args} />
+export const Static: StoryFn<typeof TodoModal> = (args) => (
+  <TodoModal {...args} />
 );

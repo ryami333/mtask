@@ -8,7 +8,7 @@ import { useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
-import { NewTodoModal } from "./NewTodoModal";
+import { TodoModal } from "./TodoModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useCrudModalState } from "../helpers/useCrudModalState";
 import { useDeleteModalState } from "../helpers/useDeleteModalState";
@@ -76,7 +76,7 @@ export const HomePage = ({
   return (
     <div className={cx("container")}>
       <Button onClick={() => newTodoModalState.openNew()}>New Todo</Button>
-      <NewTodoModal
+      <TodoModal
         isOpen={newTodoModalState.isOpen}
         onRequestClose={() => newTodoModalState.close()}
         onSubmit={(todo) => addTodo(todo)}
