@@ -71,8 +71,8 @@ export const TodoList = ({
     ["ArrowRight", (event) => moveFocus(event, 1)],
     ["Home", () => focusIndex(0)],
     ["End", () => focusIndex(getButtons().length - 1)],
-    ["Delete", deleteActive],
-    ["Backspace", deleteActive],
+    ["mod+Delete", deleteActive],
+    ["mod+Backspace", deleteActive],
   ]);
 
   return (
