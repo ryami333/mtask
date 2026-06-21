@@ -8,13 +8,13 @@ import styles from "./TodoList.module.css";
 const cx = classNames.bind(styles);
 
 export const TodoList = ({
-  onClickTodo,
+  onToggleTodo,
   onDeleteKeyDown,
   onContextMenu,
   colors,
   todos,
 }: {
-  onClickTodo: (uuid: string) => void;
+  onToggleTodo: (uuid: string) => void;
   onDeleteKeyDown: (uuid: string) => void;
   onContextMenu: (uuid: string) => void;
   colors: ColorMapping[];
@@ -44,6 +44,15 @@ export const TodoList = ({
     focusIndex((currentIndex + delta + buttons.length) % buttons.length);
   };
 
+  const toggleActive = (event: KeyboardEvent) => {
+    const uuid = (event.target as HTMLElement)
+      .closest("[data-todolist-button]")
+      ?.getAttribute("data-todolist-button");
+    if (uuid) {
+      onToggleTodo(uuid);
+    }
+  };
+
   const deleteActive = (event: KeyboardEvent) => {
     const buttons = getButtons();
 
@@ -71,6 +80,8 @@ export const TodoList = ({
     ["ArrowRight", (event) => moveFocus(event, 1)],
     ["Home", () => focusIndex(0)],
     ["End", () => focusIndex(getButtons().length - 1)],
+    ["mod+Enter", toggleActive],
+    ["mod+Space", toggleActive],
     ["mod+Delete", deleteActive],
     ["mod+Backspace", deleteActive],
   ]);
@@ -83,10 +94,7 @@ export const TodoList = ({
           key={todo.uuid}
           onKeyDown={onKeyDown}
           tabIndex={activeIndex === index ? 0 : -1} // using "roving" tabIndex
-          onClick={() => {
-            setActiveIndex(index);
-            onClickTodo(todo.uuid);
-          }}
+          onClick={() => setActiveIndex(index)}
           active={activeIndex === index}
           onContextMenu={() => onContextMenu(todo.uuid)}
           colors={colors}

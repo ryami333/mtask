@@ -31,7 +31,7 @@ export const HomePage = ({
     }));
   };
 
-  const onClickTodo = (uuid: string) => {
+  const onToggleTodo = (uuid: string) => {
     ipcClient.setState((current) => ({
       todos: current.todos.map((todo) => {
         if (todo.uuid === uuid) {
@@ -70,7 +70,7 @@ export const HomePage = ({
       />
       <div className={cx("todoListWrapper")}>
         <TodoList
-          onClickTodo={onClickTodo}
+          onToggleTodo={onToggleTodo}
           onDeleteKeyDown={onDeleteKeyDown}
           onContextMenu={onContextMenu}
           todos={appState.todos}
