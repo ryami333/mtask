@@ -4,3 +4,9 @@
   align-items: flex-start;
   row-gap: var(--spacing-md);
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  column-gap: var(--spacing-md);
+}
