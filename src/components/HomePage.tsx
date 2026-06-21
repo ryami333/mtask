@@ -7,7 +7,7 @@ import { useAppState } from "../helpers/AppStateContext";
 import { useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
-import { IconBackspace, IconSettings } from "@tabler/icons-react";
+import { IconSettings } from "@tabler/icons-react";
 import { TodoModal } from "./TodoModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useCrudModalState } from "../helpers/useCrudModalState";
@@ -46,12 +46,6 @@ export const HomePage = ({
     if (todo) {
       todoModalState.openEdit({ selectedEntity: todo, key: todo.uuid });
     }
-  };
-
-  const removeCompletedTodos = () => {
-    ipcClient.setState((current) => ({
-      todos: current.todos.filter((todo) => !todo.completed),
-    }));
   };
 
   const onToggleTodo = (uuid: string) => {
@@ -122,13 +116,6 @@ export const HomePage = ({
         onConfirm={() => confirmDeleteTodo()}
       />
       <div className={cx("buttonWrapper")}>
-        <Button
-          onClick={() => removeCompletedTodos()}
-          icon={IconBackspace}
-          iconPlacement="after"
-        >
-          Clear Completed
-        </Button>
         <Button
           onClick={onClickSettings}
           icon={IconSettings}
