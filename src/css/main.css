@@ -1,3 +1,4 @@
+@import "./reset.css";
 @import "./fonts.css";
 
 :root {
@@ -16,7 +17,6 @@ html {
   color: white;
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
 }
 
 body {
