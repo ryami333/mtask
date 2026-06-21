@@ -1,12 +1,20 @@
-.backdrop {
+.container {
+  padding: var(--spacing-md);
   position: fixed;
+  inset: 0;
+}
+
+.backdrop {
+  position: absolute;
   inset: 0;
   z-index: 10;
   background-color: var(--color-base-l0);
   opacity: 0.7;
 }
 
-.modal {
+.dialog {
+  position: relative; /* Override dialog default */
   z-index: 11;
   background-color: var(--color-base);
+  width: 100%;
 }

@@ -19,10 +19,10 @@ export function Modal({
   const mergedRef = useMergedRef(focusTrapRef, clickawayRef);
 
   return (
-    <>
+    <div className={cx("container")}>
       {isOpen && <div className={cx("backdrop")} onClick={onRequestClose} />}
       <dialog
-        className={cx("modal")}
+        className={cx("dialog")}
         open={isOpen}
         ref={mergedRef}
         onKeyDown={(e) => {
@@ -34,6 +34,6 @@ export function Modal({
       >
         {children}
       </dialog>
-    </>
+    </div>
   );
 }
