@@ -3,12 +3,6 @@
 @import "./spacing.css";
 @import "./fonts.css";
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
 html {
   font-family: "Fira Code";
   background-color: var(--color-background);
