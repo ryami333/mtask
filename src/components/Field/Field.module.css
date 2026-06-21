@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  row-gap: var(--spacing-sm);
+  row-gap: var(--spacing-xs);
   flex-direction: column;
 }
 
