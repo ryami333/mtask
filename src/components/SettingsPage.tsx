@@ -11,7 +11,12 @@ import {
 } from "./ColorMappingFormModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import styles from "./SettingsPage.module.css";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconPlus,
+  IconPlusFilled,
+  IconTrash,
+} from "@tabler/icons-react";
 
 const cx = classNames.bind(styles);
 
@@ -62,9 +67,7 @@ export const SettingsPage = () => {
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => formModalState.openNew()}>
-        Add color mapping
-      </Button>
+      <h3>Color Mappings</h3>
       <table className={cx("table")}>
         <thead>
           <tr>
@@ -102,6 +105,15 @@ export const SettingsPage = () => {
               </td>
             </tr>
           ))}
+          <tr>
+            <td style={{ gridColumn: "span 3" }}>Create New</td>
+            <td>
+              <Button
+                onClick={() => formModalState.openNew()}
+                icon={IconPlusFilled}
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
       <ColorMappingFormModal
