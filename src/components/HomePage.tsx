@@ -83,6 +83,7 @@ export const HomePage = ({
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Please enter a new thing here"
         />
       </form>
       <div className={cx("todoListWrapper")}>
