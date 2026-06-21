@@ -1,10 +1,9 @@
 @import "./reset.css";
 @import "./colors.css";
 @import "./spacing.css";
-@import "./fonts.css";
 
 html {
-  font-family: "Fira Code";
+  font-family: system-ui, sans-serif;
   background-color: var(--color-background);
   color: white;
   padding: 0;

@@ -5,7 +5,7 @@
   border-radius: 24px;
   padding-block: var(--spacing-sm);
   padding-inline: var(--spacing-xl);
-  font-family: "Fira Code";
+  font-family: system-ui, sans-serif;
   border: 2px solid transparent;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);

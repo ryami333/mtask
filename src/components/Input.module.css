@@ -6,7 +6,7 @@
   border-radius: 2px;
   padding-inline: var(--spacing-sm);
   padding-block: var(--spacing-sm);
-  font-family: "Fira Code";
+  font-family: system-ui, sans-serif;
   color: white;
   background: transparent;
   font-size: 16px;
