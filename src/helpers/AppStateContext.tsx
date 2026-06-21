@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppState } from "./appState";
+import { ipcClient } from "./ipcClient";
 
 const AppStateContext = React.createContext<AppState | undefined>(undefined);
 
@@ -13,7 +14,7 @@ export const AppStateContextProvider = ({
   const [appState, setAppState] = useState<AppState>(initialState);
 
   useEffect(() => {
-    window.appState.onSyncState(setAppState);
+    ipcClient.onSyncState(setAppState);
   }, []);
 
   return (

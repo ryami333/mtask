@@ -6,6 +6,7 @@ import { Input } from "./Input";
 import { TodoList } from "./TodoList";
 import styled from "styled-components";
 import { useAppState } from "../helpers/AppStateContext";
+import { ipcClient } from "../helpers/ipcClient";
 
 const Container = styled.div`
   display: flex;
@@ -39,19 +40,19 @@ export const HomePage = ({
   const [inputValue, setInputValue] = useState<string>("");
 
   const addTodo = (todo: Todo) => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       todos: [todo, ...current.todos],
     }));
   };
 
   const removeCompletedTodos = () => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       todos: current.todos.filter((todo) => !todo.completed),
     }));
   };
 
   const onClickTodo = (uuid: string) => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       todos: current.todos.map((todo) => {
         if (todo.uuid === uuid) {
           return {
@@ -65,13 +66,13 @@ export const HomePage = ({
   };
 
   const onDeleteKeyDown = (uuid: string) => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       todos: current.todos.filter((todo) => todo.uuid !== uuid),
     }));
   };
 
   const onContextMenu = (uuid: string) => {
-    window.ipcClient.showContextMenuForTodo(uuid);
+    ipcClient.showContextMenuForTodo(uuid);
   };
 
   const appState = useAppState();

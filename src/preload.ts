@@ -36,12 +36,6 @@ const ipcClient = {
   },
 };
 
-export type AppStateApi = typeof ipcClient;
+export type IpcClient = typeof ipcClient;
 
-contextBridge.exposeInIsolatedWorld(0, "ipcClient", ipcClient);
-
-declare global {
-  interface Window {
-    ipcClient: AppStateApi;
-  }
-}
+contextBridge.exposeInMainWorld("ipcClient", ipcClient);

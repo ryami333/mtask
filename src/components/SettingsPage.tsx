@@ -7,6 +7,7 @@ import { z } from "zod";
 import { v4 as createUuid } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppState } from "../helpers/AppStateContext";
+import { ipcClient } from "../helpers/ipcClient";
 
 const Container = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ export const SettingsPage = ({
   });
 
   const onSubmit = (formValues: FormValues) => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       colors: [
         ...current.colors,
         {
@@ -70,7 +71,7 @@ export const SettingsPage = ({
   const appState = useAppState();
 
   const removeColorMapping = (uuid: string) => {
-    window.ipcClient.setState((current) => ({
+    ipcClient.setState((current) => ({
       colors: current.colors.filter(
         (colorMapping) => colorMapping.uuid !== uuid,
       ),
