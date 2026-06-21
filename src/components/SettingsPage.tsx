@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useId } from "react";
+import React, { useId } from "react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import classNames from "classnames/bind";
@@ -18,11 +18,7 @@ const validationSchema = z.object({
 
 type FormValues = z.infer<typeof validationSchema>;
 
-export const SettingsPage = ({
-  onClickBack,
-}: {
-  onClickBack: MouseEventHandler;
-}) => {
+export const SettingsPage = () => {
   const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       prefix: "",
@@ -59,7 +55,7 @@ export const SettingsPage = ({
 
   return (
     <div className={cx("container")}>
-      <Button onClick={onClickBack}>⏎ Back</Button>
+      <Button onClick={() => window.close()}>Close</Button>
       <form className={cx("form")} onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor={prefixInputId}>Prefix</label>

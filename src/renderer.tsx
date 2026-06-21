@@ -1,7 +1,8 @@
 import "./css/main.css";
 import { createRoot } from "react-dom/client";
 import React from "react";
-import { App } from "./components/App";
+import { HomePage } from "./components/HomePage";
+import { SettingsPage } from "./components/SettingsPage";
 import { AppStateContextProvider } from "./helpers/AppStateContext";
 import { ipcClient } from "./helpers/ipcClient";
 
@@ -13,10 +14,12 @@ import { ipcClient } from "./helpers/ipcClient";
     throw new Error("Could not find rootElement");
   }
 
+  const isSettings = window.location.hash === "#settings";
+
   const root = createRoot(rootElement);
   root.render(
     <AppStateContextProvider initialState={initialState}>
-      <App />
+      {isSettings ? <SettingsPage /> : <HomePage />}
     </AppStateContextProvider>,
   );
 })().catch(console.error);

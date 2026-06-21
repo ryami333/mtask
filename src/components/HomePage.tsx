@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import type { Todo } from "../helpers/appState";
 import { Button } from "./Button";
 import { TodoList } from "./TodoList";
@@ -15,11 +15,7 @@ import { useDeleteModalState } from "../helpers/useDeleteModalState";
 
 const cx = classNames.bind(styles);
 
-export const HomePage = ({
-  onClickSettings,
-}: {
-  onClickSettings: MouseEventHandler;
-}) => {
+export const HomePage = () => {
   useHotkeys([["mod+N", () => todoModalState.openNew()]]);
 
   const submitTodo = (title: string) => {
@@ -121,7 +117,7 @@ export const HomePage = ({
       />
       <div className={cx("buttonWrapper")}>
         <Button
-          onClick={onClickSettings}
+          onClick={() => ipcClient.openSettings()}
           icon={IconSettings}
           iconPlacement="after"
         >

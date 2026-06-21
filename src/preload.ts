@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import {
   GET_STATE_CHANNEL,
   OPEN_LINK_CHANNEL,
+  OPEN_SETTINGS_CHANNEL,
   SET_STATE_CHANNEL,
   SHOW_TODO_CONTEXT_MENU,
   SYNC_STATE_CHANNEL,
@@ -33,6 +34,9 @@ const ipcClient = {
   },
   openLink: (url: string) => {
     ipcRenderer.invoke(OPEN_LINK_CHANNEL, url);
+  },
+  openSettings: () => {
+    ipcRenderer.invoke(OPEN_SETTINGS_CHANNEL);
   },
 };
 

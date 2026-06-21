@@ -48,7 +48,7 @@ export const appStateSchema = z.object({
     .array(),
 }) satisfies z.ZodSchema<AppState>;
 
-export const createAppState = (browserWindow: BrowserWindow) => {
+export const createAppState = () => {
   const appState: AppState = new Proxy(readState(), {
     set(...args) {
       const result = Reflect.set(...args);
@@ -57,7 +57,11 @@ export const createAppState = (browserWindow: BrowserWindow) => {
       const copy = { ...appState };
       writeState(copy);
 
-      browserWindow.webContents.send(SYNC_STATE_CHANNEL, copy);
+      // Broadcast to every open window so the home and settings windows stay
+      // in sync with each other.
+      for (const window of BrowserWindow.getAllWindows()) {
+        window.webContents.send(SYNC_STATE_CHANNEL, copy);
+      }
       return result;
     },
   });
