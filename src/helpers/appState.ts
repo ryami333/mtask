@@ -27,7 +27,28 @@ export interface AppState {
 
 export const initialState: AppState = {
   todos: [],
-  colors: [],
+  colors: [
+    {
+      uuid: crypto.randomUUID(),
+      prefix: "AA",
+      color: "#468C77",
+    },
+    {
+      uuid: crypto.randomUUID(),
+      prefix: "BB",
+      color: "#4B698B",
+    },
+    {
+      uuid: crypto.randomUUID(),
+      prefix: "CC",
+      color: "#D4AB6A",
+    },
+    {
+      uuid: crypto.randomUUID(),
+      prefix: "DD",
+      color: "#AA6039",
+    },
+  ],
 };
 
 export const appStateSchema = z.object({
