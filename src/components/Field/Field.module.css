@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  row-gap: var(--spacing-sm);
+  flex-direction: column;
+}
+
+.label {
+  padding-inline: var(--spacing-sm);
+}
+
+.error-message {
+  padding-inline: var(--spacing-sm);
+  color: red;
+}
