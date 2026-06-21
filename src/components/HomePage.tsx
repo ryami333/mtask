@@ -4,13 +4,14 @@ import { Button } from "./Button";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
-import { useDisclosure, useHotkeys } from "@mantine/hooks";
+import { useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { IconBackspace, IconSettings } from "@tabler/icons-react";
 import { NewTodoModal } from "./NewTodoModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useCrudModalState } from "../helpers/useCrudModalState";
+import { useDeleteModalState } from "../helpers/useDeleteModalState";
 
 const cx = classNames.bind(styles);
 
@@ -19,12 +20,13 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  useHotkeys([["mod+N", () => newTodoModalActions.open()]]);
+  useHotkeys([["mod+N", () => newTodoModalState.openNew()]]);
 
   const addTodo = (todo: Todo) => {
     ipcClient.setState((current) => ({
       todos: [todo, ...current.todos],
     }));
+    newTodoModalState.closeAndReset();
   };
 
   const removeCompletedTodos = () => {
@@ -48,12 +50,12 @@ export const HomePage = ({
   };
 
   const requestDeleteTodo = (uuid: string) => {
-    deleteModalState.openEdit({ key: uuid, selectedEntity: uuid });
+    deleteModalState.open({ selectedEntity: uuid });
   };
 
   const confirmDeleteTodo = () => {
-    if (deleteModalState.mode === "edit") {
-      const uuid = deleteModalState.selectedEntity;
+    const uuid = deleteModalState.selectedEntity;
+    if (uuid !== null) {
       ipcClient.setState((current) => ({
         todos: current.todos.filter((todo) => todo.uuid !== uuid),
       }));
@@ -67,18 +69,18 @@ export const HomePage = ({
 
   const appState = useAppState();
 
-  const [isNewTodoModalOpen, newTodoModalActions] = useDisclosure();
+  const newTodoModalState = useCrudModalState<string>();
 
-  const deleteModalState = useCrudModalState<string>();
+  const deleteModalState = useDeleteModalState<string>();
 
   return (
     <div className={cx("container")}>
-      <Button onClick={() => newTodoModalActions.open()}>New Todo</Button>
+      <Button onClick={() => newTodoModalState.openNew()}>New Todo</Button>
       <NewTodoModal
-        isOpen={isNewTodoModalOpen}
-        onRequestClose={() => newTodoModalActions.close()}
+        isOpen={newTodoModalState.isOpen}
+        onRequestClose={() => newTodoModalState.close()}
         onSubmit={(todo) => addTodo(todo)}
-        key={1} // TODO: reset after submission
+        key={newTodoModalState.key}
       />
       <div className={cx("todoListWrapper")}>
         <TodoList
@@ -93,7 +95,6 @@ export const HomePage = ({
         isOpen={deleteModalState.isOpen}
         onRequestClose={() => deleteModalState.close()}
         onConfirm={() => confirmDeleteTodo()}
-        key={deleteModalState.key}
       />
       <div className={cx("buttonWrapper")}>
         <Button
