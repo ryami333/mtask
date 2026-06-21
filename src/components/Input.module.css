@@ -4,7 +4,8 @@
   appearance: none;
   cursor: pointer;
   border-radius: 2px;
-  padding: 8px 8px;
+  padding-inline: var(--spacing-sm);
+  padding-block: var(--spacing-sm);
   font-family: "Fira Code";
   color: white;
   background-color: rgba(0, 0, 0, 0.5);

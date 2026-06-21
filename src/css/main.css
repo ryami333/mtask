@@ -1,5 +1,6 @@
 @import "./reset.css";
 @import "./colors.css";
+@import "./spacing.css";
 @import "./fonts.css";
 
 *,
@@ -17,7 +18,8 @@ html {
 }
 
 body {
-  padding: 16px 8px;
+  padding-inline: var(--spacing-md);
+  padding-block: var(--spacing-sm);
   margin: 0;
 }
 

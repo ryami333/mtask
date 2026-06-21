@@ -8,7 +8,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  row-gap: var(--spacing-sm);
   margin: 0;
   padding: 0;
 }
