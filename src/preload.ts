@@ -3,7 +3,6 @@ import {
   GET_STATE_CHANNEL,
   OPEN_LINK_CHANNEL,
   SET_STATE_CHANNEL,
-  SHOW_TODO_CONTEXT_MENU,
   SYNC_STATE_CHANNEL,
 } from "./helpers/channels";
 import type { AppState } from "./helpers/appState";
@@ -28,9 +27,6 @@ const ipcClient = {
   onSyncState,
   setState,
   getState: (): Promise<AppState> => ipcRenderer.invoke(GET_STATE_CHANNEL),
-  showContextMenuForTodo: (uuid: string) => {
-    ipcRenderer.invoke(SHOW_TODO_CONTEXT_MENU, uuid);
-  },
   openLink: (url: string) => {
     ipcRenderer.invoke(OPEN_LINK_CHANNEL, url);
   },

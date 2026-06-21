@@ -70,10 +70,6 @@ export const HomePage = () => {
     deleteModalState.close();
   };
 
-  const onContextMenu = (uuid: string) => {
-    ipcClient.showContextMenuForTodo(uuid);
-  };
-
   const appState = useAppState();
 
   const todoModalState = useCrudModalState<Todo>();
@@ -103,7 +99,6 @@ export const HomePage = () => {
           onToggleTodo={onToggleTodo}
           onDeleteKeyDown={requestDeleteTodo}
           onEditKeyDown={requestEditTodo}
-          onContextMenu={onContextMenu}
           todos={appState.todos}
           colors={appState.colors}
         />

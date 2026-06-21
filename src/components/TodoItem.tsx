@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, MouseEventHandler } from "react";
+import React, { KeyboardEventHandler } from "react";
 import { ColorMapping } from "../helpers/appState";
 import { Todo } from "../helpers/appState";
 import classNames from "classnames/bind";
@@ -58,12 +58,10 @@ function TitleFormatter({ children }: { children: string }) {
 export const TodoItem = ({
   todo,
   onKeyDown,
-  onContextMenu,
   colors,
 }: {
   todo: Todo;
   onKeyDown: KeyboardEventHandler<HTMLElement>;
-  onContextMenu: MouseEventHandler;
   colors: ColorMapping[];
 }) => {
   return (
@@ -72,7 +70,6 @@ export const TodoItem = ({
         className={cx("button")}
         onKeyDown={onKeyDown}
         data-todolist-button={todo.uuid}
-        onContextMenu={onContextMenu}
       >
         <span
           className={cx("title", { completed: todo.completed })}

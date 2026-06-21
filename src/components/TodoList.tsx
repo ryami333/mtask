@@ -11,14 +11,12 @@ export const TodoList = ({
   onToggleTodo,
   onDeleteKeyDown,
   onEditKeyDown,
-  onContextMenu,
   colors,
   todos,
 }: {
   onToggleTodo: (uuid: string) => void;
   onDeleteKeyDown: (uuid: string) => void;
   onEditKeyDown: (uuid: string) => void;
-  onContextMenu: (uuid: string) => void;
   colors: ColorMapping[];
   todos: Todo[];
 }) => {
@@ -97,7 +95,6 @@ export const TodoList = ({
           todo={todo}
           key={todo.uuid}
           onKeyDown={onKeyDown}
-          onContextMenu={() => onContextMenu(todo.uuid)}
           colors={colors}
         />
       ))}
