@@ -17,9 +17,7 @@ export const HomePage = ({
 }: {
   onClickSettings: MouseEventHandler;
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useHotkeys([["mod+N", () => inputRef.current?.focus()]]);
+  useHotkeys([["mod+N", () => newTodoDialogActions.open());
 
   const addTodo = (todo: Todo) => {
     ipcClient.setState((current) => ({
@@ -67,7 +65,6 @@ export const HomePage = ({
       <NewTodoDialog
         isOpen={isNewTodoDialogOpen}
         onRequestClose={() => newTodoDialogActions.close()}
-        inputRef={inputRef} // TODO: might be redundant now with autofocus attribute.
         onSubmit={(todo) => addTodo(todo)}
         key={1} // TODO: reset after submission
       />

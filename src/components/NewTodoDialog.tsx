@@ -4,19 +4,17 @@ import {
   useInputState,
   useMergedRef,
 } from "@mantine/hooks";
-import React, { Ref } from "react";
+import React from "react";
 import { Todo } from "../helpers/appState";
 import { Input } from "./Input";
 
 export function NewTodoDialog({
   isOpen,
   onRequestClose,
-  inputRef,
   onSubmit,
 }: {
   isOpen: boolean;
   onRequestClose: () => void;
-  inputRef: Ref<HTMLInputElement>;
   onSubmit: (todo: Todo) => void;
 }) {
   const focusTrapRef = useFocusTrap(isOpen);
@@ -52,7 +50,6 @@ export function NewTodoDialog({
         }}
       >
         <Input
-          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={setInputValue}
