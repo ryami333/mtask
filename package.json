@@ -58,6 +58,7 @@
     "@mantine/hooks": "^9.3.2",
     "classnames": "^2.5.1",
     "electron-store": "^11.0.2",
+    "is-valid-css-color": "^3.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.79.0",

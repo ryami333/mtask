@@ -6025,6 +6025,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-valid-css-color@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-valid-css-color@npm:3.0.0"
+  checksum: 10c0/a005f9e2b211318cc8ec59287a820a8bc265c0b14549dbeb0505da3f081b23147c5647df7b2e153494937147526f6fe1cd05fef4cf91555afadf11df4a4c68a5
+  languageName: node
+  linkType: hard
+
 "is-wsl@npm:^3.1.0":
   version: 3.1.1
   resolution: "is-wsl@npm:3.1.1"
@@ -6911,6 +6918,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-storybook: "npm:10.4.6"
     globals: "npm:^17.6.0"
+    is-valid-css-color: "npm:^3.0.0"
     prettier: "npm:^3.8.4"
     react: "npm:^19.2.7"
     react-dom: "npm:^19.2.7"

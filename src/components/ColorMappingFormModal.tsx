@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { useForm, useFormState, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { isValidCssColor } from "is-valid-css-color";
 import { Field } from "./Field/Field";
 import styles from "./ColorMappingFormModal.module.css";
 import classNames from "classnames/bind";
@@ -13,7 +14,10 @@ const cx = classNames.bind(styles);
 
 const validationSchema = z.object({
   prefix: z.string().nonempty(),
-  color: z.string().nonempty(),
+  color: z
+    .string()
+    .nonempty()
+    .refine(isValidCssColor, { message: "Must be a valid CSS color" }),
 });
 
 export type ColorMappingFormValues = z.infer<typeof validationSchema>;
