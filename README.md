@@ -61,7 +61,6 @@ Anything you type that starts with `ACME` picks up the colour. Use it however su
 ```bash
 yarn install
 yarn dev      # run in development
-yarn package  # build an unpacked app
 yarn make     # produce a distributable (.zip, macOS only)
 ```
 

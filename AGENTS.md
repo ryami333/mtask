@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `yarn dev` / `yarn start` — run the app in development (Vite dev server + hot reload; main window opens DevTools undocked).
 - `yarn lint` — ESLint over the whole repo.
 - `yarn storybook` — component workbench at port 6006. Components have co-located `*.stories.tsx` files; this is the primary way to develop/preview UI in isolation.
-- `yarn package` — build an unpacked app (rebuilds icons first). `yarn make` — produce a distributable zip (macOS/darwin only, per `forge.config.mjs`).
+- `yarn make` — produce a distributable zip (macOS/darwin only, per `forge.config.mjs`); rebuilds icons first.
 
 There is no test runner configured and no `tsc` build step (`tsconfig.json` is `noEmit`; Vite does the bundling). Type errors surface in the editor/`tsc --noEmit`, not via a yarn script.
 
