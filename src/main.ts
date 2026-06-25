@@ -6,10 +6,27 @@ import { BrowserWindow, Menu, app, ipcMain } from "electron/main";
 import type { MenuItemConstructorOptions } from "electron";
 import { OPEN_LINK_CHANNEL } from "./helpers/channels";
 import { shell } from "electron";
+import { updateElectronApp } from "update-electron-app";
 
 // These constants are injected by `@electron-forge/plugin-vite`.
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string | undefined;
 declare const MAIN_WINDOW_VITE_NAME: string;
+
+/**
+ * Auto-updates via GitHub releases.
+ *
+ * Wires Electron's `autoUpdater` to the free `update.electronjs.org` service,
+ * which serves the latest release published to this repo (see the `github`
+ * target in `.release-it.mjs`). On launch — and every `updateInterval`
+ * thereafter — it checks for a newer release, downloads it in the background,
+ * and prompts the user to restart once it's ready.
+ *
+ * Requirements (all satisfied here): the repo must be public and the macOS
+ * build must be code-signed (Squirrel.Mac rejects unsigned updates) — see the
+ * `SIGN=true` build in `.release-it.mjs`. This call is a no-op in development
+ * (the app isn't packaged), so it's safe to run unconditionally.
+ */
+updateElectronApp();
 
 /**
  * Performance improvement:
