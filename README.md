@@ -68,6 +68,16 @@ Built with Electron, React, and TypeScript. Distributables are produced for macO
 
 ---
 
+## Updates
+
+mtask updates itself. Each tagged release is published to [GitHub Releases](https://github.com/ryami333/mtask/releases) (via `yarn release`), and the installed app checks for a newer one through Electron's [`update.electronjs.org`](https://github.com/electron/update.electronjs.org) service — on launch and periodically after.
+
+When a newer version is found it downloads quietly in the background, and you're prompted to restart and apply it.
+
+Updates only flow to packaged, code-signed builds (Squirrel.Mac refuses unsigned ones), so the auto-updater is a no-op while running `yarn dev`.
+
+---
+
 ## A note on scope
 
 This is a personal tool. Features exist because I wanted them, and absent features are absent because I didn't. It's shared in case it's useful or interesting — but it's not trying to be a general-purpose product, and that's rather the point.

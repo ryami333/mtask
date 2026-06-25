@@ -41,6 +41,13 @@ This is the core pattern to understand before touching state. There is a single 
 - Write path: components call `ipcClient.setState(patch)`. `patch` may be a partial object or an **updater function** `(current) => Partial<AppState>`; the function form is resolved in the preload by fetching current state first, so writes that depend on existing state (toggling, mapping, filtering todos) are safe. See `HomePage.tsx` for the canonical CRUD examples.
 - IPC channel name constants live in `src/helpers/channels.ts`. Beyond the state channels, the only extra one is `OPEN_LINK_CHANNEL`: opening an external link is delegated to the main process (`shell.openExternal`) — the renderer fires `ipcClient.openLink(url)` (see link handling in `TodoItem.tsx`/`TodoList.tsx`).
 
+### Auto-updates
+
+`main.ts` calls `updateElectronApp()` once at module load to enable auto-updates against GitHub Releases. It comes from [`update-electron-app`](https://github.com/electron/update-electron-app), which points Electron's `autoUpdater` at the hosted `update.electronjs.org` feed for this repo — no update server to run. `release-it` publishes the zip asset the feed reads (see the `github` target in `.release-it.mjs`).
+
+- `updateElectronApp()` is a **no-op in development** (it bails when `!app.isPackaged`) and only sets the feed URL once the app is `ready`. It checks on launch and periodically thereafter, downloads any newer release in the background, and prompts the user to restart.
+- Updates require a **public repo** and **code-signed** macOS builds (Squirrel.Mac rejects unsigned updates) — hence the `SIGN=true` build in `.release-it.mjs`. This can't be exercised via `yarn dev`; it needs two real signed releases.
+
 ### UI conventions
 
 - Components are in `src/components/`, each with a co-located `*.module.css` (CSS Modules, accessed via `classnames/bind` → `const cx = classNames.bind(styles)`) and usually a `*.stories.tsx`.
