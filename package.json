@@ -11,7 +11,7 @@
     "start": "electron-forge start",
     "build:icons": "electron-icon-builder --flatten --input=./check-mark-button.png --output=.",
     "package": "yarn build:icons && electron-forge package",
-    "build": "yarn build:icons && SKIP_NOTARIZE=true electron-forge package",
+    "build": "yarn build:icons && electron-forge package",
     "make": "yarn build:icons && electron-forge make",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

@@ -2,46 +2,42 @@ import "dotenv/config";
 import { createEnv } from "@t3-oss/env-core";
 import z from "zod";
 
-/**
- * Set `SKIP_NOTARIZE=true` to build an unsigned, un-notarized app without Apple
- * credentials — used by the `build` script as a CI quality-assurance check.
- * Skipping also disables the env validation below, so CI needs no secrets.
- */
-// eslint-disable-next-line no-undef
-const skipNotarize = process.env.SKIP_NOTARIZE === "true";
-
-export const env = createEnv({
+const env = createEnv({
   server: {
-    APPLE_ID: z.email(),
-    APPLE_ID_PASSWORD: z.string().nonempty(),
-    APPLE_TEAM_ID: z.string().nonempty(),
+    SIGN: z.stringbool().optional().default(false),
   },
-
-  /**
-   * What object holds the environment variables at runtime. This is usually
-   * `process.env` or `import.meta.env`.
-   */
-  // eslint-disable-next-line no-undef
   runtimeEnv: process.env,
-  skipValidation: skipNotarize,
 });
 
 /** @type {import('@electron-forge/shared-types').ForgeConfig} */
 const config = {
+  hooks: {
+    resolveForgeConfig: (runConfig) => {
+      if (env.SIGN === "true") {
+        const notarizeEnv = createEnv({
+          server: {
+            APPLE_ID: z.email(),
+            APPLE_ID_PASSWORD: z.string().nonempty(),
+            APPLE_TEAM_ID: z.string().nonempty(),
+          },
+          runtimeEnv: process.env,
+          skipValidation: true,
+        });
+
+        runConfig.packagerConfig.osxSign = {};
+        runConfig.packagerConfig.osxNotarize = {
+          appleId: notarizeEnv.APPLE_ID,
+          appleIdPassword: notarizeEnv.APPLE_ID_PASSWORD,
+          teamId: notarizeEnv.APPLE_TEAM_ID,
+        };
+      }
+      return runConfig;
+    },
+  },
   packagerConfig: {
     name: "mtask",
     executableName: "mtask",
     icon: "./icons/icon",
-    ...(skipNotarize
-      ? {}
-      : {
-          osxSign: {},
-          osxNotarize: {
-            appleId: env.APPLE_ID,
-            appleIdPassword: env.APPLE_ID_PASSWORD,
-            teamId: env.APPLE_TEAM_ID,
-          },
-        }),
   },
   makers: [
     {
