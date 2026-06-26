@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler } from "react";
+import React from "react";
 import { ColorMapping } from "../helpers/appState";
 import { Todo } from "../helpers/appState";
 import classNames from "classnames/bind";
