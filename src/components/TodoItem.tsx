@@ -4,6 +4,7 @@ import { Todo } from "../helpers/appState";
 import classNames from "classnames/bind";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./TodoItem.module.css";
+import { getHotkeyHandler } from "@mantine/hooks";
 
 const cx = classNames.bind(styles);
 
@@ -45,15 +46,30 @@ function TitleFormatter({ children }: { children: string }) {
   );
 }
 
-export const TodoItem = ({
+export function TodoItem({
   todo,
-  onKeyDown,
   colors,
+  onToggle,
+  onEdit,
+  onOpenLink,
+  onDelete,
 }: {
   todo: Todo;
-  onKeyDown: KeyboardEventHandler<HTMLElement>;
   colors: ColorMapping[];
-}) => {
+  onToggle: React.MouseEventHandler;
+  onEdit: React.MouseEventHandler;
+  onOpenLink: React.MouseEventHandler;
+  onDelete: React.MouseEventHandler;
+}) {
+  const onKeyDown = getHotkeyHandler([
+    ["mod+Enter", onToggle],
+    ["mod+Space", onToggle],
+    ["mod+E", onEdit],
+    ["mod+O", onOpenLink],
+    ["mod+Delete", onDelete],
+    ["mod+Backspace", onDelete],
+  ]);
+
   return (
     <div className={cx("wrapper")}>
       <button
@@ -74,4 +90,4 @@ export const TodoItem = ({
       </button>
     </div>
   );
-};
+}

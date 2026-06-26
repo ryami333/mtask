@@ -97,8 +97,8 @@ export const HomePage = () => {
       <div className={cx("todoListWrapper")}>
         <TodoList
           onToggleTodo={onToggleTodo}
-          onDeleteKeyDown={requestDeleteTodo}
-          onEditKeyDown={requestEditTodo}
+          onDeleteTodo={requestDeleteTodo}
+          onEditTodo={requestEditTodo}
           todos={appState.todos}
           colors={appState.colors}
         />
