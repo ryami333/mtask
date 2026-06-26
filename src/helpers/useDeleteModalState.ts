@@ -1,3 +1,4 @@
+import { useFocusReturn } from "@mantine/hooks";
 import { useState } from "react";
 
 /**
@@ -46,6 +47,11 @@ export const useDeleteModalState = <T>() => {
     selectedEntity: UnArrayed<T> | null;
   }>({ isOpen: false, selectedEntity: null });
 
+  const returnFocusEffect = useFocusReturn({
+    opened: state.isOpen,
+    shouldReturnFocus: false,
+  });
+
   return {
     ...state,
     open: ({ selectedEntity }: { selectedEntity: UnArrayed<T> }) =>
@@ -55,6 +61,9 @@ export const useDeleteModalState = <T>() => {
      * Closes the modal while preserving `selectedEntity` so the modal can
      * animate closed without its contents flashing to empty.
      */
-    close: () => setState((current) => ({ ...current, isOpen: false })),
+    close: ({ returnFocus }: { returnFocus: boolean }) => {
+      setState((current) => ({ ...current, isOpen: false }));
+      if (returnFocus) returnFocusEffect();
+    },
   };
 };

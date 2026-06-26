@@ -3,7 +3,7 @@ import type { Todo } from "../helpers/appState";
 import { TodoList } from "./TodoList";
 import classNames from "classnames/bind";
 import { useAppState } from "../helpers/AppStateContext";
-import { useHotkeys, useFocusReturn } from "@mantine/hooks";
+import { useHotkeys } from "@mantine/hooks";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./HomePage.module.css";
 import { TodoModal } from "./TodoModal";
@@ -24,6 +24,7 @@ export const HomePage = () => {
           todo.uuid === uuid ? { ...todo, title } : todo,
         ),
       }));
+      todoModalState.closeAndReset({ returnFocus: true });
     } else {
       ipcClient.setState((current) => ({
         todos: [
@@ -31,8 +32,9 @@ export const HomePage = () => {
           ...current.todos,
         ],
       }));
+      todoModalState.closeAndReset({ returnFocus: false });
+      // TODO: focus on new TodoItem
     }
-    todoModalState.closeAndReset();
   };
 
   const requestEditTodo = (uuid: string) => {
@@ -67,7 +69,8 @@ export const HomePage = () => {
         todos: current.todos.filter((todo) => todo.uuid !== uuid),
       }));
     }
-    deleteModalState.close();
+    deleteModalState.close({ returnFocus: false });
+    // TODO: return focus somewhere – to top?
   };
 
   const appState = useAppState();
@@ -76,16 +79,11 @@ export const HomePage = () => {
 
   const deleteModalState = useDeleteModalState<string>();
 
-  // Return focus to the element that opened a modal once it closes.
-  useFocusReturn({
-    opened: todoModalState.isOpen || deleteModalState.isOpen,
-  });
-
   return (
     <div className={cx("container")}>
       <TodoModal
         isOpen={todoModalState.isOpen}
-        onRequestClose={() => todoModalState.close()}
+        onRequestClose={() => todoModalState.close({ returnFocus: true })}
         onSubmit={(title) => submitTodo(title)}
         defaultValue={
           todoModalState.mode === "edit"
@@ -105,7 +103,7 @@ export const HomePage = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={deleteModalState.isOpen}
-        onRequestClose={() => deleteModalState.close()}
+        onRequestClose={() => deleteModalState.close({ returnFocus: true })}
         onConfirm={() => confirmDeleteTodo()}
       />
     </div>

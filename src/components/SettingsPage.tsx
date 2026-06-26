@@ -48,7 +48,7 @@ export const SettingsPage = () => {
         ],
       }));
     }
-    formModalState.closeAndReset();
+    formModalState.closeAndReset({ returnFocus: true });
   };
 
   const removeColorMapping = (uuid: string) => {
@@ -63,7 +63,7 @@ export const SettingsPage = () => {
     if (deleteModalState.selectedEntity) {
       removeColorMapping(deleteModalState.selectedEntity.uuid);
     }
-    deleteModalState.close();
+    deleteModalState.close({ returnFocus: true });
   };
 
   return (
@@ -120,7 +120,7 @@ export const SettingsPage = () => {
       </table>
       <ColorMappingFormModal
         isOpen={formModalState.isOpen}
-        onRequestClose={() => formModalState.close()}
+        onRequestClose={() => formModalState.close({ returnFocus: true })}
         onSubmit={submitColorMapping}
         defaultValues={
           formModalState.mode === "edit"
@@ -134,7 +134,7 @@ export const SettingsPage = () => {
       />
       <ConfirmDeleteModal
         isOpen={deleteModalState.isOpen}
-        onRequestClose={() => deleteModalState.close()}
+        onRequestClose={() => deleteModalState.close({ returnFocus: true })}
         onConfirm={() => confirmRemoveColorMapping()}
         message={
           deleteModalState.selectedEntity

@@ -1,3 +1,4 @@
+import { useFocusReturn } from "@mantine/hooks";
 import { useState } from "react";
 
 /**
@@ -57,6 +58,11 @@ export const useCrudModalState = <T>() => {
     )
   >({ isOpen: false, key: crypto.randomUUID(), mode: undefined });
 
+  const returnFocusEffect = useFocusReturn({
+    opened: state.isOpen,
+    shouldReturnFocus: false,
+  });
+
   return {
     ...state,
     openNew: () =>
@@ -85,16 +91,21 @@ export const useCrudModalState = <T>() => {
       key: string;
       selectedEntity: UnArrayed<T>;
     }) => setState({ isOpen: true, mode: "edit", selectedEntity, key }),
-    close: () => setState((current) => ({ ...current, isOpen: false })),
+    close: ({ returnFocus }: { returnFocus: boolean }) => {
+      setState((current) => ({ ...current, isOpen: false }));
+      if (returnFocus) returnFocusEffect();
+    },
 
     /**
      * For closing a modal after a successful submission – resets the `key`.
      */
-    closeAndReset: () =>
+    closeAndReset: ({ returnFocus }: { returnFocus: boolean }) => {
       setState((current) => ({
         ...current,
         isOpen: false,
         key: crypto.randomUUID(),
-      })),
+      }));
+      if (returnFocus) returnFocusEffect();
+    },
   };
 };
