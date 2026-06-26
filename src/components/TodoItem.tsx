@@ -75,6 +75,11 @@ export function TodoItem({
       <button
         className={cx("button")}
         onKeyDown={onKeyDown}
+        onClick={(event) => {
+          if (event.metaKey) {
+            onToggle(event);
+          }
+        }}
         data-todolist-button={todo.uuid}
       >
         <span
