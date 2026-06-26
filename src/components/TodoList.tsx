@@ -29,18 +29,6 @@ export const TodoList = ({
       wrapperRef.current?.querySelectorAll("[data-todolist-button]") ?? [],
     ).filter((button): button is HTMLElement => button instanceof HTMLElement);
 
-  const focusIndex = (index: number) => {
-    const buttons = getButtons();
-    const newIndex = Math.max(0, Math.min(index, buttons.length - 1));
-    buttons.at(newIndex)?.focus();
-  };
-
-  const moveFocus = (event: KeyboardEvent, delta: number) => {
-    const buttons = getButtons();
-    const currentIndex = buttons.findIndex((button) => button === event.target);
-    focusIndex((currentIndex + delta + buttons.length) % buttons.length);
-  };
-
   const toggleActive = (event: KeyboardEvent) => {
     const uuid = (event.target as HTMLElement)
       .closest("[data-todolist-button]")
