@@ -1,3 +1,4 @@
+import { useMergedRef } from "@mantine/hooks";
 import React from "react";
 
 export type FocusGroupDirection = "inline" | "block" | "all";
@@ -22,15 +23,17 @@ export function FocusGroup({
   direction = "all",
   children,
   onKeyDown,
+  ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: React.ComponentPropsWithRef<"div"> & {
   direction?: FocusGroupDirection;
 }) {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const innerRef = React.useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(innerRef, ref);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event);
-    if (event.defaultPrevented || !ref.current) return;
+    if (event.defaultPrevented || !innerRef.current) return;
 
     const nextKeys: string[] = [];
     const prevKeys: string[] = [];
@@ -51,7 +54,7 @@ export function FocusGroup({
 
     // Only act on keys that originated from a button we manage.
     const buttons = Array.from(
-      ref.current.querySelectorAll("button:not([disabled])"),
+      innerRef.current.querySelectorAll("button:not([disabled])"),
     ).filter((item) => item instanceof HTMLButtonElement);
     if (!document.activeElement) {
       return;
@@ -78,7 +81,7 @@ export function FocusGroup({
   };
 
   return (
-    <div ref={ref} onKeyDown={handleKeyDown} {...props}>
+    <div ref={mergedRef} onKeyDown={handleKeyDown} {...props}>
       {children}
     </div>
   );
