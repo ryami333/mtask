@@ -5,6 +5,7 @@ import { TodoItem } from "./TodoItem";
 import { ColorMapping, Todo } from "../helpers/appState";
 import { ipcClient } from "../helpers/ipcClient";
 import styles from "./TodoList.module.css";
+import { FocusGroup } from "./FocusGroup";
 
 const cx = classNames.bind(styles);
 
@@ -94,12 +95,6 @@ export const TodoList = ({
   // `getHotkeyHandler` calls `event.preventDefault()` by default, which blocks
   // scrolling on the arrow/Home/End/Delete keys.
   const onKeyDown = getHotkeyHandler([
-    ["ArrowUp", (event) => moveFocus(event, -1)],
-    ["ArrowLeft", (event) => moveFocus(event, -1)],
-    ["ArrowDown", (event) => moveFocus(event, 1)],
-    ["ArrowRight", (event) => moveFocus(event, 1)],
-    ["Home", () => focusIndex(0)],
-    ["End", () => focusIndex(getButtons().length - 1)],
     ["mod+Enter", toggleActive],
     ["mod+Space", toggleActive],
     ["mod+E", editActive],
@@ -109,7 +104,7 @@ export const TodoList = ({
   ]);
 
   return (
-    <div className={cx("container")} ref={wrapperRef}>
+    <FocusGroup className={cx("container")} ref={wrapperRef} direction="block">
       {todos.map((todo) => (
         <TodoItem
           todo={todo}
@@ -118,6 +113,6 @@ export const TodoList = ({
           colors={colors}
         />
       ))}
-    </div>
+    </FocusGroup>
   );
 };
